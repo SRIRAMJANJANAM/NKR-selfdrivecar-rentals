@@ -74,9 +74,9 @@ function About() {
 
   // Team members (optional)
   const team = [
-    { name: "Neelendar Reddy", role: "Founder & CEO", desc: "Passionate about providing top-notch self-drive experiences." },
-    { name: "Suresh Kumar", role: "Operations Head", desc: "Ensures every car is in perfect condition for your journey." },
-    { name: "Priya Sharma", role: "Customer Relations", desc: "Dedicated to making your booking smooth and enjoyable." },
+    { name: "Neelendar Reddy", role: "Founder", desc: "Passionate about providing top-notch self-drive experiences." },
+    { name: "Himachal", role: "Driver", desc: "Ensures every car is in perfect condition for your journey." },
+    { name: "Muralidhar Reddy", role: "Partner", desc: "Dedicated to making your booking smooth and enjoyable." },
   ];
 
   // FAQ data
@@ -95,7 +95,7 @@ function About() {
     },
     {
       question: "Is there a security deposit?",
-      answer: "Yes, a refundable security deposit of ₹3000 is required at the time of pickup. It will be returned within 7 days after the car is returned in good condition."
+      answer: "Yes, a refundable security deposit of ₹3000 is required at the time of pickup. It will be refunded immediately when the car is returned in good condition."
     },
     {
       question: "What documents do I need?",
@@ -103,15 +103,15 @@ function About() {
     },
     {
       question: "What is your fuel policy?",
-      answer: "Cars are provided with a full tank; you need to return them with a full tank. If you return with less fuel, we'll charge for the difference."
+      answer: "Cars come with some fuel at pickup. You must return the car with the same fuel. If less, we will charge for the difference.."
     },
     {
       question: "Can I book for just a few hours?",
-      answer: "Absolutely! We offer hourly rentals as well. Minimum rental period is 4 hours. Contact us for customized packages."
+      answer: "Absolutely! We offer hourly rentals as well. Minimum rental period is 6 hours. Contact us for customized packages."
     },
     {
       question: "How do I contact customer support?",
-      answer: "You can reach us 24/7 at +91-1234567890 or via WhatsApp at the same number. Email: neelandarnkr@gmail.com"
+      answer: "You can reach us 24/7 at +91-8660014029 or via WhatsApp at the same number. Email: neelandarnkr@gmail.com"
     }
   ];
 
@@ -141,7 +141,7 @@ function About() {
         "priceRange": "₹1800 - ₹3500",
         "openingHours": "Mo-Su 00:00-23:59",
         "sameAs": [
-          "https://facebook.com/nkrselfdrive",
+          "https://www.facebook.com/share/1DcKcWZUBe/",
           "https://www.instagram.com/neelendar_reddy_nkr_?utm_source=qr&igsh=MWJ6YTN3OTN5bzRqYQ==",
           "https://twitter.com/nkrselfdrive"
         ],
@@ -235,7 +235,7 @@ function About() {
         <section className="about-hero" aria-label="About Us Hero">
           <div className="hero-overlay"></div>
           <div className="hero-content">
-            <h1 className="hero-title">Driving Your Journeys Since 2020</h1>
+            <h1 className="hero-title">Driving Your Journeys Since 2023</h1>
             <p className="hero-subtitle">
               NKR Self Drive is Tirupati's most trusted self-drive car rental, 
               offering affordable, safe, and convenient mobility solutions. 
@@ -244,12 +244,12 @@ function About() {
             <div className="hero-stats">
               <div className="stat-item">
                 <FaUsers className="stat-icon" />
-                <span className="stat-number">5000+</span>
+                <span className="stat-number">1000+</span>
                 <span className="stat-label">Happy Customers</span>
               </div>
               <div className="stat-item">
                 <FaRoad className="stat-icon" />
-                <span className="stat-number">1M+</span>
+                <span className="stat-number">3L+</span>
                 <span className="stat-label">Kilometers Driven</span>
               </div>
               <div className="stat-item">
@@ -266,7 +266,7 @@ function About() {
           <div className="story-content">
             <h2 className="section-title">Our Story</h2>
             <p>
-              Founded in 2020 by <strong>Neelendar Reddy</strong>, NKR Self Drive was born from a simple idea: 
+              Founded in 2023 by <strong>Neelendar Reddy</strong>, NKR Self Drive was born from a simple idea: 
               provide <strong>affordable, hassle-free self-drive cars</strong> to the people of Tirupati and surrounding areas. 
               What started with a single car has now grown into a fleet of well-maintained vehicles, serving thousands of satisfied customers.
             </p>
@@ -334,6 +334,7 @@ function About() {
               <span className="area-chip"><MdLocationOn /> Tiruchanur</span>
               <span className="area-chip"><MdLocationOn /> Alipiri</span>
               <span className="area-chip"><MdLocationOn /> Kapilatheertham</span>
+              <span className="area-chip"><MdLocationOn /> Airport</span>
             </div>
           </div>
         </section>

@@ -408,7 +408,7 @@ Days: ${formData.days}
         {/* Info Banner */}
         <div className="info-banner">
           <FaMapMarkerAlt className="banner-icon" />
-          <span>Free pickup & drop anywhere in Tirupati & Renigunta. Fuel not included. No hidden charges.</span>
+          <span>Free pickup & drop at any location, including Tirupati, Renigunta & Tirupati Airport. Fuel not included. No hidden charges.</span>
         </div>
       </main>
 

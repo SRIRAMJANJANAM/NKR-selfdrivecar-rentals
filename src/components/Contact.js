@@ -39,7 +39,7 @@ function Contact() {
 
   // Social media links (replace with your actual profiles)
   const socialLinks = {
-    facebook: "https://facebook.com/nkrselfdrive",
+    facebook: "https://www.facebook.com/share/1DcKcWZUBe/",
     instagram: "https://www.instagram.com/neelendar_reddy_nkr_?utm_source=qr&igsh=MWJ6YTN3OTN5bzRqYQ==",
     whatsapp: "https://wa.me/918660014029",
     location: "https://maps.app.goo.gl/J5n6MZKT6stpCAXV7",

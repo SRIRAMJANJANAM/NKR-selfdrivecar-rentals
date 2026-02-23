@@ -65,7 +65,7 @@ function Footer() {
             <a href="https://www.instagram.com/neelendar_reddy_nkr_?utm_source=qr&igsh=MWJ6YTN3OTN5bzRqYQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <FaInstagram />
             </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <a href="https://www.facebook.com/share/1DcKcWZUBe/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <FaFacebookF />
             </a>
             <a href="https://youtube.com/@neelandarreddy?si=W_RTEtCIVakU9ypb" target="_blank" rel="noopener noreferrer" aria-label="YouTube">

@@ -158,7 +158,7 @@ function Home() {
         "priceRange": "₹1800 - ₹3500",
         "openingHours": "Mo-Su 00:00-23:59",
         "sameAs": [
-          "https://facebook.com/nkrselfdrive",
+          "https://www.facebook.com/share/1DcKcWZUBe/",
           "https://www.instagram.com/neelendar_reddy_nkr_?utm_source=qr&igsh=MWJ6YTN3OTN5bzRqYQ==",
           "https://twitter.com/nkrselfdrive"
         ],
