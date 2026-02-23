@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { 
   FaInstagram, FaFacebookF, FaYoutube, FaWhatsapp, FaCar,
-  FaHome, FaInfoCircle, FaWrench, FaCalendarCheck, FaEnvelope, FaGoogle
+  FaHome, FaInfoCircle,FaCalendarCheck, FaEnvelope, FaGoogle
 } from "react-icons/fa";
 
 function Footer() {

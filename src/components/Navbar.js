@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FaHome, FaInfoCircle, FaWrench, FaCalendarCheck, FaEnvelope, FaCar } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaCalendarCheck, FaEnvelope, FaCar } from "react-icons/fa";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

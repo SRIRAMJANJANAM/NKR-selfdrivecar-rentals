@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { 
   FaFacebookF, FaInstagram, FaWhatsapp, FaMapMarkerAlt, 
-  FaPhone, FaEnvelope, FaClock, FaGoogle 
+  FaPhone, FaEnvelope,FaGoogle 
 } from "react-icons/fa";
 import { useEffect, useRef } from "react";
 

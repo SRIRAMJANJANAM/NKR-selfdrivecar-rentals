@@ -2,13 +2,12 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import {
-  FaHeart, FaHandshake, FaClock, FaShieldAlt, FaUsers,
+  FaHeart,  FaClock, FaShieldAlt, FaUsers,
   FaRoad, FaMapMarkerAlt, FaRupeeSign, FaStar, FaBullseye,
-  FaEye, FaTrophy, FaLeaf, FaPhoneAlt, FaWhatsapp,
-  FaQuestionCircle, FaRegCreditCard, FaIdCard, FaGasPump,
-  FaTachometerAlt, FaUserFriends, FaPlus, FaMinus
+  FaEye, FaLeaf, FaPhoneAlt, FaWhatsapp,
+  FaQuestionCircle, FaUserFriends, FaPlus, FaMinus
 } from "react-icons/fa";
-import { MdSupportAgent, MdLocationOn } from "react-icons/md";
+import {  MdLocationOn } from "react-icons/md";
 import { GiPriceTag } from "react-icons/gi";
 import { RiCustomerService2Fill } from "react-icons/ri";
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo} from "react";
 import { Helmet } from "react-helmet";
 import { 
   FaUser, FaGasPump, FaRupeeSign, FaMapMarkerAlt, FaClock, 
@@ -33,7 +33,7 @@ function Booking() {
   const [totalPrice, setTotalPrice] = useState(0);
 
   // Cars data (with added "Fuel not included" feature)
-  const cars = [
+  const cars = useMemo(() => [
     {
       id: 1,
       name: "Maruti Suzuki Ertiga",
@@ -88,7 +88,7 @@ function Booking() {
       price: 2200,
       features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km", "Fuel not included"],
     },
-  ];
+  ], []);
 
   // Sort cars by price
   const sortedCars = [...cars].sort((a, b) => a.price - b.price);
