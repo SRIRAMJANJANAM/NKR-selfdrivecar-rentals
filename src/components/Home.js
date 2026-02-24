@@ -301,7 +301,6 @@ function Home() {
           <div className="hero-content">
             <h1 className="hero-title">Car Rentals starting from just  ₹1800 </h1>
             <p className="hero-subtitle">
-              Best car rental services in Tirupati with prices starting at just ₹1800. 
               Free pickup & drop anywhere in Tirupati & Renigunta.
             </p>
             <Link to="/book" className="cta-button" aria-label="Book your ride now">Book Your Ride Now</Link>
@@ -468,7 +467,7 @@ const homeStyles = `
   .hero-subtitle {
     font-size: clamp(1rem, 3vw, 1.3rem);
     margin-bottom: 2rem;
-    color: #ff0000;
+    color: #0400ff;
     animation: slideUp 0.7s ease-out;
     font-weight: bolder;
   }
