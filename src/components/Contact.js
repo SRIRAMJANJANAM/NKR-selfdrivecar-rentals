@@ -74,9 +74,9 @@ function Contact() {
         <meta name="keywords" content="contact NKR Self Drive, car rental Tirupati phone number, self drive cars WhatsApp, Tirupati car rental address" />
         <meta property="og:title" content="Contact NKR Self Drive – Tirupati Car Rental" />
         <meta property="og:description" content="Reach out to us for self-drive car bookings in Tirupati. Call or WhatsApp now." />
-        <meta property="og:url" content="https://nkrselfdrive.com/contact" />
-        <meta property="og:image" content="https://nkrselfdrive.com/og-contact.jpg" />
-        <link rel="canonical" href="https://nkrselfdrive.com/contact" />
+        <meta property="og:url" content="https://nkrselfdrivecarrentals.in/contact" />
+        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-contact.jpg" />
+        <link rel="canonical" href="https://nkrselfdrivecarrentals.in/contact" />
       </Helmet>
 
       <main className="contact-page">

@@ -306,20 +306,20 @@ Days: ${formData.days}
         <meta name="geo.placename" content="Tirupati" />
         <meta name="geo.position" content="13.6288;79.4192" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://nkrselfdrive.com/book" />
+        <link rel="canonical" href="https://nkrselfdrivecarrentals.in/book" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nkrselfdrive.com/book" />
+        <meta property="og:url" content="https://nkrselfdrivecarrentals.in/book" />
         <meta property="og:title" content="Book Self-Drive Car in Tirupati - NKR Self Drive" />
         <meta property="og:description" content="Instant booking via WhatsApp. Choose from our fleet of well-maintained cars. Free pickup & drop. Fuel not included – pay only for what you use." />
-        <meta property="og:image" content="https://nkrselfdrive.com/og-booking.jpg" />
+        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-booking.jpg" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Book Self-Drive Car in Tirupati - NKR Self Drive" />
         <meta name="twitter:description" content="Instant booking via WhatsApp. Free pickup & drop. Fuel not included. Wide fleet available." />
-        <meta name="twitter:image" content="https://nkrselfdrive.com/og-booking.jpg" />
+        <meta name="twitter:image" content="https://nkrselfdrivecarrentals.in/og-booking.jpg" />
 
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}

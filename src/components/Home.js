@@ -137,12 +137,12 @@ function Home() {
     "@graph": [
       {
         "@type": "AutoRental",
-        "@id": "https://nkrselfdrive.com/#organization",
+        "@id": "https://nkrselfdrivecarrentals.in/#organization",
         "name": "NKR Self Drive Cars",
         "description": "Best self-drive car rental in Tirupati with prices starting from ₹1800. Wide range of cars including Ertiga, Carens, Nexon, Swift, and more. Free pickup and drop.",
-        "url": "https://nkrselfdrive.com",
-        "logo": "https://nkrselfdrive.com/logo.png",
-        "image": "https://nkrselfdrive.com/hero-bg.jpg",
+        "url": "https://nkrselfdrivecarrentals.in",
+        "logo": "https://nkrselfdrivecarrentals.in/logo.png",
+        "image": "https://nkrselfdrivecarrentals.in/hero-bg.jpg",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Tirupati",
@@ -190,36 +190,36 @@ function Home() {
           "price": car.price,
           "priceCurrency": "INR",
           "availability": "https://schema.org/InStock",
-          "url": `https://nkrselfdrive.com/book?car=${car.id}`
+          "url": `https://nkrselfdrivecarrentals.in/book?car=${car.id}`
         }))
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://nkrselfdrive.com/#breadcrumb",
+        "@id": "https://nkrselfdrivecarrentals.in/#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://nkrselfdrive.com"
+            "item": "https://nkrselfdrivecarrentals.in"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Cars",
-            "item": "https://nkrselfdrive.com/cars"
+            "item": "https://nkrselfdrivecarrentals.in/cars"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "Book Now",
-            "item": "https://nkrselfdrive.com/book"
+            "item": "https://nkrselfdrivecarrentals.in/book"
           }
         ]
       },
       {
         "@type": "FAQPage",
-        "@id": "https://nkrselfdrive.com/#faq",
+        "@id": "https://nkrselfdrivecarrentals.in/#faq",
         "mainEntity": [
           {
             "@type": "Question",
@@ -269,21 +269,21 @@ function Home() {
         <meta name="geo.position" content="13.6288;79.4192" />
         <meta name="ICBM" content="13.6288, 79.4192" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://nkrselfdrive.com" />
+        <link rel="canonical" href="https://nkrselfdrivecarrentals.in" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nkrselfdrive.com" />
+        <meta property="og:url" content="https://nkrselfdrivecarrentals.in" />
         <meta property="og:title" content="NKR Self Drive Cars - Car Rental in Tirupati from ₹1800" />
         <meta property="og:description" content="Best self-drive car rental in Tirupati with prices starting from ₹1800. Free pickup & drop. Wide fleet including Ertiga, Carens, Nexon & more." />
-        <meta property="og:image" content="https://nkrselfdrive.com/og-image.jpg" />
+        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-image.jpg" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://nkrselfdrive.com" />
+        <meta property="twitter:url" content="https://nkrselfdrivecarrentals.in" />
         <meta property="twitter:title" content="NKR Self Drive Cars - Car Rental in Tirupati from ₹1800" />
         <meta property="twitter:description" content="Best self-drive car rental in Tirupati with prices starting from ₹1800. Free pickup & drop. Wide fleet including Ertiga, Carens, Nexon & more." />
-        <meta property="twitter:image" content="https://nkrselfdrive.com/og-image.jpg" />
+        <meta property="twitter:image" content="https://nkrselfdrivecarrentals.in/og-image.jpg" />
         <meta property="twitter:site" content="@nkrselfdrive" />
         <meta property="twitter:creator" content="@nkrselfdrive" />
 

@@ -121,11 +121,11 @@ function About() {
     "@graph": [
       {
         "@type": "AutoRental",
-        "@id": "https://nkrselfdrive.com/#organization",
+        "@id": "https://nkrselfdrivecarrentals.in/#organization",
         "name": "NKR Self Drive Cars",
         "description": "Best self-drive car rental in Tirupati and Renigunta with affordable prices starting from ₹1800. Free pickup & drop, 24/7 service, well-maintained fleet.",
-        "url": "https://nkrselfdrive.com",
-        "logo": "https://nkrselfdrive.com/logo.png",
+        "url": "https://nkrselfdrivecarrentals.in",
+        "logo": "https://nkrselfdrivecarrentals.in/logo.png",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Tirupati",
@@ -165,25 +165,25 @@ function About() {
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://nkrselfdrive.com/about#breadcrumb",
+        "@id": "https://nkrselfdrivecarrentals.in/about#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://nkrselfdrive.com"
+            "item": "https://nkrselfdrivecarrentals.in"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "About Us",
-            "item": "https://nkrselfdrive.com/about"
+            "item": "https://nkrselfdrivecarrentals.in/about"
           }
         ]
       },
       {
         "@type": "FAQPage",
-        "@id": "https://nkrselfdrive.com/about#faq",
+        "@id": "https://nkrselfdrivecarrentals.in/about#faq",
         "mainEntity": faqs.map(faq => ({
           "@type": "Question",
           "name": faq.question,
@@ -207,21 +207,21 @@ function About() {
         <meta name="geo.position" content="13.6288;79.4192" />
         <meta name="ICBM" content="13.6288, 79.4192" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://nkrselfdrive.com/about" />
+        <link rel="canonical" href="https://nkrselfdrivecarrentals.in/about" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nkrselfdrive.com/about" />
+        <meta property="og:url" content="https://nkrselfdrivecarrentals.in/about" />
         <meta property="og:title" content="About NKR Self Drive – Best Car Rental in Tirupati & Renigunta" />
         <meta property="og:description" content="Discover why NKR is the top choice for self-drive cars in Tirupati. Lowest prices, free pickup/drop, 24/7 support. Serving Tirupati and Renigunta." />
-        <meta property="og:image" content="https://nkrselfdrive.com/about-og.jpg" />
+        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/about-og.jpg" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://nkrselfdrive.com/about" />
+        <meta property="twitter:url" content="https://nkrselfdrivecarrentals.in/about" />
         <meta property="twitter:title" content="About NKR Self Drive – Best Car Rental in Tirupati & Renigunta" />
         <meta property="twitter:description" content="Discover why NKR is the top choice for self-drive cars in Tirupati. Lowest prices, free pickup/drop, 24/7 support." />
-        <meta property="twitter:image" content="https://nkrselfdrive.com/about-og.jpg" />
+        <meta property="twitter:image" content="https://nkrselfdrivecarrentals.in/about-og.jpg" />
 
         <link rel="icon" href="/favicon.ico" />
 
