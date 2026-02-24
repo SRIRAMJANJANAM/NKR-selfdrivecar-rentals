@@ -467,7 +467,7 @@ const homeStyles = `
   .hero-subtitle {
     font-size: clamp(1rem, 3vw, 1.3rem);
     margin-bottom: 2rem;
-    color: #0400ff;
+    color: #3cff00;
     animation: slideUp 0.7s ease-out;
     font-weight: bolder;
   }
