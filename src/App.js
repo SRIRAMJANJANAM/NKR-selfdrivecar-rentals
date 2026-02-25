@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet"; // Add this import
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -26,6 +27,13 @@ function App() {
 
   return (
     <Router>
+      {/* Optional: Add global Helmet for fallback SEO */}
+      <Helmet>
+        <html lang="en" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://nkrselfdrivecarrentals.in/" />
+      </Helmet>
+      
       <ScrollToTop />
 
       <Navbar />
@@ -36,6 +44,9 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/book" element={<Book />} />
+          
+          {/* Optional: Add a 404 redirect */}
+          <Route path="*" element={<Home />} />
         </Routes>
       </div>
 

@@ -69,14 +69,65 @@ function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact NKR Self Drive – Tirupati Car Rental</title>
-        <meta name="description" content="Get in touch with NKR Self Drive in Tirupati. Call, WhatsApp, or visit us for self-drive car rentals. Free pickup & drop. 24/7 service." />
-        <meta name="keywords" content="contact NKR Self Drive, car rental Tirupati phone number, self drive cars WhatsApp, Tirupati car rental address" />
-        <meta property="og:title" content="Contact NKR Self Drive – Tirupati Car Rental" />
-        <meta property="og:description" content="Reach out to us for self-drive car bookings in Tirupati. Call or WhatsApp now." />
-        <meta property="og:url" content="https://nkrselfdrivecarrentals.in/contact" />
-        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-contact.jpg" />
+        {/* ========== SEO ENHANCED META TAGS (ADDED - REST UNCHANGED) ========== */}
+        
+        {/* Primary Title with Location Keywords */}
+        <title>Contact NKR Self Drive - Best Car Rental in Tirupati & Renigunta | 24/7 Support</title>
+        
+        {/* Enhanced Meta Description with Keywords */}
+        <meta name="description" content="Contact NKR Self Drive for best self drive car rentals in Tirupati and Renigunta. Call +91 8660014029, WhatsApp, or email neelandarnkr@gmail.com. Free pickup & drop. 24/7 customer support. Instant booking confirmation." />
+        
+        {/* Comprehensive Meta Keywords */}
+        <meta name="keywords" content="contact NKR Self Drive, car rental Tirupati phone number, self drive cars Tirupati contact, Tirupati car rental WhatsApp, Renigunta car rental address, book self drive car Tirupati, car rental customer service, 24/7 car rental Tirupati, NKR Self Drive contact details" />
+        
+        {/* Geo Tags for Local SEO */}
+        <meta name="geo.region" content="IN-AP" />
+        <meta name="geo.placename" content="Tirupati, Renigunta, Andhra Pradesh" />
+        <meta name="geo.position" content="13.6288;79.4192" />
+        <meta name="ICBM" content="13.6288, 79.4192" />
+        
+        {/* Robots */}
+        <meta name="robots" content="index, follow" />
+        
+        {/* Author */}
+        <meta name="author" content="NKR Self Drive" />
+        
+        {/* Canonical URL */}
         <link rel="canonical" href="https://nkrselfdrivecarrentals.in/contact" />
+        
+        {/* Alternate for Mobile */}
+        <link rel="alternate" media="only screen and (max-width: 640px)" href="https://nkrselfdrivecarrentals.in/contact" />
+        
+        {/* Open Graph / Facebook / WhatsApp */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://nkrselfdrivecarrentals.in/contact" />
+        <meta property="og:title" content="Contact NKR Self Drive - Best Car Rental in Tirupati & Renigunta" />
+        <meta property="og:description" content="Get in touch with NKR Self Drive for self-drive car bookings in Tirupati and Renigunta. Call, WhatsApp, or email us for instant support. Free pickup & drop." />
+        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-contact.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="NKR Self Drive" />
+        <meta property="og:locale" content="en_IN" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@nkrselfdrive" />
+        <meta name="twitter:creator" content="@nkrselfdrive" />
+        <meta name="twitter:title" content="Contact NKR Self Drive - Tirupati Car Rental" />
+        <meta name="twitter:description" content="Contact us for self-drive car rentals in Tirupati & Renigunta. 24/7 support. Free pickup & drop." />
+        <meta name="twitter:image" content="https://nkrselfdrivecarrentals.in/og-contact.jpg" />
+        
+        {/* Additional SEO Meta Tags */}
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="distribution" content="global" />
+        <meta name="rating" content="general" />
+        <meta name="target" content="all" />
+        
+        {/* Phone number meta for click-to-call on mobile */}
+        <meta name="format-detection" content="telephone=yes" />
+        
+        {/* ========== END OF ADDED SEO META TAGS ========== */}
       </Helmet>
 
       <main className="contact-page">
@@ -84,10 +135,10 @@ function Contact() {
         <section className="contact-hero">
           <div className="hero-overlay"></div>
           <div className="hero-content">
-            <h1 className="hero-title">Get in Touch</h1>
+            <h1 className="hero-title">Get in Touch with NKR Self Drive</h1>
             <p className="hero-subtitle">
-              We're here 24/7 to help you with your self-drive car needs in Tirupati.
-              Call, WhatsApp, or visit us – we respond instantly.
+              We're here 24/7 to help you with your self-drive car needs in <strong>Tirupati and Renigunta</strong>.
+              Call, WhatsApp, or visit us – we respond instantly. Free pickup & drop anywhere in the city.
             </p>
           </div>
         </section>
@@ -95,7 +146,7 @@ function Contact() {
         {/* Contact Info Cards */}
         <section className="contact-info-section">
           <div className="container">
-            <h2 className="section-title">Connect With Us</h2>
+            <h2 className="section-title">Connect With Us in Tirupati & Renigunta</h2>
             <div className="info-cards">
               {/* Phone Card */}
               <div 
@@ -109,7 +160,7 @@ function Contact() {
                 <a href={contactDetails.phoneLink} className="contact-link">
                   {contactDetails.phone}
                 </a>
-                <p className="card-note">Available 24/7 for bookings</p>
+                <p className="card-note">Available 24/7 for bookings in Tirupati & Renigunta</p>
               </div>
 
               {/* WhatsApp Card */}
@@ -124,7 +175,7 @@ function Contact() {
                 <a href={contactDetails.whatsappLink} className="contact-link" target="_blank" rel="noopener noreferrer">
                   {contactDetails.whatsapp}
                 </a>
-                <p className="card-note">Instant replies on WhatsApp</p>
+                <p className="card-note">Instant replies on WhatsApp for car bookings</p>
               </div>
 
               {/* Email Card */}
@@ -139,7 +190,7 @@ function Contact() {
                 <a href={contactDetails.emailLink} className="contact-link">
                   {contactDetails.email}
                 </a>
-                <p className="card-note">We'll get back within 1 hour</p>
+                <p className="card-note">We'll get back within 1 hour for your queries</p>
               </div>
 
               {/* Location Card - Now clickable to open Google Maps */}
@@ -161,7 +212,7 @@ function Contact() {
                 <h3>Visit Us</h3>
                 <p className="address">{contactDetails.address}</p>
                 <span className="map-link">
-                  Click to open in Google Maps →
+                  Click to open in Google Maps → (Serving Tirupati & Renigunta)
                 </span>
               </div>
             </div>
@@ -171,7 +222,7 @@ function Contact() {
         {/* Map Section */}
         <section className="map-section">
           <div className="container">
-            <h2 className="section-title">Find Us Here</h2>
+            <h2 className="section-title">Find Our Location in Tirupati</h2>
             <div className="map-container">
               <iframe
                 src={mapSrc}
@@ -181,11 +232,12 @@ function Contact() {
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="NKR Self Drive Location"
+                title="NKR Self Drive Location - Car Rental Tirupati"
               ></iframe>
             </div>
             <p className="map-note">
-              <FaMapMarkerAlt /> We operate across Tirupati & Renigunta – free pickup and drop anywhere in the city.
+              <FaMapMarkerAlt /> We operate across <strong>Tirupati & Renigunta</strong> – free pickup and drop anywhere in the city. 
+              Serving all areas including Railway Station, Bus Stand, Airport, and Renigunta Junction.
             </p>
           </div>
         </section>
@@ -193,21 +245,21 @@ function Contact() {
         {/* Social Links Bar with Google Review */}
         <div className="social-bar">
           <div className="container">
-            <span className="follow-text">Follow us:</span>
+            <span className="follow-text">Follow NKR Self Drive:</span>
             <div className="social-icons">
-              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook - NKR Self Drive">
                 <FaFacebookF />
               </a>
-              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram - NKR Self Drive">
                 <FaInstagram />
               </a>
-              <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp - NKR Self Drive Car Rentals">
                 <FaWhatsapp />
               </a>
-              <a href={socialLinks.googleReview} target="_blank" rel="noopener noreferrer" aria-label="Review us on Google" className="google-review-link">
+              <a href={socialLinks.googleReview} target="_blank" rel="noopener noreferrer" aria-label="Review us on Google - NKR Self Drive" className="google-review-link">
                 <FaGoogle />
               </a>
-              <a href={socialLinks.location} target="_blank" rel="noopener noreferrer" aria-label="Location">
+              <a href={socialLinks.location} target="_blank" rel="noopener noreferrer" aria-label="Location - NKR Self Drive Tirupati">
                 <FaMapMarkerAlt />
               </a>
             </div>
@@ -221,12 +273,12 @@ function Contact() {
               <div className="review-left">
                 <FaGoogle className="review-icon" />
                 <div className="review-text">
-                  <h3>Love our service? Review us on Google!</h3>
-                  <p>Your feedback helps us serve you better</p>
+                  <h3>Love our self-drive car service in Tirupati?</h3>
+                  <p>Your feedback helps us serve you better. Review us on Google!</p>
                 </div>
               </div>
               <a href={socialLinks.googleReview} target="_blank" rel="noopener noreferrer" className="review-button">
-                Write a Review <span>→</span>
+                Write a Google Review <span>→</span>
               </a>
             </div>
           </div>

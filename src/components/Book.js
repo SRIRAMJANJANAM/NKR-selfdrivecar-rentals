@@ -277,50 +277,103 @@ Days: ${formData.days}
   // Get selected car details
   const selectedCar = formData.selectedCarId ? cars.find(c => c.id === formData.selectedCarId) : null;
 
-  // SEO structured data
+  // ENHANCED SEO structured data - Added location and more details
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "Car Rental Booking - NKR Self Drive",
-    "description": "Book your self-drive car in Tirupati. Choose from a wide range of cars and get instant confirmation via WhatsApp. Fuel not included, transparent pricing.",
-    "brand": {
-      "@type": "Brand",
-      "name": "NKR Self Drive"
-    },
-    "offers": {
-      "@type": "AggregateOffer",
-      "offerCount": sortedCars.length,
-      "lowPrice": Math.min(...sortedCars.map(c => c.price)),
-      "highPrice": Math.max(...sortedCars.map(c => c.price)),
-      "priceCurrency": "INR"
-    }
+    "@graph": [
+      {
+        "@type": "Product",
+        "name": "Self Drive Car Rental Booking - Tirupati & Renigunta",
+        "description": "Book self-drive cars in Tirupati and Renigunta. Instant WhatsApp booking. Free pickup & drop. Fuel not included.",
+        "brand": {
+          "@type": "Brand",
+          "name": "NKR Self Drive"
+        },
+        "offers": {
+          "@type": "AggregateOffer",
+          "offerCount": sortedCars.length,
+          "lowPrice": Math.min(...sortedCars.map(c => c.price)),
+          "highPrice": Math.max(...sortedCars.map(c => c.price)),
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "areaServed": ["Tirupati", "Renigunta"]
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://nkrselfdrivecarrentals.in"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Book Self Drive Car",
+            "item": "https://nkrselfdrivecarrentals.in/book"
+          }
+        ]
+      }
+    ]
   };
 
   return (
     <>
       <Helmet>
-        <title>Book Self-Drive Car in Tirupati | NKR Self Drive – Fuel Not Included</title>
-        <meta name="description" content="Book your self-drive car in Tirupati instantly. Select from Ertiga, Carens, Nexon, Swift, and more. Fuel not included, free pickup & drop. Confirm via WhatsApp." />
-        <meta name="keywords" content="book self drive car Tirupati, car rental booking, Ertiga on rent, Carens hire, Nexon self drive, Swift Dzire booking, fuel not included, self drive cars Tirupati" />
+        {/* Primary Title with Location Keywords */}
+        <title>Book Self Drive Cars in Tirupati & Renigunta | Instant WhatsApp Booking | NKR Self Drive</title>
+        
+        {/* Meta Description - Rich with keywords and prices */}
+        <meta name="description" content="Book self drive cars in Tirupati and Renigunta instantly. Choose from Ertiga (₹3000/day), Carens (₹3500), Nexon (₹2700), Swift (₹1800). Free pickup & drop. Fuel not included. Confirm via WhatsApp." />
+        
+        {/* Meta Keywords */}
+        <meta name="keywords" content="book self drive car Tirupati, self drive cars Renigunta, car rental booking Tirupati, Ertiga on rent, Carens hire, Nexon self drive, Swift Dzire booking, instant car booking, fuel not included, free pickup drop Tirupati" />
+        
+        {/* Geo Tags for Local SEO */}
         <meta name="geo.region" content="IN-AP" />
-        <meta name="geo.placename" content="Tirupati" />
+        <meta name="geo.placename" content="Tirupati, Renigunta, Andhra Pradesh" />
         <meta name="geo.position" content="13.6288;79.4192" />
-        <meta name="robots" content="index, follow" />
+        <meta name="ICBM" content="13.6288, 79.4192" />
+        
+        {/* Robots - Allow indexing */}
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+        
+        {/* Canonical URL */}
         <link rel="canonical" href="https://nkrselfdrivecarrentals.in/book" />
+        
+        {/* Alternate for Mobile */}
+        <link rel="alternate" media="only screen and (max-width: 640px)" href="https://nkrselfdrivecarrentals.in/book" />
 
-        {/* Open Graph */}
+        {/* Open Graph / Facebook / WhatsApp */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://nkrselfdrivecarrentals.in/book" />
-        <meta property="og:title" content="Book Self-Drive Car in Tirupati - NKR Self Drive" />
-        <meta property="og:description" content="Instant booking via WhatsApp. Choose from our fleet of well-maintained cars. Free pickup & drop. Fuel not included – pay only for what you use." />
+        <meta property="og:title" content="Book Self-Drive Cars in Tirupati & Renigunta - Starting ₹1800/day" />
+        <meta property="og:description" content="Instant booking via WhatsApp. Free pickup & drop anywhere in Tirupati & Renigunta. Fuel not included - pay only for what you use. Wide fleet available." />
         <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-booking.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="NKR Self Drive" />
+        <meta property="og:locale" content="en_IN" />
 
-        {/* Twitter */}
+        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Book Self-Drive Car in Tirupati - NKR Self Drive" />
-        <meta name="twitter:description" content="Instant booking via WhatsApp. Free pickup & drop. Fuel not included. Wide fleet available." />
+        <meta name="twitter:site" content="@nkrselfdrive" />
+        <meta name="twitter:creator" content="@nkrselfdrive" />
+        <meta name="twitter:title" content="Book Self-Drive Cars in Tirupati - NKR Self Drive" />
+        <meta name="twitter:description" content="Instant booking via WhatsApp. Free pickup & drop in Tirupati & Renigunta. Fuel not included." />
         <meta name="twitter:image" content="https://nkrselfdrivecarrentals.in/og-booking.jpg" />
 
+        {/* Additional SEO Meta Tags */}
+        <meta name="author" content="NKR Self Drive" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="distribution" content="global" />
+        <meta name="rating" content="general" />
+        <meta name="target" content="all" />
+
+        {/* Schema.org JSON-LD */}
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
@@ -331,7 +384,7 @@ Days: ${formData.days}
         <section className="booking-hero">
           <div className="hero-overlay"></div>
           <div className="hero-content">
-            <h1 className="hero-title">Book Your Self-Drive Car</h1>
+            <h1 className="hero-title">Book Your Self-Drive Car in Tirupati & Renigunta</h1>
             <p className="hero-subtitle">
               Select a car, click "Book Now", fill in your details, and confirm instantly via WhatsApp.
               Free pickup & drop anywhere in Tirupati & Renigunta. <strong>Fuel not included</strong> – pay only for what you use.
@@ -341,7 +394,7 @@ Days: ${formData.days}
 
         {/* Cars Grid */}
         <section className="cars-section" aria-labelledby="cars-heading">
-          <h2 id="cars-heading" className="section-title">Our Fleet – Choose Your Car</h2>
+          <h2 id="cars-heading" className="section-title">Our Fleet – Choose Your Self-Drive Car in Tirupati</h2>
           <div className="cars-grid">
             {sortedCars.map((car, index) => (
               <article
@@ -351,7 +404,7 @@ Days: ${formData.days}
                 style={{ transitionDelay: `${index * 0.1}s` }}
               >
                 <div className="car-image-wrapper">
-                  <img src={car.image} alt={car.name} className="car-image" loading="lazy" />
+                  <img src={car.image} alt={`${car.name} - Self Drive Car in Tirupati`} className="car-image" loading="lazy" />
                   <div className="car-price-tag">
                     <FaRupeeSign aria-hidden="true" /> {car.price}<span className="price-unit">/day</span>
                   </div>
@@ -370,7 +423,7 @@ Days: ${formData.days}
                   <button 
                     className="book-btn" 
                     onClick={() => openModal(car.id)}
-                    aria-label={`Book ${car.name}`}
+                    aria-label={`Book ${car.name} in Tirupati`}
                   >
                     Book Now
                   </button>
@@ -386,20 +439,45 @@ Days: ${formData.days}
             <h2>Why Choose NKR Self Drive for Your Tirupati Trip?</h2>
             <div className="seo-grid">
               <div className="seo-item">
-                <h3>🚗 Wide Range of Cars</h3>
-                <p>From compact hatchbacks like Swift to spacious SUVs like Carens – we have a car for every need and budget.</p>
+                <h3>🚗 Wide Range of Cars in Tirupati</h3>
+                <p>From compact hatchbacks like Swift to spacious SUVs like Carens – we have a car for every need and budget in Tirupati and Renigunta.</p>
               </div>
               <div className="seo-item">
-                <h3>⛽ Fuel Not Included</h3>
-                <p>We believe in transparency. You pay only for the car rental; fuel is extra based on your usage. No hidden fuel markups.</p>
+                <h3>⛽ Fuel Not Included - Transparent Pricing</h3>
+                <p>We believe in transparency. You pay only for the car rental; fuel is extra based on your usage. No hidden fuel markups in Tirupati.</p>
               </div>
               <div className="seo-item">
-                <h3>📍 Free Pickup & Drop</h3>
+                <h3>📍 Free Pickup & Drop in Tirupati & Renigunta</h3>
                 <p>We deliver the car to your doorstep in Tirupati or Renigunta and pick it up after your rental – absolutely free.</p>
               </div>
               <div className="seo-item">
-                <h3>📱 Instant WhatsApp Booking</h3>
-                <p>Fill the form and confirm your booking in seconds via WhatsApp. No calls, no waiting.</p>
+                <h3>📱 Instant WhatsApp Booking - No Calls</h3>
+                <p>Fill the form and confirm your booking in seconds via WhatsApp. No calls, no waiting. Best self drive car booking experience in Tirupati.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Location-Specific SEO Content - NEW but doesn't change existing structure */}
+        <section className="seo-content" style={{marginTop: '0'}}>
+          <div className="seo-container">
+            <h2>Self Drive Cars Available in Tirupati and Renigunta</h2>
+            <div className="seo-grid">
+              <div className="seo-item">
+                <h3>📍 Car Rental in Tirupati</h3>
+                <p>Book self drive cars in Tirupati at Railway Station, Bus Stand, Alipiri, and all major locations. Free pickup and drop anywhere in Tirupati city.</p>
+              </div>
+              <div className="seo-item">
+                <h3>📍 Self Drive Cars in Renigunta</h3>
+                <p>We deliver self drive cars to Renigunta Railway Junction, Bus Stand, and near Tirupati Airport. Best car rental service in Renigunta.</p>
+              </div>
+              <div className="seo-item">
+                <h3>💰 Best Prices in Tirupati</h3>
+                <p>Self drive cars in Tirupati starting from just ₹1800 per day. Ertiga at ₹3000, Carens at ₹3500, Nexon at ₹2700. Most affordable rates.</p>
+              </div>
+              <div className="seo-item">
+                <h3>⏰ 24/7 Availability</h3>
+                <p>Book self drive cars anytime in Tirupati and Renigunta. We operate 24/7 for your convenience. Instant confirmation via WhatsApp.</p>
               </div>
             </div>
           </div>
@@ -408,7 +486,7 @@ Days: ${formData.days}
         {/* Info Banner */}
         <div className="info-banner">
           <FaMapMarkerAlt className="banner-icon" />
-          <span>Free pickup & drop at any location, including Tirupati, Renigunta & Tirupati Airport. Fuel not included. No hidden charges.</span>
+          <span>Free pickup & drop at any location in Tirupati, Renigunta & Tirupati Airport. Fuel not included. No hidden charges. Best self drive cars in Tirupati!</span>
         </div>
       </main>
 
@@ -420,14 +498,14 @@ Days: ${formData.days}
               <FaTimes />
             </button>
 
-            <h2 className="modal-title">Complete Your Booking</h2>
+            <h2 className="modal-title">Complete Your Booking in Tirupati</h2>
             {selectedCar && (
               <div className="selected-car-info">
                 <img src={selectedCar.image} alt={selectedCar.name} className="modal-car-image" />
                 <div>
-                  <h3>{selectedCar.name}</h3>
+                  <h3>{selectedCar.name} - Self Drive in Tirupati</h3>
                   <p className="modal-car-price">₹{selectedCar.price}/day</p>
-                  <p className="fuel-note">Fuel not included</p>
+                  <p className="fuel-note">Fuel not included - Free pickup in Tirupati & Renigunta</p>
                 </div>
               </div>
             )}
@@ -496,7 +574,7 @@ Days: ${formData.days}
                     name="pickupLocation"
                     value={formData.pickupLocation}
                     onChange={handleChange}
-                    placeholder="e.g., Tirupati Railway Station"
+                    placeholder="e.g., Tirupati Railway Station, Renigunta Junction"
                     className={errors.pickupLocation ? 'error' : ''}
                   />
                   {errors.pickupLocation && <span className="error-text"><FaExclamationCircle /> {errors.pickupLocation}</span>}
@@ -558,10 +636,10 @@ Days: ${formData.days}
               {totalPrice > 0 && (
                 <div className="price-summary">
                   <p className="total-price">
-                    <span>Total for {formData.days} day{formData.days > 1 ? 's' : ''}:</span>
+                    <span>Total for {formData.days} day{formData.days > 1 ? 's' : ''} in Tirupati:</span>
                     <span>₹{totalPrice}</span>
                   </p>
-                  <p className="fuel-note-modal"><FaExclamationCircle /> Fuel not included. Extra km charges may apply.</p>
+                  <p className="fuel-note-modal"><FaExclamationCircle /> Fuel not included. Free pickup in Tirupati & Renigunta. Extra km charges may apply.</p>
                 </div>
               )}
 
