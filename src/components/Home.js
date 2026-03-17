@@ -3,16 +3,21 @@ import { useEffect, useRef, useState } from "react"; // Added useState
 import { Helmet } from "react-helmet";
 import { 
   FaUser, FaGasPump, FaTachometerAlt, FaRupeeSign, FaStar, 
-  FaMapMarkerAlt, FaRoad, FaMoneyBillWave, FaSnowflake, FaSun, FaCogs 
+  FaMapMarkerAlt, FaRoad, FaMoneyBillWave, FaSnowflake, FaSun, FaCogs,
+  FaChevronLeft, FaChevronRight, FaQuoteLeft, FaQuoteRight, FaStarHalfAlt
 } from "react-icons/fa";
 
 function Home() {
   // Add state for device detection
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+  
+  // Add state for testimonial carousel
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   // Refs for scroll animations
   const carsRef = useRef([]);
   const featuresRef = useRef([]);
+  const testimonialsRef = useRef([]);
 
   useEffect(() => {
     // Add resize listener for device detection
@@ -45,11 +50,23 @@ function Home() {
     featuresRef.current.forEach((feature) => {
       if (feature) observer.observe(feature);
     });
+    testimonialsRef.current.forEach((testimonial) => {
+      if (testimonial) observer.observe(testimonial);
+    });
 
     return () => {
       observer.disconnect();
       window.removeEventListener('resize', handleResize);
     };
+  }, []);
+
+  // Auto-slide testimonials every 10 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 10000); // 10 seconds
+
+    return () => clearInterval(interval);
   }, []);
 
   // Helper function to get icon for feature text
@@ -64,6 +81,34 @@ function Home() {
     if (lower.includes('automatic') || lower.includes('transmission')) return <FaCogs className="feature-icon-small" />;
     return null;
   };
+
+  // Testimonials data with ratings (all 5 stars)
+  const testimonials = [
+    {
+      id: 1,
+      name: "Surya Teja",
+      rating: 5,
+      text: "Had a great service with NKR Car Rentals in Tirupati. The cars are well maintained, responses are quick, and the customer service is excellent.",
+      date: "March 2025",
+      location: "Tirupati"
+    },
+    {
+      id: 2,
+      name: "Dr Gautham Vetrivendan",
+      rating: 5,
+      text: "Good experience with NKR self drive cars. Smooth booking process and well maintained vehicles.",
+      date: "February 2025",
+      location: "Renigunta"
+    },
+    {
+      id: 3,
+      name: "Charan Roy",
+      rating: 5,
+      text: "Car condition was excellent and the car owner is also pleasant kind person very co operative and ac condition was good overall it was nice ride best choice",
+      date: "March 2025",
+      location: "Tirupati"
+    }
+  ];
 
   // Car data
   const cars = [
@@ -131,6 +176,30 @@ function Home() {
 
   const sortedCars = [...cars].sort((a, b) => a.price - b.price);
 
+  // Testimonial navigation functions
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  // Function to render stars based on rating
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<FaStar key={i} className="star filled" />);
+      } else if (i - 0.5 === rating) {
+        stars.push(<FaStarHalfAlt key={i} className="star half-filled" />);
+      } else {
+        stars.push(<FaStar key={i} className="star empty" />);
+      }
+    }
+    return stars;
+  };
+
   // Enhanced structured data with FAQ, Breadcrumb, and social profiles
   const structuredData = {
     "@context": "https://schema.org",
@@ -169,20 +238,13 @@ function Home() {
           "bestRating": "5",
           "worstRating": "1"
         },
-        "review": [
-          {
-            "@type": "Review",
-            "author": { "@type": "Person", "name": "Suresh K." },
-            "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-            "reviewBody": "Very clean cars and on-time delivery. Highly recommend!"
-          },
-          {
-            "@type": "Review",
-            "author": { "@type": "Person", "name": "Priya M." },
-            "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-            "reviewBody": "Best self-drive service in Tirupati. Free pickup & drop is a lifesaver."
-          }
-        ],
+        "review": testimonials.map(t => ({
+          "@type": "Review",
+          "author": { "@type": "Person", "name": t.name },
+          "reviewRating": { "@type": "Rating", "ratingValue": t.rating.toString() },
+          "reviewBody": t.text,
+          "datePublished": t.date
+        })),
         "offers": sortedCars.map(car => ({
           "@type": "Offer",
           "name": car.name,
@@ -306,7 +368,7 @@ function Home() {
             <Link to="/book" className="cta-button" aria-label="Book your ride now">Book Your Ride Now</Link>
           </div>
           <div className="hero-badge">
-            <FaStar className="badge-icon" aria-hidden="true" /> 4.9 (100+ reviews)
+            <FaStar className="badge-icon" aria-hidden="true" /> 4.9 (150+ reviews)
           </div>
           {/* Only this line changed - conditional image source */}
           <img src={isDesktop ? "/images/venkat1.jpg" : "/images/venkat.jpg"} alt="Lord Venkateswara" className="hero-floating-image" loading="lazy" />
@@ -367,6 +429,84 @@ function Home() {
           </div>
         </section>
 
+        {/* Testimonials Section */}
+        <section className="testimonials-section" aria-labelledby="testimonials-heading">
+          <h2 id="testimonials-heading" className="section-title">What Our Customers Say</h2>
+          
+          <div className="testimonials-container">
+            {/* Left Arrow Button */}
+            <button 
+              className="testimonial-nav-btn prev-btn" 
+              onClick={prevTestimonial}
+              aria-label="Previous testimonial"
+            >
+              <FaChevronLeft />
+            </button>
+            
+            {/* Testimonials Display */}
+            <div className="testimonials-wrapper">
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={testimonial.id}
+                  className={`testimonial-card ${index === currentTestimonial ? 'active' : ''}`}
+                  ref={(el) => (testimonialsRef.current[index] = el)}
+                >
+                  <div className="testimonial-content">
+                    <FaQuoteLeft className="quote-icon quote-left" />
+                    <p className="testimonial-text">"{testimonial.text}"</p>
+                    <FaQuoteRight className="quote-icon quote-right" />
+                  </div>
+                  <div className="testimonial-footer">
+                    {/* Enhanced Responsive Rating Section */}
+                    <div className="testimonial-rating-container">
+                      <div className="testimonial-rating">
+                        {renderStars(testimonial.rating)}
+                      </div>
+                      <span className="rating-text">{testimonial.rating}.0</span>
+                    </div>
+                    
+                    <div className="testimonial-author">
+                      <strong>{testimonial.name}</strong>
+                      <div className="author-details">
+                        <span className="testimonial-location">
+                          <FaMapMarkerAlt className="location-icon" /> {testimonial.location}
+                        </span>
+                        <span className="testimonial-date">{testimonial.date}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right Arrow Button */}
+            <button 
+              className="testimonial-nav-btn next-btn" 
+              onClick={nextTestimonial}
+              aria-label="Next testimonial"
+            >
+              <FaChevronRight />
+            </button>
+          </div>
+
+          {/* Testimonial Indicators */}
+          <div className="testimonial-indicators">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                className={`indicator ${index === currentTestimonial ? 'active' : ''}`}
+                onClick={() => setCurrentTestimonial(index)}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Auto-slide timer indicator */}
+          <div className="timer-indicator">
+            <div className="timer-bar" key={currentTestimonial}></div>
+          </div>
+        </section>
+
         {/* Why Choose Us */}
         <section className="why-us" aria-labelledby="why-heading">
           <h2 id="why-heading" className="section-title">Why NKR Self Drive?</h2>
@@ -394,7 +534,7 @@ function Home() {
   );
 }
 
-// Enhanced responsive styles with new animations and SEO enhancements
+// Enhanced responsive styles with improved mobile centering
 const homeStyles = `
   .home {
     font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
@@ -871,6 +1011,309 @@ const homeStyles = `
     outline-offset: 2px;
   }
 
+  /* Testimonials Section - Enhanced with better mobile centering */
+  .testimonials-section {
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, #f8fafc, #ffffff);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonials-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(30, 74, 118, 0.03) 0%, transparent 70%);
+    animation: rotate 30s linear infinite;
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .testimonials-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .testimonials-wrapper {
+    flex: 1;
+    max-width: 700px;
+    min-height: 320px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .testimonial-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+    transition: all 0.5s ease-in-out;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid rgba(30, 74, 118, 0.1);
+    visibility: hidden;
+    margin: 0 auto;
+  }
+
+  .testimonial-card.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    position: relative;
+    visibility: visible;
+    animation: slideIn 0.5s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .testimonial-content {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-icon {
+    color: #1e4a76;
+    opacity: 0.2;
+    font-size: 2rem;
+    position: absolute;
+  }
+
+  .quote-left {
+    top: -10px;
+    left: -10px;
+  }
+
+  .quote-right {
+    bottom: -10px;
+    right: -10px;
+  }
+
+  .testimonial-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #2c3e50;
+    font-style: italic;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+  }
+
+  /* Enhanced Responsive Rating Container */
+  .testimonial-rating-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #f8fafc;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    border: 1px solid #e2e8f0;
+    margin: 0 auto;
+  }
+
+  .testimonial-rating {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .star {
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    transition: all 0.3s ease;
+  }
+
+  .star.filled {
+    color: #fbbf24;
+    filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3));
+    animation: starPulse 0.5s ease-out;
+  }
+
+  .star.half-filled {
+    color: #fbbf24;
+    filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3));
+  }
+
+  .star.empty {
+    color: #cbd5e1;
+  }
+
+  .rating-text {
+    font-weight: 700;
+    color: #1e4a76;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    background: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+  }
+
+  @keyframes starPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .testimonial-author {
+    text-align: center;
+    width: 100%;
+  }
+
+  .testimonial-author strong {
+    display: block;
+    color: #1e4a76;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    margin-bottom: 0.3rem;
+  }
+
+  .author-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  }
+
+  .testimonial-location {
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .location-icon {
+    color: #1e4a76;
+    font-size: 0.8rem;
+  }
+
+  .testimonial-date {
+    color: #94a3b8;
+    font-size: 0.85rem;
+  }
+
+  .testimonial-nav-btn {
+    background: white;
+    border: 2px solid #1e4a76;
+    color: #1e4a76;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  .testimonial-nav-btn:hover {
+    background: #1e4a76;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(30, 74, 118, 0.3);
+  }
+
+  .testimonial-nav-btn:active {
+    transform: scale(0.95);
+  }
+
+  .testimonial-nav-btn:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 2px;
+  }
+
+  .testimonial-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .indicator:hover {
+    background: #94a3b8;
+    transform: scale(1.2);
+  }
+
+  .indicator.active {
+    background: #1e4a76;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(30, 74, 118, 0.5);
+  }
+
+  .indicator:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 2px;
+  }
+
+  /* Timer indicator */
+  .timer-indicator {
+    max-width: 700px;
+    margin: 1rem auto 0;
+    height: 3px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .timer-bar {
+    height: 100%;
+    background: #1e4a76;
+    width: 0%;
+    animation: timerProgress 10s linear infinite;
+  }
+
+  @keyframes timerProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
   /* Why Us Section */
   .why-us {
     background-color: #eef2f6;
@@ -1012,6 +1455,87 @@ const homeStyles = `
     .seo-intro {
       font-size: 1rem;
       padding: 0.8rem;
+    }
+    
+    /* Mobile-specific testimonial centering */
+    .testimonials-container {
+      gap: 0.3rem;
+      padding: 0 0.2rem;
+    }
+    
+    .testimonial-nav-btn {
+      width: 32px;
+      height: 32px;
+      font-size: 0.9rem;
+      min-width: 32px;
+    }
+    
+    .testimonials-wrapper {
+      min-height: 380px;
+      max-width: calc(100% - 10px);
+    }
+    
+    .testimonial-card {
+      padding: 1.2rem;
+      width: 100%;
+      left: 0;
+      right: 0;
+    }
+    
+    .testimonial-text {
+      font-size: 0.95rem;
+      padding: 0 0.5rem;
+    }
+    
+    .testimonial-rating-container {
+      padding: 0.4rem 0.8rem;
+      gap: 0.5rem;
+    }
+    
+    .star {
+      font-size: 1rem;
+    }
+    
+    .rating-text {
+      font-size: 0.85rem;
+      padding: 0.15rem 0.5rem;
+    }
+    
+    .author-details {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    
+    .timer-indicator {
+      max-width: 90%;
+    }
+    
+    /* Ensure perfect centering */
+    .testimonials-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .testimonial-card.active {
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    .testimonials-wrapper {
+      min-height: 320px;
+      max-width: 500px;
+    }
+    .testimonial-card {
+      padding: 1.5rem;
+    }
+    .author-details {
+      flex-direction: row;
+    }
+    .testimonial-nav-btn {
+      width: 40px;
+      height: 40px;
     }
   }
 
