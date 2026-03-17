@@ -26,7 +26,7 @@ function Home() {
       name: "Surya Teja",
       rating: 5,
       text: "Had a great service with NKR Car Rentals in Tirupati. The cars are well maintained, responses are quick, and the customer service is excellent.",
-      date: "March 2024",
+      date: "March 2025",
       location: "Tirupati"
     },
     {
@@ -34,7 +34,7 @@ function Home() {
       name: "Dr Gautham Vetrivendan",
       rating: 5,
       text: "Good experience with NKR self drive cars. Smooth booking process and well maintained vehicles.",
-      date: "February 2024",
+      date: "February 2025",
       location: "Renigunta"
     },
     {
@@ -42,7 +42,7 @@ function Home() {
       name: "Charan Roy",
       rating: 5,
       text: "Car condition was excellent and the car owner is also pleasant kind person very co operative and ac condition was good overall it was nice ride best choice",
-      date: "January 2024",
+      date: "January 2025",
       location: "Tirupati"
     }
   ];
