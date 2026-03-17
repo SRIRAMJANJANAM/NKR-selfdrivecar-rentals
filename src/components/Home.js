@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react"; // Added useState
+import { useEffect, useRef, useState, useCallback } from "react"; // Added useCallback
 import { Helmet } from "react-helmet";
 import { 
   FaUser, FaGasPump, FaTachometerAlt, FaRupeeSign, FaStar, 
@@ -19,77 +19,14 @@ function Home() {
   const featuresRef = useRef([]);
   const testimonialsRef = useRef([]);
 
-  useEffect(() => {
-    // Add resize listener for device detection
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 768);
-    };
-    
-    window.addEventListener('resize', handleResize);
-
-    // Inject custom styles (including all new animations)
-    const style = document.createElement('style');
-    style.innerHTML = homeStyles;
-    document.head.appendChild(style);
-
-    // Intersection Observer for scroll animations
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-          }
-        });
-      },
-      { threshold: 0.2, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    carsRef.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
-    featuresRef.current.forEach((feature) => {
-      if (feature) observer.observe(feature);
-    });
-    testimonialsRef.current.forEach((testimonial) => {
-      if (testimonial) observer.observe(testimonial);
-    });
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  // Auto-slide testimonials every 10 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 10000); // 10 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Helper function to get icon for feature text
-  const getFeatureIcon = (feature) => {
-    const lower = feature.toLowerCase();
-    if (lower.includes('km') || lower.includes('distance')) return <FaRoad className="feature-icon-small" />;
-    if (lower.includes('extra') || lower.includes('₹')) return <FaMoneyBillWave className="feature-icon-small" />;
-    if (lower.includes('seater')) return <FaUser className="feature-icon-small" />;
-    if (lower.includes('cng') || lower.includes('petrol') || lower.includes('diesel') || lower.includes('fuel')) return <FaGasPump className="feature-icon-small" />;
-    if (lower.includes('sunroof')) return <FaSun className="feature-icon-small" />;
-    if (lower.includes('ac') || lower.includes('air')) return <FaSnowflake className="feature-icon-small" />;
-    if (lower.includes('automatic') || lower.includes('transmission')) return <FaCogs className="feature-icon-small" />;
-    return null;
-  };
-
-  // Testimonials data with ratings (all 5 stars)
+  // Testimonials data (moved outside to avoid dependency issues)
   const testimonials = [
     {
       id: 1,
       name: "Surya Teja",
       rating: 5,
       text: "Had a great service with NKR Car Rentals in Tirupati. The cars are well maintained, responses are quick, and the customer service is excellent.",
-      date: "March 2025",
+      date: "March 2024",
       location: "Tirupati"
     },
     {
@@ -97,7 +34,7 @@ function Home() {
       name: "Dr Gautham Vetrivendan",
       rating: 5,
       text: "Good experience with NKR self drive cars. Smooth booking process and well maintained vehicles.",
-      date: "February 2025",
+      date: "February 2024",
       location: "Renigunta"
     },
     {
@@ -105,12 +42,12 @@ function Home() {
       name: "Charan Roy",
       rating: 5,
       text: "Car condition was excellent and the car owner is also pleasant kind person very co operative and ac condition was good overall it was nice ride best choice",
-      date: "March 2025",
+      date: "January 2024",
       location: "Tirupati"
     }
   ];
 
-  // Car data
+  // Car data (moved outside to avoid dependency issues)
   const cars = [
     {
       id: 1,
@@ -174,16 +111,85 @@ function Home() {
     },
   ];
 
-  const sortedCars = [...cars].sort((a, b) => a.price - b.price);
-
-  // Testimonial navigation functions
-  const nextTestimonial = () => {
+  // Navigation functions (memoized with useCallback)
+  const nextTestimonial = useCallback(() => {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  }, [testimonials.length]);
+
+  const prevTestimonial = useCallback(() => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  }, [testimonials.length]);
+
+  useEffect(() => {
+    // Add resize listener for device detection
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+
+    // Inject custom styles
+    const style = document.createElement('style');
+    style.innerHTML = homeStyles;
+    document.head.appendChild(style);
+
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    // Observe car cards
+    carsRef.current.forEach((card) => {
+      if (card) observer.observe(card);
+    });
+    
+    // Observe feature items
+    featuresRef.current.forEach((feature) => {
+      if (feature) observer.observe(feature);
+    });
+    
+    // Observe testimonial cards
+    testimonialsRef.current.forEach((testimonial) => {
+      if (testimonial) observer.observe(testimonial);
+    });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+      document.head.removeChild(style); // Clean up style
+    };
+  }, []); // Empty dependency array is fine here as we're not using any external values
+
+  // Auto-slide testimonials every 10 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextTestimonial();
+    }, 10000); // 10 seconds
+
+    return () => clearInterval(interval);
+  }, [nextTestimonial]); // Added nextTestimonial as dependency
+
+  // Helper function to get icon for feature text
+  const getFeatureIcon = (feature) => {
+    const lower = feature.toLowerCase();
+    if (lower.includes('km') || lower.includes('distance')) return <FaRoad className="feature-icon-small" />;
+    if (lower.includes('extra') || lower.includes('₹')) return <FaMoneyBillWave className="feature-icon-small" />;
+    if (lower.includes('seater')) return <FaUser className="feature-icon-small" />;
+    if (lower.includes('cng') || lower.includes('petrol') || lower.includes('diesel') || lower.includes('fuel')) return <FaGasPump className="feature-icon-small" />;
+    if (lower.includes('sunroof')) return <FaSun className="feature-icon-small" />;
+    if (lower.includes('ac') || lower.includes('air')) return <FaSnowflake className="feature-icon-small" />;
+    if (lower.includes('automatic') || lower.includes('transmission')) return <FaCogs className="feature-icon-small" />;
+    return null;
   };
 
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  const sortedCars = [...cars].sort((a, b) => a.price - b.price);
 
   // Function to render stars based on rating
   const renderStars = (rating) => {
@@ -370,7 +376,6 @@ function Home() {
           <div className="hero-badge">
             <FaStar className="badge-icon" aria-hidden="true" /> 4.9 (150+ reviews)
           </div>
-          {/* Only this line changed - conditional image source */}
           <img src={isDesktop ? "/images/venkat1.jpg" : "/images/venkat.jpg"} alt="Lord Venkateswara" className="hero-floating-image" loading="lazy" />
         </section>
 
