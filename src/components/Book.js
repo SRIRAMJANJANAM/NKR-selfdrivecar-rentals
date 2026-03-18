@@ -88,6 +88,15 @@ function Booking() {
       price: 2200,
       features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km", "Fuel not included"],
     },
+    {
+      id: 7,
+      name: "Hyundai Xcent Diesel ",
+      image: "/images/hyundai.png",
+      seats: 5,
+      fuel: "Petrol",
+      price: 2000,
+      features: ["5 Seater", "Diesel", "250 km/day", "Extra ₹10/km", "Fuel not included"],
+    },
   ], []);
 
   // Sort cars by price
