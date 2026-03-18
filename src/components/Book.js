@@ -93,7 +93,7 @@ function Booking() {
       name: "Hyundai Xcent Diesel ",
       image: "/images/hyundai.png",
       seats: 5,
-      fuel: "Petrol",
+      fuel: "Diesel",
       price: 2000,
       features: ["5 Seater", "Diesel", "250 km/day", "Extra ₹10/km", "Fuel not included"],
     },
