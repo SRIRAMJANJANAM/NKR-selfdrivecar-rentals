@@ -1,228 +1,217 @@
 import { Helmet } from "react-helmet";
+import { useState, useEffect } from "react";
 import { 
   FaFacebookF, FaInstagram, FaWhatsapp, FaMapMarkerAlt, 
-  FaPhone, FaEnvelope,FaGoogle 
+  FaPhone, FaEnvelope, FaGoogle, FaUser, FaCarSide
 } from "react-icons/fa";
-import { useEffect, useRef } from "react";
 
 function Contact() {
-  // Refs for scroll animations
-  const infoCardsRef = useRef([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    car: ""
+  });
 
-  // Intersection Observer for fade-in effect
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-          }
-        });
-      },
-      { threshold: 0.2, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    infoCardsRef.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Inject global styles
-  useEffect(() => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = contactStyles;
     document.head.appendChild(style);
-    return () => style.remove();
+    return () => document.head.removeChild(style);
   }, []);
 
-  // Social media links (replace with your actual profiles)
   const socialLinks = {
     facebook: "https://www.facebook.com/share/1DcKcWZUBe/",
-    instagram: "https://www.instagram.com/neelendar_reddy_nkr_?utm_source=qr&igsh=MWJ6YTN3OTN5bzRqYQ==",
+    instagram: "https://www.instagram.com/neelendar_reddy_nkr_",
     whatsapp: "https://wa.me/918660014029",
     location: "https://maps.app.goo.gl/J5n6MZKT6stpCAXV7",
-    googleReview: "https://search.google.com/local/writereview?placeid=ChIJjWpGth5LTToRdi7sp5r-mNw" // Replace with your actual Google Place ID
+    googleReview: "https://search.google.com/local/writereview?placeid=ChIJjWpGth5LTToRdi7sp5r-mNw"
   };
 
-  // Business contact details
   const contactDetails = {
-    phone: "+91 8660014029",
+    phone: "+91 86600 14029",
     phoneLink: "tel:+918660014029",
-    whatsapp: "+91 8660014029",
+    whatsapp: "+91 86600 14029",
     whatsappLink: "https://wa.me/918660014029",
     email: "neelandarnkr@gmail.com",
     emailLink: "mailto:neelandarnkr@gmail.com",
     address: "Tirupati, Andhra Pradesh - 517501",
-    hours: "Open 24/7 - Available anytime"
   };
 
-  // Embed map URL
   const mapSrc = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d969.301942456951!2d79.51246371571425!3d13.645121782594446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4d4b1eb6466a8d%3A0xdc98fe9aa7ec2e76!2sNKR%20self%20Drive%20Car%20Rentals%20Tirupati!5e0!3m2!1sen!2sin!4v1771779235130!5m2!1sen!2sin";
 
-  // Function to handle location card click
-  const handleLocationClick = () => {
-    window.open(socialLinks.location, '_blank', 'noopener,noreferrer');
+  const cars = [
+    "Maruti Suzuki Ertiga",
+    "Kia Carens",
+    "Tata Nexon",
+    "Tata Tiago",
+    "Swift Diesel",
+    "Swift Dzire",
+    "Tata Aries AMT",
+    "Hyduai VENUE IMT",
+    "Toyota Innova Crysta",
+    "Maruti Suzuki Baleno",
+    "Other / Not sure"
+  ];
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.phone || !formData.car) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    const message = `Hi NKR Car Rentals,\n\nMy Name: ${formData.name}\nPhone Number: ${formData.phone}\nCar Interested: ${formData.car}\n\nPlease share the availability and price.`;
+    window.open(`https://wa.me/918660014029?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   return (
     <>
       <Helmet>
-        {/* ========== SEO ENHANCED META TAGS (ADDED - REST UNCHANGED) ========== */}
-        
-        {/* Primary Title with Location Keywords */}
-        <title>Contact NKR Self Drive - Best Car Rental in Tirupati & Renigunta | 24/7 Support</title>
-        
-        {/* Enhanced Meta Description with Keywords */}
-        <meta name="description" content="Contact NKR Self Drive for best self drive car rentals in Tirupati and Renigunta. Call +91 8660014029, WhatsApp, or email neelandarnkr@gmail.com. Free pickup & drop. 24/7 customer support. Instant booking confirmation." />
-        
-        {/* Comprehensive Meta Keywords */}
-        <meta name="keywords" content="contact NKR Self Drive, car rental Tirupati phone number, self drive cars Tirupati contact, Tirupati car rental WhatsApp, Renigunta car rental address, book self drive car Tirupati, car rental customer service, 24/7 car rental Tirupati, NKR Self Drive contact details" />
-        
-        {/* Geo Tags for Local SEO */}
+        <title>Contact NKR Self Drive - Best Car Rental in Tirupati & Renigunta | 24/7</title>
+        <meta name="description" content="Contact NKR Self Drive for best self drive car rentals in Tirupati and Renigunta. Call +91 8660014029, WhatsApp, or email neelandarnkr@gmail.com. pickup & drop." />
         <meta name="geo.region" content="IN-AP" />
         <meta name="geo.placename" content="Tirupati, Renigunta, Andhra Pradesh" />
-        <meta name="geo.position" content="13.6288;79.4192" />
-        <meta name="ICBM" content="13.6288, 79.4192" />
-        
-        {/* Robots */}
         <meta name="robots" content="index, follow" />
-        
-        {/* Author */}
-        <meta name="author" content="NKR Self Drive" />
-        
-        {/* Canonical URL */}
         <link rel="canonical" href="https://nkrselfdrivecarrentals.in/contact" />
-        
-        {/* Alternate for Mobile */}
-        <link rel="alternate" media="only screen and (max-width: 640px)" href="https://nkrselfdrivecarrentals.in/contact" />
-        
-        {/* Open Graph / Facebook / WhatsApp */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nkrselfdrivecarrentals.in/contact" />
-        <meta property="og:title" content="Contact NKR Self Drive - Best Car Rental in Tirupati & Renigunta" />
-        <meta property="og:description" content="Get in touch with NKR Self Drive for self-drive car bookings in Tirupati and Renigunta. Call, WhatsApp, or email us for instant support. Free pickup & drop." />
-        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-contact.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content="NKR Self Drive" />
-        <meta property="og:locale" content="en_IN" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@nkrselfdrive" />
-        <meta name="twitter:creator" content="@nkrselfdrive" />
-        <meta name="twitter:title" content="Contact NKR Self Drive - Tirupati Car Rental" />
-        <meta name="twitter:description" content="Contact us for self-drive car rentals in Tirupati & Renigunta. 24/7 support. Free pickup & drop." />
-        <meta name="twitter:image" content="https://nkrselfdrivecarrentals.in/og-contact.jpg" />
-        
-        {/* Additional SEO Meta Tags */}
-        <meta name="language" content="English" />
-        <meta name="revisit-after" content="7 days" />
-        <meta name="distribution" content="global" />
-        <meta name="rating" content="general" />
-        <meta name="target" content="all" />
-        
-        {/* Phone number meta for click-to-call on mobile */}
-        <meta name="format-detection" content="telephone=yes" />
-        
-        {/* ========== END OF ADDED SEO META TAGS ========== */}
+        <link rel="icon" href="/favicon.ico" />
       </Helmet>
 
       <main className="contact-page">
-        {/* Hero Section */}
+        {/* ================= HERO ================= */}
         <section className="contact-hero">
-          <div className="hero-overlay"></div>
+          <div className="hero-ornament" aria-hidden="true" />
           <div className="hero-content">
-            <h1 className="hero-title">Get in Touch with NKR Self Drive</h1>
+            <p className="hero-eyebrow">
+              <span className="gold-diamond">◆</span> Get in Touch <span className="gold-diamond">◆</span>
+            </p>
+            <h1 className="hero-title">
+              Contact <span className="hero-gold">NKR Self Drive</span>
+            </h1>
             <p className="hero-subtitle">
               We're here 24/7 to help you with your self-drive car needs in <strong>Tirupati and Renigunta</strong>.
-              Call, WhatsApp, or visit us – we respond instantly. Free pickup & drop anywhere in the city.
+              Call, WhatsApp, or fill the form below to book instantly.
             </p>
+          </div>
+          <div className="hero-divider" aria-hidden="true">
+            <span className="divider-line" />
+            <span className="divider-diamond">◆</span>
+            <span className="divider-line" />
           </div>
         </section>
 
-        {/* Contact Info Cards */}
+        {/* ================= CONTACT CARDS ================= */}
         <section className="contact-info-section">
           <div className="container">
-            <h2 className="section-title">Connect With Us in Tirupati & Renigunta</h2>
+            <div className="choose-head">
+              <h2 className="choose-title">Connect With <span className="gold">Us</span></h2>
+              <p className="choose-sub">Reach out anytime for bookings and support.</p>
+            </div>
+
             <div className="info-cards">
               {/* Phone Card */}
-              <div 
-                className="info-card"
-                ref={(el) => (infoCardsRef.current[0] = el)}
-              >
-                <div className="card-icon phone-icon">
-                  <FaPhone />
-                </div>
+              <div className="info-card">
+                <div className="card-icon phone-icon"><FaPhone /></div>
                 <h3>Call Us</h3>
-                <a href={contactDetails.phoneLink} className="contact-link">
-                  {contactDetails.phone}
-                </a>
+                <a href={contactDetails.phoneLink} className="contact-link">{contactDetails.phone}</a>
                 <p className="card-note">Available 24/7 for bookings in Tirupati & Renigunta</p>
               </div>
 
               {/* WhatsApp Card */}
-              <div 
-                className="info-card"
-                ref={(el) => (infoCardsRef.current[1] = el)}
-              >
-                <div className="card-icon whatsapp-icon">
-                  <FaWhatsapp />
-                </div>
+              <div className="info-card">
+                <div className="card-icon whatsapp-icon"><FaWhatsapp /></div>
                 <h3>WhatsApp</h3>
-                <a href={contactDetails.whatsappLink} className="contact-link" target="_blank" rel="noopener noreferrer">
-                  {contactDetails.whatsapp}
-                </a>
+                <a href={contactDetails.whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-link">{contactDetails.whatsapp}</a>
                 <p className="card-note">Instant replies on WhatsApp for car bookings</p>
               </div>
 
               {/* Email Card */}
-              <div 
-                className="info-card"
-                ref={(el) => (infoCardsRef.current[2] = el)}
-              >
-                <div className="card-icon email-icon">
-                  <FaEnvelope />
-                </div>
+              <div className="info-card">
+                <div className="card-icon email-icon"><FaEnvelope /></div>
                 <h3>Email</h3>
-                <a href={contactDetails.emailLink} className="contact-link">
-                  {contactDetails.email}
-                </a>
+                <a href={contactDetails.emailLink} className="contact-link">{contactDetails.email}</a>
                 <p className="card-note">We'll get back within 1 hour for your queries</p>
               </div>
 
-              {/* Location Card - Now clickable to open Google Maps */}
-              <div 
-                className="info-card clickable-card"
-                ref={(el) => (infoCardsRef.current[3] = el)}
-                onClick={handleLocationClick}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    handleLocationClick();
-                  }
-                }}
-              >
-                <div className="card-icon location-icon">
-                  <FaMapMarkerAlt />
-                </div>
+              {/* Location Card */}
+              <div className="info-card" onClick={() => window.open(socialLinks.location, "_blank")} style={{ cursor: "pointer" }}>
+                <div className="card-icon location-icon"><FaMapMarkerAlt /></div>
                 <h3>Visit Us</h3>
                 <p className="address">{contactDetails.address}</p>
-                <span className="map-link">
-                  Click to open in Google Maps → (Serving Tirupati & Renigunta)
-                </span>
+                <p className="card-note">Click to open in Google Maps →</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Map Section */}
+        {/* ================= BOOKING FORM SECTION ================= */}
+        <section className="booking-form-section">
+          <div className="container">
+            <div className="form-wrapper">
+              <div className="choose-head">
+                <h2 className="choose-title">Book <span className="gold">Instantly</span></h2>
+                <p className="choose-sub">Fill this quick form and we'll confirm your booking on WhatsApp.</p>
+              </div>
+
+              <form className="quick-book-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="name"><FaUser className="input-icon" /> Your Name</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Enter your full name" 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                    required 
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="phone"><FaPhone className="input-icon" /> Phone Number</label>
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    placeholder="10-digit mobile number" 
+                    value={formData.phone} 
+                    onChange={handleChange} 
+                    required 
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="car"><FaCarSide className="input-icon" /> Select Car</label>
+                  <select 
+                    id="car" 
+                    name="car" 
+                    value={formData.car} 
+                    onChange={handleChange} 
+                    required
+                  >
+                    <option value="" disabled>-- Choose a car --</option>
+                    {cars.map((car, i) => (
+                      <option key={i} value={car}>{car}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <button type="submit" className="submit-btn">
+                  <FaWhatsapp className="btn-icon" /> Book via WhatsApp
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= MAP ================= */}
         <section className="map-section">
           <div className="container">
-            <h2 className="section-title">Find Our Location in Tirupati</h2>
+            <div className="choose-head">
+              <h2 className="choose-title">Find Our <span className="gold">Location</span></h2>
+            </div>
             <div className="map-container">
               <iframe
                 src={mapSrc}
@@ -236,42 +225,33 @@ function Contact() {
               ></iframe>
             </div>
             <p className="map-note">
-              <FaMapMarkerAlt /> We operate across <strong>Tirupati & Renigunta</strong> – free pickup and drop anywhere in the city. 
-              Serving all areas including Railway Station, Bus Stand, Airport, and Renigunta Junction.
+              <FaMapMarkerAlt className="pin-icon" /> We operate across <strong>Tirupati &amp; Renigunta</strong> – pickup and drop anywhere in the city.
             </p>
           </div>
         </section>
 
-        {/* Social Links Bar with Google Review */}
+        {/* ================= SOCIAL BAR ================= */}
         <div className="social-bar">
           <div className="container">
             <span className="follow-text">Follow NKR Self Drive:</span>
             <div className="social-icons">
-              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook - NKR Self Drive">
-                <FaFacebookF />
-              </a>
-              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram - NKR Self Drive">
-                <FaInstagram />
-              </a>
-              <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp - NKR Self Drive Car Rentals">
-                <FaWhatsapp />
-              </a>
-              <a href={socialLinks.googleReview} target="_blank" rel="noopener noreferrer" aria-label="Review us on Google - NKR Self Drive" className="google-review-link">
-                <FaGoogle />
-              </a>
-              <a href={socialLinks.location} target="_blank" rel="noopener noreferrer" aria-label="Location - NKR Self Drive Tirupati">
-                <FaMapMarkerAlt />
-              </a>
+              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF /></a>
+              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
+              <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><FaWhatsapp /></a>
+              <a href={socialLinks.googleReview} target="_blank" rel="noopener noreferrer" aria-label="Google Review" className="google-review-link"><FaGoogle /></a>
+              <a href={socialLinks.location} target="_blank" rel="noopener noreferrer" aria-label="Location"><FaMapMarkerAlt /></a>
             </div>
           </div>
         </div>
 
-        {/* Enhanced responsive review banner */}
+        {/* ================= REVIEW BANNER ================= */}
         <div className="review-banner">
           <div className="container">
             <div className="review-content">
               <div className="review-left">
-                <FaGoogle className="review-icon" />
+                <div className="review-icon-wrap">
+                  <FaGoogle className="review-icon" />
+                </div>
                 <div className="review-text">
                   <h3>Love our self-drive car service in Tirupati?</h3>
                   <p>Your feedback helps us serve you better. Review us on Google!</p>
@@ -288,576 +268,362 @@ function Contact() {
   );
 }
 
-// Enhanced responsive styles with wider container for desktop
+/* =========================================================
+   STYLES
+   ========================================================= */
 const contactStyles = `
+  :root {
+    --gold: #e6b23a;
+    --gold-2: #f5d76e;
+    --gold-deep: #b8860b;
+    --line: rgba(230,178,58,0.35);
+    --whatsapp: #25d366;
+    --whatsapp-dark: #128c7e;
+  }
+
+  /* Page background is white */
   .contact-page {
-    font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-    background-color: #f4f7fb;
-    color: #1e293b;
-    min-height: 100vh;
+    font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+    background: #fff;
+    color: #1a1a1a;
     overflow-x: hidden;
   }
 
-  /* Hero Section */
+  /* ---------- HERO (Dark Background only here) ---------- */
   .contact-hero {
-    background: linear-gradient(135deg, #d7ebff, #ffffff, #f0f9ff);
-    background-size: 300% 300%;
-    animation: gradientShift 12s ease infinite;
-    padding: clamp(2rem, 8vw, 4rem) 1rem;
+    position: relative;
+    isolation: isolate;
+    padding: clamp(4rem, 10vw, 7rem) 24px clamp(3rem, 8vw, 5rem);
     text-align: center;
-    position: relative;
-    border-bottom: 3px solid #2563eb20;
-    min-height: 30vh;
+    color: #fff;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(230,178,58,0.18), transparent 55%),
+      radial-gradient(ellipse at 70% 70%, rgba(230,178,58,0.1), transparent 55%),
+      linear-gradient(135deg, #0a0a0a 0%, #161616 100%);
+    overflow: hidden;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    min-height: 45vh;
   }
 
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  .contact-hero::before {
+    content: "";
+    position: absolute; inset: -20%;
+    background: linear-gradient(110deg, transparent 40%, rgba(230,178,58,.12) 48%, transparent 56%);
+    transform: translateX(-80%) skewX(-12deg);
+    animation: heroSweep 9s ease-in-out infinite;
+    pointer-events: none; z-index: 0;
   }
 
-  .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(37,99,235,0.1) 0%, transparent 50%);
-    pointer-events: none;
+  @keyframes heroSweep {
+    0%, 15% { transform: translateX(-80%) skewX(-12deg); opacity: 0; }
+    40% { opacity: 1; }
+    70%, 100% { transform: translateX(80%) skewX(-12deg); opacity: 0; }
   }
 
-  .hero-content {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    position: relative;
-    z-index: 1;
+  .hero-ornament {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(230,178,58,0.1), transparent 55%);
+    animation: ornamentPulse 8s ease-in-out infinite;
+    pointer-events: none; z-index: 0;
   }
+
+  @keyframes ornamentPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--gold); font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 22px;
+  }
+
+  .gold-diamond { color: var(--gold); font-size: 0.8rem; }
 
   .hero-title {
-    font-size: clamp(2rem, 6vw, 3.2rem);
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: #0f2a40;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    animation: slideUp 0.6s ease-out;
-    line-height: 1.2;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.2rem, 5.8vw, 4.5rem);
+    line-height: 1.05; font-weight: 700; margin: 0 0 22px; color: #fff;
+    text-shadow: 0 8px 40px rgba(0,0,0,.6);
+    animation: titleReveal 1s cubic-bezier(.2,.75,.25,1) both;
+  }
+
+  @keyframes titleReveal {
+    from { opacity: 0; transform: translateY(24px); filter: blur(7px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  .hero-gold {
+    display: inline-block;
+    background: linear-gradient(135deg, #f8e6a8 0%, #e6b23a 45%, #c9962a 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    filter: drop-shadow(0 4px 18px rgba(230,178,58,.35));
+    animation: goldShimmer 4s ease-in-out infinite;
+  }
+
+  @keyframes goldShimmer {
+    0%, 100% { filter: drop-shadow(0 4px 18px rgba(230,178,58,.35)) brightness(1); }
+    50% { filter: drop-shadow(0 6px 28px rgba(245,215,110,.6)) brightness(1.12); }
   }
 
   .hero-subtitle {
-    font-size: clamp(1rem, 2.5vw, 1.25rem);
-    margin-bottom: 1rem;
-    color: #334155;
-    animation: slideUp 0.7s ease-out;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.5;
+    color: #d6d6d6; font-size: clamp(1rem, 1.8vw, 1.18rem);
+    line-height: 1.7; max-width: 720px; margin: 0 auto 20px;
+    animation: titleReveal 1s .15s cubic-bezier(.2,.75,.25,1) both;
+  }
+  .hero-subtitle strong { color: var(--gold); }
+
+  .hero-divider {
+    position: relative; z-index: 2; display: flex; align-items: center;
+    justify-content: center; gap: 14px; margin-top: 40px; width: 100%;
+  }
+  .divider-line {
+    flex: 1; max-width: 380px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.7;
+  }
+  .divider-diamond {
+    color: var(--gold); font-size: 0.7rem;
+    animation: diamondSpin 6s linear infinite;
   }
 
-  /* Section Title */
-  .section-title {
-    font-size: clamp(1.6rem, 5vw, 2.2rem);
-    text-align: center;
-    margin: 2rem 1rem 1.5rem;
-    color: #0f2a40;
-    position: relative;
-    display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
-    width: fit-content;
-    padding: 0 1rem;
+  @keyframes diamondSpin {
+    from { transform: rotate(0); }
+    to { transform: rotate(360deg); }
   }
 
-  .section-title::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background-color: #1e4a76;
-    margin: 0.5rem auto;
-    transition: width 0.3s ease;
+  /* ---------- SHARED HEADS ---------- */
+  .container { max-width: 1300px; margin: 0 auto; padding: 0 24px; }
+  .choose-head { text-align: center; margin-bottom: 40px; }
+  .choose-title {
+    font-family: Georgia, serif; font-size: clamp(1.9rem, 4vw, 2.9rem);
+    font-weight: 700; color: #111; margin: 0 0 12px; letter-spacing: -0.01em;
   }
+  .choose-title .gold { color: var(--gold-deep); position: relative; }
+  .choose-title .gold::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -8px;
+    height: 3px; border-radius: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: underlinePulse 3s ease-in-out infinite;
+  }
+  @keyframes underlinePulse {
+    0%, 100% { transform: scaleX(0.7); opacity: 0.75; }
+    50% { transform: scaleX(1.15); opacity: 1; }
+  }
+  .choose-sub { color: #6b6b6b; font-size: 1.02rem; margin: 18px 0 0; }
 
-  .section-title:hover::after {
-    width: 100px;
-    background-color: #2563eb;
-  }
-
-  /* ===== CONTAINER – WIDER ON DESKTOP ===== */
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  /* Contact Info Cards */
-  .contact-info-section {
-    padding: 2rem 0;
-  }
-
-  .info-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
+  /* ---------- CONTACT CARDS ---------- */
+  .contact-info-section { padding: 70px 0; }
+  .info-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 
   .info-card {
-    background: white;
-    border-radius: 24px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
-    opacity: 0;
-    transform: translateY(30px);
-    border: 2px solid transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: #fff; border-radius: 20px; padding: 34px 24px;
+    text-align: center; border: 1px solid rgba(0,0,0,0.07);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
   }
-
-  .info-card.in-view {
-    animation: fadeInUp 0.5s forwards;
-  }
-
   .info-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 25px 35px rgba(0, 0, 0, 0.1);
-    border-color: #1e4a7620;
-  }
-
-  /* Clickable card styles */
-  .clickable-card {
-    cursor: pointer;
-    position: relative;
-  }
-
-  .clickable-card:active {
-    transform: scale(0.98);
-  }
-
-  .clickable-card:focus-visible {
-    outline: 3px solid #2563eb;
-    outline-offset: 2px;
+    transform: translateY(-8px); border-color: rgba(230,178,58,.55);
+    box-shadow: 0 22px 50px rgba(0,0,0,.12);
   }
 
   .card-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    font-size: 2rem;
-    color: white;
-    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 70px; height: 70px; border-radius: 50%;
+    font-size: 1.8rem; color: #fff; margin-bottom: 20px;
+    transition: transform .35s ease;
+  }
+  .info-card:hover .card-icon { transform: scale(1.1) rotate(-6deg); }
+
+  .phone-icon { background: linear-gradient(135deg, #1e4a76, #2563eb); }
+  .whatsapp-icon { background: linear-gradient(135deg, #25d366, #128c7e); }
+  .email-icon { background: linear-gradient(135deg, #ea4335, #c5221f); }
+  .location-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+  .info-card h3 { font-size: 1.25rem; font-weight: 800; color: #111; margin: 0 0 12px; }
+  .contact-link { display: inline-block; color: #b8860b; text-decoration: none; font-weight: 700; font-size: 1.05rem; transition: color .2s; }
+  .contact-link:hover { color: var(--gold); text-decoration: underline; }
+  .address { font-weight: 700; color: #111; font-size: 1.05rem; margin: 0 0 8px; }
+  .card-note { color: #666; font-size: 0.88rem; line-height: 1.6; margin: 0; }
+
+  /* ---------- BOOKING FORM SECTION ---------- */
+  .booking-form-section {
+    background: linear-gradient(180deg, #fdf9ee 0%, #ffffff 100%);
+    padding: 70px 0;
+    border-top: 1px solid rgba(230,178,58,0.2);
+    border-bottom: 1px solid rgba(230,178,58,0.2);
   }
 
-  .phone-icon { background-color: #1e4a76; }
-  .whatsapp-icon { background-color: #25D366; }
-  .email-icon { background-color: #ea4335; }
-  .location-icon { background-color: #f59e0b; }
-
-  .info-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.75rem;
-    color: #0f2a40;
-    font-weight: 600;
+  .form-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    border: 1px solid rgba(230,178,58,0.3);
   }
 
-  .contact-link {
-    display: inline-block;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #1e4a76;
-    text-decoration: none;
-    margin-bottom: 0.5rem;
-    transition: color 0.2s;
-    padding: 0.25rem 0;
-    word-break: break-word;
+  .quick-book-form { display: grid; gap: 20px; }
+  .form-group { display: flex; flex-direction: column; }
+
+  .form-group label {
+    font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; color: #111;
+    display: flex; align-items: center; gap: 8px;
   }
 
-  .contact-link:hover {
-    color: #2563eb;
-    text-decoration: underline;
+  .input-icon { color: var(--gold-deep); font-size: 1rem; }
+
+  .form-group input,
+  .form-group select {
+    padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px;
+    font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s;
+    background: #f9fafc; font-family: inherit; width: 100%;
   }
 
-  .card-note {
-    font-size: 0.9rem;
-    color: #64748b;
-    line-height: 1.4;
+  .form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23b8860b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat; background-position: right 16px top 50%;
+    background-size: 12px auto;
   }
 
-  .address {
-    font-size: 1rem;
-    color: #334155;
-    margin-bottom: 1rem;
-    line-height: 1.5;
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none; border-color: var(--gold); background: #fff;
+    box-shadow: 0 0 0 3px rgba(230,178,58,.15);
   }
 
-  .map-link {
-    display: inline-block;
-    color: #1e4a76;
-    font-weight: 600;
-    text-decoration: none;
-    border-bottom: 2px dotted #1e4a76;
-    padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
+  .submit-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
+    color: white; padding: 16px; border-radius: 12px;
+    font-size: 1.1rem; font-weight: 700; border: none; cursor: pointer;
+    margin-top: 10px; box-shadow: 0 8px 20px rgba(37,211,102,0.4);
+    transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
   }
-
-  .clickable-card:hover .map-link {
-    color: #2563eb;
-    border-color: #2563eb;
+  .submit-btn:hover {
+    transform: translateY(-3px); box-shadow: 0 14px 30px rgba(37,211,102,0.6);
+    filter: brightness(1.05);
   }
+  .submit-btn .btn-icon { font-size: 1.3rem; }
 
-  /* Map Section */
-  .map-section {
-    padding: 2rem 0 3rem;
-    background-color: white;
-  }
-
+  /* ---------- MAP ---------- */
+  .map-section { padding: 70px 0; }
   .map-container {
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    margin: 2rem 0 1.5rem;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 14px 40px rgba(0,0,0,.08);
+    border: 1px solid rgba(230,178,58,.3); margin-bottom: 20px;
   }
-
-  .map-container iframe {
-    display: block;
-    height: 450px;
-  }
-
+  .map-container iframe { display: block; filter: grayscale(15%) contrast(1.02); }
   .map-note {
-    text-align: center;
-    color: #334155;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-    flex-wrap: wrap;
+    text-align: center; color: #555; font-size: 0.96rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; flex-wrap: wrap; line-height: 1.6;
+  }
+  .map-note .pin-icon { color: var(--gold-deep); font-size: 1.2rem; animation: iconFloat 3s ease-in-out infinite; }
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-6px) rotate(-4deg); }
   }
 
-  .map-note svg {
-    color: #f59e0b;
-    font-size: 1.2rem;
-  }
-
-  /* Social Bar */
-  .social-bar {
-    background-color: #1e4a76;
-    color: white;
-    padding: 1.5rem 0;
-    margin-top: 2rem;
-  }
-
-  .social-bar .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem 2rem;
-  }
-
-  .follow-text {
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-
-  .social-icons {
-    display: flex;
-    gap: 1.5rem;
-  }
-
+  /* ---------- SOCIAL BAR ---------- */
+  .social-bar { background: #0a0a0a; border-top: 1px solid var(--line); padding: 24px 0; }
+  .social-bar .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .follow-text { color: #fff; font-size: 1.1rem; font-weight: 700; }
+  .social-icons { display: flex; gap: 14px; }
   .social-icons a {
-    color: white;
-    font-size: 2rem;
-    transition: transform 0.3s, color 0.3s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+    color: #fff; font-size: 1.1rem; transition: transform .25s ease, background .25s ease, color .25s ease;
   }
-
   .social-icons a:hover {
-    transform: translateY(-5px);
-    color: #f59e0b;
-    background-color: rgba(255,255,255,0.1);
+    background: var(--gold); color: #000; border-color: var(--gold);
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 8px 20px rgba(230,178,58,.4);
   }
+  .google-review-link:hover { background: #4285F4 !important; border-color: #4285F4 !important; color: #fff !important; }
 
-  .google-review-link:hover {
-    color: #4285F4 !important; /* Google blue color on hover */
-  }
-
-  /* Enhanced Review Banner */
-  .review-banner {
-    background: linear-gradient(135deg, #f8f9fa, #ffffff);
-    padding: 2rem 0;
-    border-top: 1px solid #e2e8f0;
-    border-bottom: 1px solid #e2e8f0;
-  }
-
+  /* ---------- REVIEW BANNER ---------- */
+  .review-banner { background: #fdf9ee; padding: 60px 0; }
   .review-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    background: white;
-    padding: 1.5rem 2rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px; background: #fff;
+    padding: 30px 36px; border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    border: 1px solid rgba(230,178,58,.3);
     border-left: 6px solid #4285F4;
   }
-
-  .review-left {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    flex: 1 1 auto;
-    min-width: 280px;
+  .review-left { display: flex; align-items: center; gap: 20px; flex: 1; min-width: 280px; }
+  .review-icon-wrap {
+    display: flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(66,133,244,.1); flex-shrink: 0;
+    animation: pulse 2.5s infinite;
   }
-
-  .review-icon {
-    font-size: 3rem;
-    color: #4285F4;
-    animation: pulse 2s infinite;
-    flex-shrink: 0;
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(66,133,244,.3); }
+    50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(66,133,244,0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(66,133,244,0); }
   }
+  .review-icon { font-size: 1.8rem; color: #4285F4; }
 
-  .review-text h3 {
-    font-size: clamp(1.1rem, 3vw, 1.3rem);
-    font-weight: 600;
-    color: #0f2a40;
-    margin-bottom: 0.25rem;
-    line-height: 1.3;
-  }
-
-  .review-text p {
-    color: #64748b;
-    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-  }
+  .review-text h3 { font-size: 1.25rem; font-weight: 800; color: #111; margin: 0 0 6px; }
+  .review-text p { color: #666; font-size: 0.95rem; margin: 0; }
 
   .review-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background-color: #4285F4;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
-    min-width: 140px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: linear-gradient(135deg, #4285F4, #3367D6); color: #fff;
+    padding: 14px 26px; border-radius: 12px; font-weight: 700;
+    text-decoration: none; font-size: 1rem; white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(66,133,244,.35);
+    transition: transform .3s ease, box-shadow .3s ease;
   }
-
   .review-button:hover {
-    background-color: #3367D6;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(66, 133, 244, 0.4);
+    transform: translateY(-3px); box-shadow: 0 12px 28px rgba(66,133,244,.5);
   }
+  .review-button span { font-size: 1.2rem; transition: transform .3s ease; }
+  .review-button:hover span { transform: translateX(4px); }
 
-  .review-button span {
-    font-size: 1.2rem;
-    transition: transform 0.3s;
-  }
-
-  .review-button:hover span {
-    transform: translateX(4px);
-  }
-
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-  }
-
-  /* Animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Responsive adjustments */
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 1024px) {
-    .container {
-      padding: 0 1.5rem;
-    }
-    .info-cards {
-      gap: 1.5rem;
-    }
+    .info-cards { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   }
 
   @media (max-width: 768px) {
-    .container {
-      padding: 0 1.25rem;
-    }
-    .info-cards {
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.25rem;
-    }
-    .info-card {
-      padding: 1.75rem 1rem;
-    }
-    .card-icon {
-      width: 60px;
-      height: 60px;
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-    }
-    .info-card h3 {
-      font-size: 1.3rem;
-    }
-    .contact-link {
-      font-size: 1.1rem;
-    }
-    .social-bar .container {
-      flex-direction: column;
-      text-align: center;
-    }
-    .social-icons {
-      gap: 1rem;
-    }
-    .social-icons a {
-      font-size: 1.8rem;
-    }
-    .map-container iframe {
-      height: 350px;
-    }
-    .review-content {
-      flex-direction: column;
-      text-align: center;
-      padding: 1.5rem;
-    }
-    .review-left {
-      flex-direction: column;
-      text-align: center;
-      gap: 1rem;
-      min-width: auto;
-      width: 100%;
-    }
-    .review-button {
-      width: 100%;
-      max-width: 300px;
-      white-space: normal;
-      padding: 0.75rem 1rem;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .info-cards {
-      grid-template-columns: 1fr;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .hero-title {
-      font-size: clamp(1.8rem, 7vw, 2.4rem);
-    }
-    .hero-subtitle {
-      font-size: 1rem;
-    }
-    .review-button {
-      max-width: 100%;
-    }
+    .contact-hero { padding: 70px 18px 50px; min-height: auto; }
+    .hero-title { font-size: clamp(2rem, 8vw, 2.6rem); }
+    .info-cards { grid-template-columns: 1fr; }
+    .info-card { padding: 28px 20px; }
+    .map-container iframe { height: 350px; }
+    .social-bar .container { flex-direction: column; text-align: center; }
+    .review-content { flex-direction: column; text-align: center; padding: 24px; }
+    .review-left { flex-direction: column; text-align: center; }
+    .review-button { width: 100%; max-width: 300px; }
+    .form-wrapper { padding: 24px 20px; }
   }
 
   @media (max-width: 480px) {
-    .container {
-      padding: 0 1rem;
-    }
-    .contact-hero {
-      padding: 2rem 0.5rem;
-    }
-    .section-title {
-      font-size: 1.6rem;
-      margin: 1.5rem 0.5rem 1rem;
-    }
-    .card-icon {
-      width: 55px;
-      height: 55px;
-      font-size: 1.4rem;
-    }
-    .info-card h3 {
-      font-size: 1.2rem;
-    }
-    .contact-link {
-      font-size: 1rem;
-    }
-    .map-container iframe {
-      height: 280px;
-    }
-    .map-note {
-      font-size: 0.9rem;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-    .social-icons a {
-      font-size: 1.6rem;
-      padding: 0.4rem;
-    }
-    .review-text h3 {
-      font-size: 1.1rem;
-    }
-    .review-text p {
-      font-size: 0.85rem;
-    }
-    .review-button {
-      font-size: 0.9rem;
-      padding: 0.7rem 1rem;
-    }
+    .container { padding: 0 16px; }
+    .hero-title { font-size: 1.9rem; }
+    .map-container iframe { height: 280px; }
+    .map-note { font-size: 0.88rem; }
+    .social-icons { gap: 10px; }
+    .social-icons a { width: 38px; height: 38px; font-size: 1rem; }
+    .review-text h3 { font-size: 1.1rem; }
   }
 
-  @media (max-width: 360px) {
-    .container {
-      padding: 0 0.75rem;
-    }
-    .info-card {
-      padding: 1.25rem 0.75rem;
-    }
-    .contact-link {
-      font-size: 0.95rem;
-      word-break: break-all;
-    }
-    .social-icons {
-      gap: 0.5rem;
-    }
-    .social-icons a {
-      font-size: 1.4rem;
-    }
-    .review-button {
-      font-size: 0.85rem;
-      padding: 0.6rem 0.8rem;
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
     }
   }
 `;

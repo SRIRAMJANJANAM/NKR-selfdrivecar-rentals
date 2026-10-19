@@ -13,7 +13,7 @@ function Preloader() {
             left: 0;
             width: 100%;
             height: 100vh;
-            background: linear-gradient(135deg, #0a1928 0%, #0f1f2f 50%, #1a2a3a 100%);
+            background: linear-gradient(135deg, #050505 0%, #0a0a0a 50%, #111111 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -25,13 +25,14 @@ function Preloader() {
             overflow: hidden;
           }
 
+          /* Background Ornament */
           .preloader::before {
             content: '';
             position: absolute;
             width: 150%;
             height: 150%;
-            background: radial-gradient(circle at 30% 50%, rgba(200, 170, 110, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(180, 150, 100, 0.08) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 50%, rgba(230, 178, 58, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(230, 178, 58, 0.08) 0%, transparent 50%);
             animation: slowRotate 40s linear infinite;
           }
 
@@ -62,7 +63,7 @@ function Preloader() {
             position: relative;
             width: 380px;
             height: 200px;
-            margin: 0 auto 2.5rem;
+            margin: 0 auto 1rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -78,7 +79,7 @@ function Preloader() {
 
           .geo-shape {
             position: absolute;
-            background: linear-gradient(135deg, #c8aa6e, #e5d1a3);
+            background: linear-gradient(135deg, #e6b23a, #f5d76e);
             clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
           }
 
@@ -124,13 +125,13 @@ function Preloader() {
           }
 
           .ring-1 {
-            border-top-color: #c8aa6e;
-            border-right-color: #e5d1a3;
+            border-top-color: #e6b23a;
+            border-right-color: #f5d76e;
             animation-duration: 3s;
           }
 
           .ring-2 {
-            border-bottom-color: #b89a66;
+            border-bottom-color: #b8860b;
             border-left-color: #d4bc8c;
             width: 130px;
             height: 130px;
@@ -141,7 +142,7 @@ function Preloader() {
           }
 
           .ring-3 {
-            border: 1px solid rgba(200, 170, 110, 0.3);
+            border: 1px solid rgba(230, 178, 58, 0.3);
             width: 100px;
             height: 100px;
             top: 30px;
@@ -156,14 +157,8 @@ function Preloader() {
           }
 
           @keyframes pulseRing {
-            0%, 100% { 
-              transform: scale(1);
-              border-color: rgba(200, 170, 110, 0.3);
-            }
-            50% { 
-              transform: scale(1.1);
-              border-color: rgba(200, 170, 110, 0.6);
-            }
+            0%, 100% { transform: scale(1); border-color: rgba(230, 178, 58, 0.3); }
+            50% { transform: scale(1.1); border-color: rgba(230, 178, 58, 0.6); }
           }
 
           /* Luxurious Core */
@@ -171,19 +166,19 @@ function Preloader() {
             position: absolute;
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #c8aa6e, #e5d1a3);
+            background: linear-gradient(135deg, #e6b23a, #f5d76e);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 40px rgba(200, 170, 110, 0.4);
+            box-shadow: 0 0 40px rgba(230, 178, 58, 0.4);
             animation: elegantPulse 3s ease-in-out infinite;
           }
 
           .core-inner {
             width: 35px;
             height: 35px;
-            background: #0a1928;
+            background: #0a0a0a;
             border-radius: 50%;
             position: relative;
           }
@@ -196,19 +191,13 @@ function Preloader() {
             transform: translate(-50%, -50%);
             width: 15px;
             height: 15px;
-            background: linear-gradient(135deg, #c8aa6e, #e5d1a3);
+            background: linear-gradient(135deg, #e6b23a, #f5d76e);
             border-radius: 50%;
           }
 
           @keyframes elegantPulse {
-            0%, 100% { 
-              transform: scale(1);
-              box-shadow: 0 0 40px rgba(200, 170, 110, 0.3);
-            }
-            50% { 
-              transform: scale(1.08);
-              box-shadow: 0 0 60px rgba(200, 170, 110, 0.6);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(230, 178, 58, 0.3); }
+            50% { transform: scale(1.08); box-shadow: 0 0 60px rgba(230, 178, 58, 0.6); }
           }
 
           /* Floating Gold Dust */
@@ -222,7 +211,7 @@ function Preloader() {
             position: absolute;
             width: 3px;
             height: 3px;
-            background: #c8aa6e;
+            background: #e6b23a;
             border-radius: 50%;
             opacity: 0.3;
             filter: blur(1px);
@@ -237,21 +226,14 @@ function Preloader() {
           .dust-6 { top: 85%; right: 35%; animation-delay: 3.6s; }
 
           @keyframes floatDust {
-            0%, 100% { 
-              transform: translateY(0) scale(1);
-              opacity: 0.2;
-            }
-            50% { 
-              transform: translateY(-30px) scale(1.8);
-              opacity: 0.6;
-              background: #e5d1a3;
-            }
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.2; }
+            50% { transform: translateY(-30px) scale(1.8); opacity: 0.6; background: #f5d76e; }
           }
 
           /* Sophisticated Progress Bar */
           .loading-bar-container {
             width: 380px;
-            margin: 2.5rem auto 1.5rem;
+            margin: 2rem auto 1.5rem;
             position: relative;
           }
 
@@ -266,13 +248,7 @@ function Preloader() {
           .loading-progress {
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, 
-              transparent 0%, 
-              #c8aa6e 30%,
-              #e5d1a3 50%,
-              #c8aa6e 70%,
-              transparent 100%
-            );
+            background: linear-gradient(90deg, transparent 0%, #e6b23a 30%, #f5d76e 50%, #e6b23a 70%, transparent 100%);
             animation: premiumLoading 2s ease-in-out infinite;
           }
 
@@ -282,7 +258,7 @@ function Preloader() {
             left: 0;
             width: 100%;
             height: 9px;
-            background: radial-gradient(circle at center, rgba(200, 170, 110, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(230, 178, 58, 0.3) 0%, transparent 70%);
             filter: blur(4px);
             animation: glowMove 2s ease-in-out infinite;
           }
@@ -299,6 +275,22 @@ function Preloader() {
           }
 
           /* Premium Typography */
+          .welcome-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 500;
+            color: #ffffff;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: welcomeGlow 3s ease-in-out infinite;
+          }
+
+          @keyframes welcomeGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+            50% { text-shadow: 0 0 20px rgba(230, 178, 58, 0.5); color: #f5d76e; }
+          }
+
           .brand-name {
             font-family: 'Playfair Display', serif;
             font-size: clamp(3.5rem, 10vw, 6rem);
@@ -306,16 +298,23 @@ function Preloader() {
             letter-spacing: 8px;
             margin-bottom: 0.5rem;
             color: #ffffff;
-            text-shadow: 0 0 20px rgba(200, 170, 110, 0.3);
+            text-shadow: 0 0 20px rgba(230, 178, 58, 0.3);
             position: relative;
+            line-height: 1;
           }
 
           .brand-name span {
-            background: linear-gradient(135deg, #c8aa6e, #e5d1a3);
+            background: linear-gradient(135deg, #f8e6a8 0%, #e6b23a 45%, #c9962a 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             position: relative;
+            animation: goldShimmer 4s ease-in-out infinite;
+          }
+
+          @keyframes goldShimmer {
+            0%, 100% { filter: drop-shadow(0 4px 18px rgba(230,178,58,.35)) brightness(1); }
+            50% { filter: drop-shadow(0 6px 28px rgba(245,215,110,.6)) brightness(1.12); }
           }
 
           .brand-name::before {
@@ -323,7 +322,7 @@ function Preloader() {
             position: absolute;
             width: 60px;
             height: 2px;
-            background: linear-gradient(90deg, #c8aa6e, transparent);
+            background: linear-gradient(90deg, #e6b23a, transparent);
             top: 50%;
             left: -40px;
             transform: translateY(-50%);
@@ -334,7 +333,7 @@ function Preloader() {
             position: absolute;
             width: 60px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #c8aa6e);
+            background: linear-gradient(90deg, transparent, #e6b23a);
             top: 50%;
             right: -40px;
             transform: translateY(-50%);
@@ -353,8 +352,8 @@ function Preloader() {
           .location {
             font-size: clamp(1.3rem, 5vw, 2rem);
             font-weight: 300;
-            color: #c8aa6e;
-            margin-bottom: 2.5rem;
+            color: #e6b23a;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -371,7 +370,7 @@ function Preloader() {
           .location-icon::after {
             content: '';
             position: absolute;
-            background: #c8aa6e;
+            background: #e6b23a;
           }
 
           .location-icon::before {
@@ -391,9 +390,9 @@ function Preloader() {
           /* Elegant Features */
           .features {
             display: flex;
-            gap: 3rem;
+            gap: 2.5rem;
             justify-content: center;
-            margin: 2.5rem 0;
+            margin: 1.5rem 0;
             flex-wrap: wrap;
           }
 
@@ -401,7 +400,7 @@ function Preloader() {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.8);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -411,9 +410,9 @@ function Preloader() {
           .feature-dot {
             width: 6px;
             height: 6px;
-            background: #c8aa6e;
+            background: #e6b23a;
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(200, 170, 110, 0.5);
+            box-shadow: 0 0 15px rgba(230, 178, 58, 0.5);
           }
 
           .feature-item::after {
@@ -423,7 +422,7 @@ function Preloader() {
             left: 0;
             width: 0;
             height: 1px;
-            background: linear-gradient(90deg, #c8aa6e, transparent);
+            background: linear-gradient(90deg, #e6b23a, transparent);
             transition: width 0.3s ease;
           }
 
@@ -433,16 +432,16 @@ function Preloader() {
 
           /* Loading Text */
           .loading-text {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.6);
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             font-weight: 300;
           }
 
           .loading-text span {
-            color: #c8aa6e;
+            color: #e6b23a;
             font-weight: 400;
             position: relative;
           }
@@ -476,6 +475,11 @@ function Preloader() {
             .brand-name::before,
             .brand-name::after {
               width: 30px;
+              left: -20px;
+            }
+            .brand-name::after {
+              right: -20px;
+              left: auto;
             }
           }
 
@@ -484,7 +488,7 @@ function Preloader() {
             position: absolute;
             width: 1px;
             height: 100px;
-            background: linear-gradient(to bottom, transparent, #c8aa6e, transparent);
+            background: linear-gradient(to bottom, transparent, #e6b23a, transparent);
             left: 20%;
             top: 20%;
             opacity: 0.2;
@@ -535,8 +539,12 @@ function Preloader() {
             </div>
           </div>
 
+          <div className="welcome-text">
+            Welcome to
+          </div>
+          
           <div className="brand-name">
-            <span>NKR</span>
+            <span>NKR GROUPS</span>
           </div>
           
           <div className="tagline">

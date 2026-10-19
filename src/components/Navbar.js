@@ -1,316 +1,492 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { FaHome, FaInfoCircle, FaCalendarCheck, FaEnvelope, FaCar } from "react-icons/fa";
 
-function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import {
+  FaPhoneAlt,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = navbarStyles;
-    document.head.appendChild(style);
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const phone = "+918660014029";
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Book a Car", path: "/book" },
+    { name: "Contact", path: "/contact" },
+  ];
 
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        <Link to="/">
-          <span className="logo-badge">
-            <FaCar className="logo-icon" />
-            <span className="logo-text">NKR self drive cars rentals</span>
-          </span>
-        </Link>
-      </div>
+    <>
+      <style>{`
+        * {
+          box-sizing: border-box;
+        }
 
-      <button
-        className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}
-        onClick={toggleMobileMenu}
-        aria-label="Toggle menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+        html {
+          scroll-padding-top: 110px;
+        }
 
-      <div className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
-        <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
-          <FaHome className="nav-icon" /> Home
-        </Link>
-        <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>
-          <FaInfoCircle className="nav-icon" /> About
+        body {
+          margin: 0;
+        }
+
+        .nkr-navbar {
+          width: 100%;
+          min-height: 105px;
+          padding: 10px clamp(16px, 5vw, 80px);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 25px;
+          background: linear-gradient(
+            110deg,
+            #050505,
+            #171717,
+            #050505
+          );
+          border-bottom: 3px solid #ffc629;
+
+          /* Fixed navbar */
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 9999;
+
+          font-family: Arial, Helvetica, sans-serif;
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+        }
+
+        /* Reserve space for the fixed navbar */
+        .nkr-navbar-spacer {
+          width: 100%;
+          height: 105px;
+          flex-shrink: 0;
+        }
+
+        .nkr-navbar a {
+          text-decoration: none;
+        }
+
+        .nkr-navbar-brand {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          flex-shrink: 0;
+        }
+
+        .nkr-navbar-logo {
+          width: 100px;
+          height: 100px;
+          border: 3px solid #ffc629;
+          border-radius: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-end;
+          padding-bottom: 12px;
+          overflow: hidden;
+          background:
+            linear-gradient(
+              to top,
+              #050505 0%,
+              #050505e8 27%,
+              transparent 70%
+            ),
+            url("/logo.png") center / cover no-repeat,
+            #111;
+          box-shadow: 0 0 12px #ffc62935;
+          color: #ffc629;
+        }
+
+        .nkr-navbar-logo strong {
+          font-size: 25px;
+          line-height: 1;
+          font-weight: 1000;
+          font-style: italic;
+        }
+
+        .nkr-navbar-logo span {
+          font-size: 8px;
+          font-weight: 900;
+          color: #fff;
+          letter-spacing: 1px;
+          margin-top: 3px;
+        }
+
+        .nkr-navbar-wordmark {
+          white-space: nowrap;
+          line-height: 0.95;
+        }
+
+        .nkr-navbar-wordmark strong {
+          display: block;
+          color: #ffc629;
+          font-size: clamp(30px, 3vw, 50px);
+          font-weight: 1000;
+          font-style: italic;
+          letter-spacing: -2px;
+        }
+
+        .nkr-navbar-wordmark span {
+          display: block;
+          margin-top: 6px;
+          color: #fff;
+          font-size: clamp(13px, 1.4vw, 22px);
+          font-weight: 900;
+          letter-spacing: 2px;
+        }
+
+        .nkr-navbar-links {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(22px, 4vw, 65px);
+        }
+
+        .nkr-navbar-links > a {
+          position: relative;
+          padding: 15px 0;
+          color: #f5f5f5;
+          font-size: 17px;
+          font-weight: 700;
+          white-space: nowrap;
+          transition: color 0.2s ease;
+        }
+
+        .nkr-navbar-links > a:hover,
+        .nkr-navbar-links > a.active {
+          color: #ffcf36;
+        }
+
+        .nkr-navbar-links > a.active::after,
+        .nkr-navbar-links > a:hover::after {
+          content: "";
+          position: absolute;
+          bottom: 3px;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: #ffc629;
+        }
+
+        .nkr-navbar-call {
+          min-height: 54px;
+          padding: 14px 25px;
+          border-radius: 22px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 13px;
+          background: linear-gradient(
+            180deg,
+            #ffdc53,
+            #e8a800
+          );
+          border: 1px solid #ffdc53;
+          color: #080808;
+          font-size: 18px;
+          font-weight: 900;
+          white-space: nowrap;
+          transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+        }
+
+        .nkr-navbar-call:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px #ffc62935;
+        }
+
+        .nkr-navbar-call svg {
+          font-size: 22px;
+        }
+
+        .nkr-navbar-mobile-call {
+          display: none !important;
+        }
+
+        .nkr-navbar-toggle {
+          display: none;
+          align-items: center;
+          justify-content: center;
+          padding: 12px;
+          background: #ffc629;
+          color: #111;
+          border: none;
+          border-radius: 9px;
+          font-size: 22px;
+          cursor: pointer;
+          flex-shrink: 0;
+        }
+
+        .nkr-navbar-toggle:focus-visible,
+        .nkr-navbar a:focus-visible {
+          outline: 2px solid #ffc629;
+          outline-offset: 4px;
+        }
+
+        @media (max-width: 1150px) {
+          .nkr-navbar {
+            gap: 15px;
+            padding-inline: 22px;
+          }
+
+          .nkr-navbar-logo {
+            width: 75px;
+            height: 75px;
+          }
+
+          .nkr-navbar-links {
+            gap: 22px;
+          }
+
+          .nkr-navbar-links > a {
+            font-size: 15px;
+          }
+
+          .nkr-navbar-call {
+            padding: 13px 16px;
+            font-size: 15px;
+          }
+
+          .nkr-navbar-call svg {
+            font-size: 18px;
+          }
+        }
+
+        @media (max-width: 760px) {
+          .nkr-navbar {
+            min-height: 80px;
+            padding: 9px 15px;
+            gap: 10px;
+          }
+
+          .nkr-navbar-spacer {
+            height: 80px;
+          }
+
+          html {
+            scroll-padding-top: 85px;
+          }
+
+          .nkr-navbar-brand {
+            gap: 9px;
+          }
+
+          .nkr-navbar-logo {
+            width: 58px;
+            height: 58px;
+            border-width: 2px;
+            padding-bottom: 6px;
+          }
+
+          .nkr-navbar-logo strong {
+            font-size: 17px;
+          }
+
+          .nkr-navbar-logo span {
+            font-size: 6px;
+            letter-spacing: 0.5px;
+          }
+
+          .nkr-navbar-wordmark strong {
+            font-size: clamp(23px, 5.8vw, 34px);
+            letter-spacing: -1px;
+          }
+
+          .nkr-navbar-wordmark span {
+            font-size: clamp(9px, 2.4vw, 12px);
+            letter-spacing: 1px;
+            margin-top: 4px;
+          }
+
+          .nkr-navbar > .nkr-navbar-call {
+            display: none;
+          }
+
+          .nkr-navbar-toggle {
+            display: inline-flex;
+          }
+
+          .nkr-navbar-links {
+            display: none;
+            position: absolute;
+            top: calc(100% + 3px);
+            left: 0;
+            right: 0;
+            padding: 12px 20px 20px;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+            background: #080808;
+            border-bottom: 3px solid #ffc629;
+            box-shadow: 0 12px 20px #0005;
+            max-height: calc(100dvh - 83px);
+            overflow-y: auto;
+          }
+
+          .nkr-navbar-links.nkr-navbar-open {
+            display: flex;
+          }
+
+          .nkr-navbar-links > a {
+            padding: 15px 10px;
+            font-size: 17px;
+            border-bottom: 1px solid #ffffff18;
+          }
+
+          .nkr-navbar-links > a.active::after,
+          .nkr-navbar-links > a:hover::after {
+            left: 0;
+            top: 20%;
+            bottom: auto;
+            width: 4px;
+            height: 60%;
+          }
+
+          .nkr-navbar-links > .nkr-navbar-mobile-call {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(
+              180deg,
+              #ffdc53,
+              #e8a800
+            );
+            color: #111;
+            font-weight: 900;
+          }
+
+          .nkr-navbar-mobile-call svg {
+            font-size: 19px;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .nkr-navbar {
+            padding-inline: 9px;
+          }
+
+          .nkr-navbar-logo {
+            width: 46px;
+            height: 46px;
+          }
+
+          .nkr-navbar-logo strong {
+            font-size: 14px;
+          }
+
+          .nkr-navbar-wordmark strong {
+            font-size: 21px;
+          }
+
+          .nkr-navbar-wordmark span {
+            font-size: 8px;
+          }
+
+          .nkr-navbar-toggle {
+            padding: 9px;
+            font-size: 19px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .nkr-navbar *,
+          .nkr-navbar *::before,
+          .nkr-navbar *::after {
+            scroll-behavior: auto !important;
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+          }
+        }
+      `}</style>
+
+      <header className="nkr-navbar">
+        <Link
+          to="/"
+          className="nkr-navbar-brand"
+          onClick={() => setMenuOpen(false)}
+          aria-label="NKR Car Rentals home"
+        >
+          <div className="nkr-navbar-logo">
+            <strong>NKR</strong>
+            <span>CAR RENTALS</span>
+          </div>
+
+          <div className="nkr-navbar-wordmark">
+            <strong>NKR</strong>
+            <span>CAR RENTALS</span>
+          </div>
         </Link>
 
-        <Link to="/book" onClick={() => setIsMobileMenuOpen(false)}>
-          <FaCalendarCheck className="nav-icon" /> Book
-        </Link>
-        <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-          <FaEnvelope className="nav-icon" /> Contact
-        </Link>
-      </div>
-    </nav>
+        <nav
+          id="nkr-navigation"
+          className={`nkr-navbar-links ${
+            menuOpen ? "nkr-navbar-open" : ""
+          }`}
+        >
+          {navLinks.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.path === "/"}
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                isActive ? "active" : ""
+              }
+            >
+              {item.name}
+            </NavLink>
+          ))}
+
+          <a
+            className="nkr-navbar-mobile-call"
+            href={`tel:${phone}`}
+          >
+            <FaPhoneAlt aria-hidden="true" />
+            +91 86600 14029
+          </a>
+        </nav>
+
+        <a
+          className="nkr-navbar-call"
+          href={`tel:${phone}`}
+          aria-label="Call NKR Car Rentals"
+        >
+          <FaPhoneAlt aria-hidden="true" />
+          <span>+91 86600 14029</span>
+        </a>
+
+        <button
+          type="button"
+          className="nkr-navbar-toggle"
+          aria-label={
+            menuOpen
+              ? "Close navigation"
+              : "Open navigation"
+          }
+          aria-expanded={menuOpen}
+          aria-controls="nkr-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </header>
+
+      {/* Keeps page content below the fixed navbar */}
+      <div
+        className="nkr-navbar-spacer"
+        aria-hidden="true"
+      />
+    </>
   );
 }
-
-// Monochromatic blue theme with enhanced animations – solid colors only
-const navbarStyles = `
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem 2rem;
-    background-color: #0b1e33;
-    box-shadow: 0 8px 20px rgba(0, 20, 40, 0.4);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    border-bottom: 3px solid #1e4a76;
-    animation: slideInDown 0.5s ease-out;
-  }
-
-  @keyframes slideInDown {
-    from {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  /* Logo with enhanced entrance and hover */
-  .navbar-logo a {
-    text-decoration: none;
-    display: block;
-  }
-
-  .logo-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background-color: #1a2f45;
-    padding: 0.5rem 1.5rem 0.5rem 1rem;
-    border-radius: 50px;
-    border-left: 4px solid #1e4a76;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    animation: fadeInLeft 0.6s ease-out;
-  }
-
-  @keyframes fadeInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .logo-badge:hover {
-    transform: translateY(-3px) scale(1.02);
-    background-color: #1e3a5a;
-    box-shadow: 0 8px 16px rgba(0, 40, 80, 0.5);
-  }
-
-  .logo-text {
-    font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-  }
-
-  .logo-icon {
-    font-size: 2rem;
-    color: #4a9eff;
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
-    transition: transform 0.4s ease;
-  }
-
-  .logo-badge:hover .logo-icon {
-    transform: rotate(5deg) scale(1.1);
-  }
-
-  /* Navigation links with staggered animation */
-  .nav-links {
-    display: flex;
-    gap: 1.2rem;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: #e6f0ff;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 0.5rem 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-radius: 30px;
-    transition: all 0.25s ease;
-    position: relative;
-    opacity: 0;
-    animation: fadeInUp 0.4s forwards;
-    animation-delay: calc(0.1s * var(--order));
-  }
-
-  /* Assign order variables via style attribute – we'll use inline style for simplicity */
-  .nav-links a:nth-child(1) { --order: 1; }
-  .nav-links a:nth-child(2) { --order: 2; }
-  .nav-links a:nth-child(3) { --order: 3; }
-  .nav-links a:nth-child(4) { --order: 4; }
-  .nav-links a:nth-child(5) { --order: 5; }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .nav-icon {
-    font-size: 1.2rem;
-    color: #4a9eff;
-    transition: all 0.3s ease;
-  }
-
-  /* Hover effect with icon bounce */
-  .nav-links a:hover {
-    background-color: #1e4a76;
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 30, 60, 0.4);
-  }
-
-  .nav-links a:hover .nav-icon {
-    color: #ffffff;
-    transform: rotate(5deg) scale(1.2);
-  }
-
-  /* Active link indicator with subtle pulse */
-  .nav-links a.active {
-    background-color: #1e4a76;
-    color: #ffffff;
-    animation: pulse 2s infinite;
-  }
-  .nav-links a.active .nav-icon {
-    color: #ffffff;
-  }
-
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(30, 74, 118, 0.5); }
-    70% { box-shadow: 0 0 0 6px rgba(30, 74, 118, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(30, 74, 118, 0); }
-  }
-
-  /* Hamburger with smoother morph */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    padding: 0.5rem;
-    z-index: 1001;
-  }
-
-  .hamburger span {
-    width: 28px;
-    height: 3px;
-    background-color: #e6f0ff;
-    margin: 3px 0;
-    transition: all 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-    border-radius: 2px;
-  }
-
-  .hamburger.open span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-    background-color: #4a9eff;
-  }
-
-  .hamburger.open span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-  }
-
-  .hamburger.open span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-    background-color: #4a9eff;
-  }
-
-  /* Mobile menu with backdrop blur and enhanced slide */
-  @media (max-width: 768px) {
-    .nav-links {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      height: 100vh;
-      width: 280px;
-      background-color: #122b44;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 1.5rem;
-      padding-left: 2rem;
-      transition: right 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
-      border-left: 3px solid #1e4a76;
-    }
-
-    .nav-links.active {
-      right: 0;
-    }
-
-    .nav-links a {
-      font-size: 1.3rem;
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border-radius: 30px 0 0 30px;
-      animation: none; /* disable entrance animation on mobile */
-      opacity: 1;
-    }
-
-    .nav-links a:hover {
-      background-color: #1e4a76;
-      transform: translateX(5px);
-    }
-
-    .hamburger {
-      display: flex;
-    }
-  }
-
-  /* Small screens */
-  @media (max-width: 480px) {
-    .navbar {
-      padding: 0.8rem 1rem;
-    }
-    .logo-text {
-      font-size: 1.2rem;
-    }
-    .logo-icon {
-      font-size: 1.6rem;
-    }
-    .logo-badge {
-      padding: 0.4rem 1rem 0.4rem 0.8rem;
-    }
-  }
-`;
-
-export default Navbar;

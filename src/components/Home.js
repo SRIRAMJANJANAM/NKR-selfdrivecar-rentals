@@ -1,117 +1,41 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState, useCallback } from "react"; // Added useCallback
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Helmet } from "react-helmet";
-import { 
-  FaUser, FaGasPump, FaTachometerAlt, FaRupeeSign, FaStar, 
+import {
+  FaUser, FaGasPump, FaRupeeSign, FaStar,
   FaMapMarkerAlt, FaRoad, FaMoneyBillWave, FaSnowflake, FaSun, FaCogs,
-  FaChevronLeft, FaChevronRight, FaQuoteLeft, FaQuoteRight, FaStarHalfAlt
+  FaChevronLeft, FaChevronRight, FaQuoteLeft, FaQuoteRight, FaStarHalfAlt,
+  FaCalendarCheck, FaCarSide, FaShieldAlt, FaClock, FaBroom,
+  FaUserTie, FaWallet, FaCheckCircle, FaWhatsapp, FaBolt,
 } from "react-icons/fa";
 
 function Home() {
-  // Add state for device detection
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
-  
-  // Add state for testimonial carousel
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  // Refs for scroll animations
   const carsRef = useRef([]);
   const featuresRef = useRef([]);
   const testimonialsRef = useRef([]);
 
-  // Testimonials data (moved outside to avoid dependency issues)
   const testimonials = [
-    {
-      id: 1,
-      name: "Surya Teja",
-      rating: 5,
-      text: "Had a great service with NKR Car Rentals in Tirupati. The cars are well maintained, responses are quick, and the customer service is excellent.",
-      date: "March 2025",
-      location: "Tirupati"
-    },
-    {
-      id: 2,
-      name: "Dr Gautham Vetrivendan",
-      rating: 5,
-      text: "Good experience with NKR self drive cars. Smooth booking process and well maintained vehicles.",
-      date: "February 2025",
-      location: "Renigunta"
-    },
-    {
-      id: 3,
-      name: "Charan Roy",
-      rating: 5,
-      text: "Car condition was excellent and the car owner is also pleasant kind person very co operative and ac condition was good overall it was nice ride best choice",
-      date: "January 2025",
-      location: "Tirupati"
-    }
+    { id: 1, name: "Abdul Ahadh", rating: 5, text: "Exceptional service. It was around 8.40 PM in tirupati international airport..raining heavily..no buses or autos..tried to book uber cab to my relative home which is around 80 kms..online it showed 1700 but driver called and asked 4000..I told to cancel..then I thought of taking rental cars for self drive and searched nearby rentals and I got this rentals. Went to their website.. updated the details and it takes to WhatsApp chat. Once message sent immediately i got reply. Asking which car required and I provided the details. I told i required immediately and he immediately took me Swift car within 30 to 40 mins to airport. I felt thank god and he gave me clear instructions on everything and handed over the car. They charged 1800 per day for swift and airport delivery charges 400 and pickup charges 400 and toll charges 200 for up and down. Overall Good.", date: "October 2026", location: "Tirupati Airport" },
+    { id: 2, name: "Gokul Nair", rating: 5, text: "Good experience, good price and Neelendra is very good person. He explains everything properly and humble person. Car is maintained to the minimum as required for safe drive.",date: "October 2026", location: "Renigunta" },
+    { id: 3, name: "Venkatesh Vallamdas", rating: 5, text: "Excellent service! The cars are always in great condition. Nallandeer Reddy’s support and his ability to resolve any issues quickly are truly incredible. Highly recommended!", date: "October 2026", location: "Tirupati" },
   ];
 
-  // Car data (moved outside to avoid dependency issues)
   const cars = [
-    {
-      id: 1,
-      name: "Maruti Suzuki Ertiga",
-      image: "/images/ertiga.jpg",
-      seats: 7,
-      fuel: "CNG & Petrol",
-      price: 3000,
-      features: ["7 Seater", "CNG & Petrol", "250 km/day", "Extra ₹10/km"],
-      description: "Spacious 7-seater MPV perfect for family trips.",
-    },
-    {
-      id: 2,
-      name: "Kia Carens",
-      image: "/images/carens.jpg",
-      seats: 7,
-      fuel: "Diesel",
-      price: 3500,
-      features: ["7 Seater", "Diesel", "250 km/day", "Extra ₹10/km"],
-      description: "Premium 7-seater with IMT diesel engine.",
-    },
-    {
-      id: 3,
-      name: "Tata Nexon",
-      image: "/images/nexon.jpg",
-      seats: 5,
-      fuel: "Petrol & CNG",
-      price: 2700,
-      features: ["5 Seater", "Petrol & CNG", "Sunroof", "250 km/day", "Extra ₹10/km"],
-      description: "Compact SUV with sunroof.",
-    },
-    {
-      id: 4,
-      name: "Tata Tiago",
-      image: "/images/tiago.jpg",
-      seats: 5,
-      fuel: "Petrol",
-      price: 2000,
-      features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km"],
-      description: "Hatchback perfect for city drives.",
-    },
-    {
-      id: 5,
-      name: "Swift Diesel",
-      image: "/images/swift.jpg",
-      seats: 5,
-      fuel: "Diesel",
-      price: 1800,
-      features: ["5 Seater", "Diesel", "250 km/day", "Extra ₹10/km"],
-      description: "Sporty diesel hatchback.",
-    },
-    {
-      id: 6,
-      name: "Swift Dzire",
-      image: "/images/dzire.jpg",
-      seats: 5,
-      fuel: "Petrol",
-      price: 2200,
-      features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km"],
-      description: "Sleek sedan with petrol engine.",
-    },
+    { id: 1, name: "Maruti Suzuki Ertiga", image: "/images/ertiga.webp", seats: 7, fuel: "CNG & Petrol", price: 3000, features: ["7 Seater", "CNG & Petrol", "250 km/day", "Extra ₹10/km"], description: "Spacious 7-seater MPV perfect for family trips." },
+    { id: 2, name: "Kia Carens", image: "/images/carens.webp", seats: 7, fuel: "Diesel", price: 3500, features: ["7 Seater", "Diesel", "250 km/day", "Extra ₹10/km"], description: "Premium 7-seater with IMT diesel engine." },
+    { id: 3, name: "Tata Nexon", image: "/images/nexon.webp", seats: 5, fuel: "Petrol & CNG", price: 2700, features: ["5 Seater", "Petrol & CNG", "Sunroof", "250 km/day", "Extra ₹10/km"], description: "Compact SUV with sunroof." },
+    { id: 4, name: "Tata Tiago", image: "/images/tiago.webp", seats: 5, fuel: "Petrol", price: 2000, features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km"], description: "Hatchback perfect for city drives." },
+    { id: 5, name: "Swift Diesel", image: "/images/swift.webp", seats: 5, fuel: "Diesel", price: 1800, features: ["5 Seater", "Diesel", "250 km/day", "Extra ₹10/km"], description: "Sporty diesel hatchback." },
+    { id: 6, name: "Swift Dzire", image: "/images/dzire.webp", seats: 5, fuel: "Petrol", price: 2200, features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km"], description: "Sleek sedan with petrol engine." },
+    { id: 7, name: "Tata Aries AMT", image: "/images/aeris.webp", seats: 5, fuel: "Petrol", price: 2500, features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km", "Fuel not included"] },
+    { id: 8, name: "Hyundai Venue IMT", image: "/images/venue.webp", seats: 5, fuel: "Petrol", price: 3000, features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km", "Fuel not included"] },
+    { id: 9, name: "Toyota Innova Crysta", image: "/images/crysta.webp", seats: 8, fuel: "Diesel", price: 4000, features: ["8 Seater", "Diesel", "250 km/day", "Extra ₹10/km", "Fuel not included"] },
+    { id: 10, name: "Maruti Suzuki Baleno", image: "/images/baleno.webp", seats: 5, fuel: "Petrol", price: 2300, features: ["5 Seater", "Petrol", "250 km/day", "Extra ₹10/km", "Fuel not included"] },
   ];
 
-  // Navigation functions (memoized with useCallback)
   const nextTestimonial = useCallback(() => {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
   }, [testimonials.length]);
@@ -121,362 +45,283 @@ function Home() {
   }, [testimonials.length]);
 
   useEffect(() => {
-    // Add resize listener for device detection
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 768);
-    };
-    
-    window.addEventListener('resize', handleResize);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
 
-    // Inject custom styles
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = homeStyles;
     document.head.appendChild(style);
 
-    // Intersection Observer for scroll animations
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-          }
-        });
-      },
-      { threshold: 0.2, rootMargin: '0px 0px -50px 0px' }
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in-view")),
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
     );
-
-    // Observe car cards
-    carsRef.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
-    
-    // Observe feature items
-    featuresRef.current.forEach((feature) => {
-      if (feature) observer.observe(feature);
-    });
-    
-    // Observe testimonial cards
-    testimonialsRef.current.forEach((testimonial) => {
-      if (testimonial) observer.observe(testimonial);
-    });
+    carsRef.current.forEach((el) => el && observer.observe(el));
+    featuresRef.current.forEach((el) => el && observer.observe(el));
+    testimonialsRef.current.forEach((el) => el && observer.observe(el));
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('resize', handleResize);
-      document.head.removeChild(style); // Clean up style
+      window.removeEventListener("resize", handleResize);
+      document.head.removeChild(style);
     };
-  }, []); // Empty dependency array is fine here as we're not using any external values
+  }, []);
 
-  // Auto-slide testimonials every 10 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextTestimonial();
-    }, 10000); // 10 seconds
-
+    const interval = setInterval(nextTestimonial, 10000);
     return () => clearInterval(interval);
-  }, [nextTestimonial]); // Added nextTestimonial as dependency
+  }, [nextTestimonial]);
 
-  // Helper function to get icon for feature text
   const getFeatureIcon = (feature) => {
     const lower = feature.toLowerCase();
-    if (lower.includes('km') || lower.includes('distance')) return <FaRoad className="feature-icon-small" />;
-    if (lower.includes('extra') || lower.includes('₹')) return <FaMoneyBillWave className="feature-icon-small" />;
-    if (lower.includes('seater')) return <FaUser className="feature-icon-small" />;
-    if (lower.includes('cng') || lower.includes('petrol') || lower.includes('diesel') || lower.includes('fuel')) return <FaGasPump className="feature-icon-small" />;
-    if (lower.includes('sunroof')) return <FaSun className="feature-icon-small" />;
-    if (lower.includes('ac') || lower.includes('air')) return <FaSnowflake className="feature-icon-small" />;
-    if (lower.includes('automatic') || lower.includes('transmission')) return <FaCogs className="feature-icon-small" />;
-    return null;
+    if (lower.includes("km") || lower.includes("distance")) return <FaRoad />;
+    if (lower.includes("extra") || lower.includes("₹")) return <FaMoneyBillWave />;
+    if (lower.includes("seater")) return <FaUser />;
+    if (lower.includes("cng") || lower.includes("petrol") || lower.includes("diesel") || lower.includes("fuel")) return <FaGasPump />;
+    if (lower.includes("sunroof")) return <FaSun />;
+    if (lower.includes("ac") || lower.includes("air")) return <FaSnowflake />;
+    if (lower.includes("automatic") || lower.includes("transmission")) return <FaCogs />;
+    return <FaCheckCircle />;
   };
 
   const sortedCars = [...cars].sort((a, b) => a.price - b.price);
 
-  // Function to render stars based on rating
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      if (i <= rating) {
-        stars.push(<FaStar key={i} className="star filled" />);
-      } else if (i - 0.5 === rating) {
-        stars.push(<FaStarHalfAlt key={i} className="star half-filled" />);
-      } else {
-        stars.push(<FaStar key={i} className="star empty" />);
-      }
-    }
-    return stars;
-  };
+  const renderStars = (rating) =>
+    Array.from({ length: 5 }, (_, i) => {
+      const n = i + 1;
+      if (n <= rating) return <FaStar key={n} className="star filled" />;
+      if (n - 0.5 === rating) return <FaStarHalfAlt key={n} className="star half" />;
+      return <FaStar key={n} className="star empty" />;
+    });
 
-  // Enhanced structured data with FAQ, Breadcrumb, and social profiles
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "AutoRental",
         "@id": "https://nkrselfdrivecarrentals.in/#organization",
-        "name": "NKR Self Drive Cars",
-        "description": "Best self-drive car rental in Tirupati with prices starting from ₹1800. Wide range of cars including Ertiga, Carens, Nexon, Swift, and more. Free pickup and drop.",
-        "url": "https://nkrselfdrivecarrentals.in",
-        "logo": "https://nkrselfdrivecarrentals.in/logo.png",
-        "image": "https://nkrselfdrivecarrentals.in/hero-bg.jpg",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Tirupati",
-          "addressRegion": "Andhra Pradesh",
-          "addressCountry": "IN"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "13.6288",
-          "longitude": "79.4192"
-        },
-        "telephone": "+91-1234567890",
-        "priceRange": "₹1800 - ₹3500",
-        "openingHours": "Mo-Su 00:00-23:59",
-        "sameAs": [
+        name: "NKR Self Drive Cars",
+        description: "Best self-drive car rental in Tirupati from ₹1800.  pickup and drop.",
+        url: "https://nkrselfdrivecarrentals.in",
+        logo: "https://nkrselfdrivecarrentals.in/logo.png",
+        image: "https://nkrselfdrivecarrentals.in/hero-bg.webp",
+        address: { "@type": "PostalAddress", addressLocality: "Tirupati", addressRegion: "Andhra Pradesh", addressCountry: "IN" },
+        geo: { "@type": "GeoCoordinates", latitude: "13.6288", longitude: "79.4192" },
+        telephone: "+91-8660014029",
+        priceRange: "₹1800 - ₹3500",
+        openingHours: "Mo-Su 00:00-23:59",
+        sameAs: [
           "https://www.facebook.com/share/1DcKcWZUBe/",
-          "https://www.instagram.com/neelendar_reddy_nkr_?utm_source=qr&igsh=MWJ6YTN3OTN5bzRqYQ==",
-          "https://twitter.com/nkrselfdrive"
+          "https://www.instagram.com/neelendar_reddy_nkr_",
+          "https://twitter.com/nkrselfdrive",
         ],
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "520",
-          "bestRating": "5",
-          "worstRating": "1"
-        },
-        "review": testimonials.map(t => ({
+        aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "520", bestRating: "5", worstRating: "1" },
+        review: testimonials.map((t) => ({
           "@type": "Review",
-          "author": { "@type": "Person", "name": t.name },
-          "reviewRating": { "@type": "Rating", "ratingValue": t.rating.toString() },
-          "reviewBody": t.text,
-          "datePublished": t.date
+          author: { "@type": "Person", name: t.name },
+          reviewRating: { "@type": "Rating", ratingValue: t.rating.toString() },
+          reviewBody: t.text,
+          datePublished: t.date,
         })),
-        "offers": sortedCars.map(car => ({
-          "@type": "Offer",
-          "name": car.name,
-          "description": car.description,
-          "price": car.price,
-          "priceCurrency": "INR",
-          "availability": "https://schema.org/InStock",
-          "url": `https://nkrselfdrivecarrentals.in/book?car=${car.id}`
-        }))
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://nkrselfdrivecarrentals.in/#breadcrumb",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://nkrselfdrivecarrentals.in"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Cars",
-            "item": "https://nkrselfdrivecarrentals.in/cars"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Book Now",
-            "item": "https://nkrselfdrivecarrentals.in/book"
-          }
-        ]
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Self Drive Cars",
+          itemListElement: sortedCars.map((c) => ({
+            "@type": "Offer",
+            name: c.name,
+            description: c.description,
+            price: c.price,
+            priceCurrency: "INR",
+            availability: "https://schema.org/InStock",
+            url: `https://nkrselfdrivecarrentals.in/book?car=${c.id}`,
+          })),
+        },
       },
       {
         "@type": "FAQPage",
-        "@id": "https://nkrselfdrivecarrentals.in/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the fuel policy?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Cars are provided with a full tank; you need to return them with a full tank."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is there a security deposit?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, a refundable security deposit of ₹3000 is required at the time of pickup."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do you offer delivery outside Tirupati?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Free pickup and drop is available anywhere in Tirupati and Renigunta. For other locations, please contact us."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What documents do I need?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "You need a valid driving licence (both printed and digital are accepted) and a government ID proof (Aadhar, Voter ID, or Passport)."
-            }
-          }
-        ]
-      }
-    ]
+        mainEntity: [
+          { "@type": "Question", name: "What is the fuel policy?", acceptedAnswer: { "@type": "Answer", text: "Cars are provided with a full tank; you need to return them with a full tank." } },
+          { "@type": "Question", name: "Is there a security deposit?", acceptedAnswer: { "@type": "Answer", text: "Yes, a refundable security deposit of ₹3000 is required at the time of pickup." } },
+          { "@type": "Question", name: "Do you offer delivery outside Tirupati?", acceptedAnswer: { "@type": "Answer", text: " pickup and drop is available anywhere in Tirupati and Renigunta." } },
+          { "@type": "Question", name: "What documents do I need?", acceptedAnswer: { "@type": "Answer", text: "You need a valid driving licence and a government ID proof." } },
+        ],
+      },
+    ],
   };
+
+  const getWhatsAppLink = (carName) =>
+    `https://wa.me/918660014029?text=${encodeURIComponent(
+      `Hi NKR Car Rentals, I want to book the ${carName}. Please share availability and price.`
+    )}`;
+
+  // Mobile shows venkat.webp, desktop shows venkat1.webp
+  const heroImage = isMobile ? "/images/venkat.webp" : "/images/venkat1.webp";
 
   return (
     <>
       <Helmet>
-        <title>Car Rental in Tirupati from ₹1800 | Best Self-Drive Cars NKR</title>
-        <meta name="description" content="Book the best self-drive cars in Tirupati at affordable prices starting from ₹1800. Choose from Ertiga, Carens, Nexon, Swift, and more. Free pickup & drop anywhere in Tirupati & Renigunta. 24/7 service, well-maintained fleet, no hidden charges." />
-        <meta name="keywords" content="car rental Tirupati, self drive cars Tirupati, Ertiga on rent Tirupati, Kia Carens rent, Tata Nexon self drive, Swift Dzire hire, best car rental in Tirupati, affordable car rental Tirupati, car hire near Renigunta, self drive cars Andhra Pradesh" />
+        <title>Car Rental in Tirupati from ₹1800 | NKR Self Drive Cars</title>
+        <meta name="description" content="Book the best self-drive cars in Tirupati at affordable prices starting from ₹1800. Ertiga, Carens, Nexon, Swift & more.  pickup & drop in Tirupati & Renigunta." />
+        <meta name="keywords" content="car rental Tirupati, self drive cars Tirupati, Ertiga on rent Tirupati, Kia Carens rent, Tata Nexon self drive, Swift Dzire hire, best car rental in Tirupati, car hire near Renigunta" />
         <meta name="geo.region" content="IN-AP" />
         <meta name="geo.placename" content="Tirupati" />
         <meta name="geo.position" content="13.6288;79.4192" />
-        <meta name="ICBM" content="13.6288, 79.4192" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://nkrselfdrivecarrentals.in" />
-
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://nkrselfdrivecarrentals.in" />
         <meta property="og:title" content="NKR Self Drive Cars - Car Rental in Tirupati from ₹1800" />
-        <meta property="og:description" content="Best self-drive car rental in Tirupati with prices starting from ₹1800. Free pickup & drop. Wide fleet including Ertiga, Carens, Nexon & more." />
-        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-image.jpg" />
-
-        {/* Twitter */}
+        <meta property="og:description" content="Best self-drive car rental in Tirupati from ₹1800.  pickup & drop." />
+        <meta property="og:image" content="https://nkrselfdrivecarrentals.in/og-image.webp" />
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://nkrselfdrivecarrentals.in" />
         <meta property="twitter:title" content="NKR Self Drive Cars - Car Rental in Tirupati from ₹1800" />
-        <meta property="twitter:description" content="Best self-drive car rental in Tirupati with prices starting from ₹1800. Free pickup & drop. Wide fleet including Ertiga, Carens, Nexon & more." />
-        <meta property="twitter:image" content="https://nkrselfdrivecarrentals.in/og-image.jpg" />
-        <meta property="twitter:site" content="@nkrselfdrive" />
-        <meta property="twitter:creator" content="@nkrselfdrive" />
-
+        <meta property="twitter:description" content="Best self-drive car rental in Tirupati from ₹1800.  pickup & drop." />
+        <meta property="twitter:image" content="https://nkrselfdrivecarrentals.in/og-image.webp" />
         <link rel="icon" href="/favicon.ico" />
-
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
-      <main className="home">
-        {/* Hero Section */}
-        <section className="hero" aria-label="Hero">
-          <div className="hero-overlay"></div>
-          <div className="hero-content">
-            <h1 className="hero-title">Car Rentals starting from just  ₹1800 </h1>
-            <p className="hero-subtitle">
-              Free pickup & drop anywhere in Tirupati & Renigunta.
-            </p>
-            <Link to="/book" className="cta-button" aria-label="Book your ride now">Book Your Ride Now</Link>
+      <main className="nkr-home">
+
+        {/* ================= HERO ================= */}
+        <section className="nkr-hero" aria-label="Hero">
+          <div className="hero-bg" style={{ backgroundImage: `url('${heroImage}')` }} />
+          <div className="hero-shade" />
+          <div className="hero-ornament" aria-hidden="true" />
+
+          <div className="hero-inner">
+            <div className="hero-text">
+            </div>
           </div>
-          <div className="hero-badge">
-            <FaStar className="badge-icon" aria-hidden="true" /> 4.9 (150+ reviews)
+
+          {/* Kept outside animated hero text so mobile positioning anchors to the full hero. */}
+          <div className="hero-actions">
+            <Link to="/book" className="btn btn-gold">
+              <FaCalendarCheck className="btn-icon" /> Book Your Ride <FaChevronRight className="btn-chev" />
+            </Link>
+            <Link to="/book" className="btn btn-outline">
+              <FaCarSide className="btn-icon" /> Explore Our Cars <FaChevronRight className="btn-chev" />
+            </Link>
           </div>
-          <img src={isDesktop ? "/images/venkat1.jpg" : "/images/venkat.jpg"} alt="Lord Venkateswara" className="hero-floating-image" loading="lazy" />
+
+          <div className="hero-divider" aria-hidden="true">
+            <span className="divider-line" />
+            <span className="divider-diamond">◆</span>
+            <span className="divider-line" />
+          </div>
         </section>
 
-        {/* Free Pickup/Drop Banner */}
-        <div className="offer-banner" role="region" aria-label="Special offer">
-          <FaMapMarkerAlt className="banner-icon" aria-hidden="true" />
-          <span>🚐 Free Pickup & Drop at any location in Tirupati & Renigunta</span>
-        </div>
+        {/* ================= FEATURE STRIP ================= */}
+        <section className="feature-strip" aria-label="Why choose NKR">
+          <div className="feature-strip-inner">
+            {[
+              { icon: <FaBroom />, label: "Clean & Comfortable" },
+              { icon: <FaUserTie />, label: "Experienced Drivers" },
+              { icon: <FaClock />, label: "On-Time Pickup" },
+              { icon: <FaWallet />, label: "Affordable Pricing" },
+            ].map((f, i) => (
+              <div className="strip-item" key={i}>
+                <span className="strip-icon" aria-hidden="true">{f.icon}</span>
+                <span className="strip-label">{f.label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        {/* SEO intro text above cars */}
-        <div className="seo-intro">
-          <p>
-            At <strong>NKR Self Drive</strong>, we offer the <strong>best car rental services in Tirupati</strong> at unbeatable prices. 
-            Our fleet includes fuel-efficient hatchbacks, spacious SUVs, and premium sedans – all available for self-drive. 
-            With prices starting from <strong>₹1800 per day</strong>, enjoy a hassle-free journey with free pickup and drop anywhere in Tirupati and Renigunta.
-          </p>
-        </div>
+        {/* ================= FULL FLEET ================= */}
+        <section className="fleet-section" aria-labelledby="fleet-heading">
+          <div className="choose-head">
+            <h2 id="fleet-heading" className="choose-title">
+              Our Full <span className="gold">Fleet</span>
+            </h2>
+            <p className="choose-sub">Prices start from ₹1800 per day —  pickup &amp; drop in Tirupati.</p>
+          </div>
 
-        {/* Cars Grid */}
-        <section className="cars-section" aria-labelledby="cars-heading">
-          <h2 id="cars-heading" className="section-title">Our Fleet – Affordable Self-Drive Cars</h2>
-          <div className="cars-grid">
-            {sortedCars.map((car, index) => (
+          <div className="fleet-grid">
+            {sortedCars.map((car, i) => (
               <article
                 key={car.id}
-                className="car-card"
-                ref={(el) => (carsRef.current[index] = el)}
-                style={{ transitionDelay: `${index * 0.1}s` }}
-                aria-label={`Car details for ${car.name}`}
+                className="fleet-card"
+                ref={(el) => (carsRef.current[i] = el)}
+                style={{ transitionDelay: `${i * 0.08}s` }}
               >
-                <div className="car-image-wrapper">
-                  <img src={car.image} alt={car.name} className="car-image" loading="lazy" />
-                  <div className="car-price-tag">
-                    <FaRupeeSign aria-hidden="true" /> {car.price}<span className="price-unit">/day</span>
+                <div className="fleet-img-wrap">
+                  <img src={car.image} alt={car.name} className="fleet-img" loading="lazy" />
+                  <div className="fleet-img-shine" aria-hidden="true" />
+                  <div className="fleet-img-speedlines" aria-hidden="true" />
+                  <div className="fleet-price">
+                    <FaRupeeSign /> {car.price}<span>/day</span>
+                  </div>
+                  <div className="fleet-badge-speed" aria-hidden="true">
+                    <FaBolt /> Live
                   </div>
                 </div>
-                <div className="car-details">
-                  <h3 className="car-name">{car.name}</h3>
-                  <div className="car-features">
-                    <span><FaUser aria-hidden="true" /> {car.seats} Seats</span>
-                    <span><FaGasPump aria-hidden="true" /> {car.fuel}</span>
-                    <span><FaTachometerAlt aria-hidden="true" /> Fuel not included</span>
+                <div className="fleet-body">
+                  <h3 className="fleet-name">{car.name}</h3>
+                  <div className="fleet-meta">
+                    <span><FaUser /> {car.seats} Seats</span>
+                    <span><FaGasPump /> {car.fuel}</span>
                   </div>
-                  <ul className="feature-list">
-                    {car.features.map((feature, i) => (
-                      <li key={i}>
-                        {getFeatureIcon(feature)}
-                        <span>{feature}</span>
-                      </li>
+                  <ul className="fleet-features">
+                    {car.features.map((f, k) => (
+                      <li key={k}>{getFeatureIcon(f)} <span>{f}</span></li>
                     ))}
                   </ul>
-                  <Link to="/book" className="book-btn" aria-label={`Book ${car.name} now`}>Book Now</Link>
+
+                  <Link to="/book" className="btn btn-gold btn-block">Book Now</Link>
+
+                  <a
+                    href={getWhatsAppLink(car.name)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-whatsapp btn-block fleet-wa-btn"
+                    aria-label={`Book ${car.name} via WhatsApp`}
+                  >
+                    <FaWhatsapp className="wa-btn-icon" />
+                    Book via WhatsApp
+                  </a>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        {/* Testimonials Section */}
+        {/* ================= TESTIMONIALS ================= */}
         <section className="testimonials-section" aria-labelledby="testimonials-heading">
-          <h2 id="testimonials-heading" className="section-title">What Our Customers Say</h2>
-          
+          <div className="choose-head">
+            <h2 id="testimonials-heading" className="choose-title">
+              What Our <span className="gold">Customers</span> Say
+            </h2>
+            <p className="choose-sub">Rated 4.9 / 5 by 520+ happy travellers.</p>
+          </div>
+
           <div className="testimonials-container">
-            {/* Left Arrow Button */}
-            <button 
-              className="testimonial-nav-btn prev-btn" 
-              onClick={prevTestimonial}
-              aria-label="Previous testimonial"
-            >
+            <button className="testimonial-nav-btn" onClick={prevTestimonial} aria-label="Previous testimonial">
               <FaChevronLeft />
             </button>
-            
-            {/* Testimonials Display */}
+
             <div className="testimonials-wrapper">
-              {testimonials.map((testimonial, index) => (
+              {testimonials.map((t, i) => (
                 <div
-                  key={testimonial.id}
-                  className={`testimonial-card ${index === currentTestimonial ? 'active' : ''}`}
-                  ref={(el) => (testimonialsRef.current[index] = el)}
+                  key={t.id}
+                  className={`testimonial-card ${i === currentTestimonial ? "active" : ""}`}
+                  ref={(el) => (testimonialsRef.current[i] = el)}
                 >
                   <div className="testimonial-content">
                     <FaQuoteLeft className="quote-icon quote-left" />
-                    <p className="testimonial-text">"{testimonial.text}"</p>
+                    <p className="testimonial-text">"{t.text}"</p>
                     <FaQuoteRight className="quote-icon quote-right" />
                   </div>
                   <div className="testimonial-footer">
-                    {/* Enhanced Responsive Rating Section */}
                     <div className="testimonial-rating-container">
-                      <div className="testimonial-rating">
-                        {renderStars(testimonial.rating)}
-                      </div>
-                      <span className="rating-text">{testimonial.rating}.0</span>
+                      <div className="testimonial-rating">{renderStars(t.rating)}</div>
+                      <span className="rating-text">{t.rating}.0</span>
                     </div>
-                    
                     <div className="testimonial-author">
-                      <strong>{testimonial.name}</strong>
+                      <strong>{t.name}</strong>
                       <div className="author-details">
-                        <span className="testimonial-location">
-                          <FaMapMarkerAlt className="location-icon" /> {testimonial.location}
-                        </span>
-                        <span className="testimonial-date">{testimonial.date}</span>
+                        <span className="testimonial-location"><FaMapMarkerAlt /> {t.location}</span>
+                        <span className="testimonial-date">{t.date}</span>
                       </div>
                     </div>
                   </div>
@@ -484,1079 +329,358 @@ function Home() {
               ))}
             </div>
 
-            {/* Right Arrow Button */}
-            <button 
-              className="testimonial-nav-btn next-btn" 
-              onClick={nextTestimonial}
-              aria-label="Next testimonial"
-            >
+            <button className="testimonial-nav-btn" onClick={nextTestimonial} aria-label="Next testimonial">
               <FaChevronRight />
             </button>
           </div>
 
-          {/* Testimonial Indicators */}
           <div className="testimonial-indicators">
-            {testimonials.map((_, index) => (
+            {testimonials.map((_, i) => (
               <button
-                key={index}
-                className={`indicator ${index === currentTestimonial ? 'active' : ''}`}
-                onClick={() => setCurrentTestimonial(index)}
-                aria-label={`Go to testimonial ${index + 1}`}
+                key={i}
+                className={`indicator ${i === currentTestimonial ? "active" : ""}`}
+                onClick={() => setCurrentTestimonial(i)}
+                aria-label={`Go to testimonial ${i + 1}`}
               />
             ))}
           </div>
-
-          {/* Auto-slide timer indicator */}
-          <div className="timer-indicator">
-            <div className="timer-bar" key={currentTestimonial}></div>
-          </div>
         </section>
 
-        {/* Why Choose Us */}
+        {/* ================= WHY US ================= */}
         <section className="why-us" aria-labelledby="why-heading">
-          <h2 id="why-heading" className="section-title">Why NKR Self Drive?</h2>
+          <div className="choose-head">
+            <h2 id="why-heading" className="choose-title">
+              Why <span className="gold">NKR Self Drive?</span>
+            </h2>
+          </div>
           <div className="features-grid">
             {[
-              { icon: "🚗", title: "Well-Maintained Cars", desc: "All cars serviced regularly for a smooth, safe ride." },
-              { icon: "⏰", title: "24/7 Availability", desc: "Book anytime, we deliver at your convenience." },
-              { icon: "📍", title: "Free Pickup & Drop", desc: "Anywhere in Tirupati & Renigunta – no extra cost." },
-              { icon: "💰", title: "Affordable Rates", desc: "Best prices with no hidden charges." },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="feature-item"
-                ref={(el) => (featuresRef.current[index] = el)}
-              >
-                <div className="feature-icon" aria-hidden="true">{item.icon}</div>
+              { icon: <FaShieldAlt />, title: "Well-Maintained Cars", desc: "All cars serviced regularly for a smooth, safe ride." },
+              { icon: <FaClock />, title: "24/7 Availability", desc: "Book anytime, we deliver at your convenience." },
+              { icon: <FaMapMarkerAlt />, title: " Pickup & Drop", desc: "Anywhere in Tirupati & Renigunta." },
+              { icon: <FaWallet />, title: "Affordable Rates", desc: "Best prices with no hidden charges." },
+            ].map((item, i) => (
+              <div key={i} className="feature-item" ref={(el) => (featuresRef.current[i + 3] = el)}>
+                <div className="feature-icon-wrap" aria-hidden="true">{item.icon}</div>
                 <h3>{item.title}</h3>
                 <p>{item.desc}</p>
               </div>
             ))}
           </div>
         </section>
+
+        {/* ================= CTA BANNER ================= */}
+        <section className="cta-banner">
+          <div className="cta-banner-inner">
+            <h2>Ready to hit the road?</h2>
+            <p>Book your self-drive car in Tirupati from just ₹1800/day.</p>
+            <Link to="/book" className="btn btn-gold">
+              <FaCalendarCheck /> Book Your Ride <FaChevronRight className="btn-chev" />
+            </Link>
+          </div>
+        </section>
+
+        {/* ================= FAQ ================= */}
+        <section className="faq-section" aria-labelledby="faq-heading">
+          <div className="choose-head">
+            <h2 id="faq-heading" className="choose-title">
+              Frequently Asked <span className="gold">Questions</span>
+            </h2>
+            <p className="choose-sub">Quick answers to help you plan your next drive around Tirupati.</p>
+          </div>
+          <div className="faq-list">
+            <details className="faq-item"><summary>What is the starting price for a self-drive car?</summary><p>Self-drive rentals start from ₹1800 per day. The final price depends on the car you choose and the rental details.</p></details>
+            <details className="faq-item"><summary>Do you provide pickup and drop in Tirupati?</summary><p>Yes.  pickup and drop are available in Tirupati and Renigunta.</p></details>
+            <details className="faq-item"><summary>What types of cars can I rent?</summary><p>Our fleet includes hatchbacks, SUVs, and sedans. Availability may vary by date.</p></details>
+            <details className="faq-item"><summary>Can I book a car for temple visits or outstation travel?</summary><p>Our cars are suitable for local travel, temple visits, airport transfers, and outstation journeys.</p></details>
+            <details className="faq-item"><summary>How do I reserve a car?</summary><p>Use the Book Your Ride link on this website to start your booking.</p></details>
+            <details className="faq-item"><summary>What should I confirm before starting my trip?</summary><p>Please confirm documents, deposit, fuel policy, kilometre limits, and pickup/drop arrangements before rental.</p></details>
+          </div>
+        </section>
+
+        {/* Floating WhatsApp button removed as requested */}
       </main>
     </>
   );
 }
 
-// Enhanced responsive styles with improved mobile centering
+/* =========================================================
+   STYLES
+   ========================================================= */
 const homeStyles = `
-  .home {
-    font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-    background-color: #f4f7fb;
-    color: #1e293b;
-    min-height: 100vh;
-    overflow-x: hidden;
+  :root {
+    --gold: #e6b23a;
+    --gold-2: #f5d76e;
+    --gold-deep: #b8860b;
+    --ink: #0a0a0a;
+    --line: rgba(230,178,58,0.35);
+    --whatsapp: #25d366;
+    --whatsapp-dark: #128c7e;
   }
 
-  /* Visually hidden for accessibility */
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
+  .nkr-home { font-family: 'Segoe UI','Poppins',system-ui,-apple-system,sans-serif; background:#fff; color:#1a1a1a; overflow-x:hidden; }
 
-  /* Hero Section with gradient animation */
-  .hero {
-    background: linear-gradient(135deg, #d7ebff, #ffffff, #f0f9ff);
-    background-size: 300% 300%;
-    animation: gradientShift 12s ease infinite;
-    padding: clamp(3rem, 8vw, 5rem) 1rem;
-    text-align: center;
+  /* HERO */
+  .nkr-hero { position:relative; isolation:isolate; min-height:640px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; padding:90px 24px 0; }
+  .hero-bg { position:absolute; inset:0; z-index:-2; background-size:cover; background-position:center 30%; transform:scale(1.06); animation:heroBgDrift 18s ease-in-out infinite alternate; will-change:transform; }
+  .hero-shade { position:absolute; inset:0; z-index:-1;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.82) 32%, rgba(0,0,0,.45) 62%, rgba(0,0,0,.15) 100%),
+      linear-gradient(180deg, rgba(0,0,0,.35) 0%, transparent 30%, transparent 60%, rgba(0,0,0,.55) 100%);
+  }
+  .hero-ornament { position:absolute; inset:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse at 20% 50%, rgba(230,178,58,.12), transparent 55%); animation:ornamentPulse 8s ease-in-out infinite; }
+  .hero-inner { position:relative; z-index:2; max-width:1300px; margin:0 auto; width:100%; display:grid; grid-template-columns:1fr; gap:30px; align-items:center; flex:1; }
+  .hero-text { max-width:640px; animation:heroTextRise 1s cubic-bezier(.2,.75,.25,1) both; }
+  .hero-eyebrow { display:inline-flex; align-items:center; gap:10px; color:var(--gold); font-size:.8rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; margin:0 0 20px; }
+  .gold-diamond { color:var(--gold); font-size:.8rem; }
+  .hero-heading { font-family:Georgia,'Times New Roman',serif; font-size:clamp(2.4rem,6.2vw,5rem); line-height:1.03; color:#fff; margin:0 0 22px; font-weight:700; text-wrap:balance; text-shadow:0 8px 40px rgba(0,0,0,.6); }
+  .hero-gold { display:inline-block; background:linear-gradient(135deg,#f8e6a8 0%,#e6b23a 45%,#c9962a 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; filter:drop-shadow(0 4px 18px rgba(230,178,58,.35)); animation:goldShimmer 4s ease-in-out infinite; }
+  .hero-desc { color:#e2e2e2; font-size:clamp(1rem,1.8vw,1.18rem); line-height:1.65; max-width:520px; margin:0 0 34px; }
+  .hero-actions { display:flex; flex-wrap:wrap; gap:16px; }
+
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 28px; border-radius:12px; font-weight:700; font-size:1rem; text-decoration:none; transition:transform .25s ease, box-shadow .25s ease, filter .25s ease, background .25s ease, color .25s ease; border:2px solid transparent; cursor:pointer; position:relative; overflow:hidden; min-height:48px; white-space:nowrap; }
+  .btn-icon { font-size:.95rem; }
+  .btn-chev { font-size:.75rem; transition:transform .25s ease; }
+  .btn:hover .btn-chev { transform:translateX(3px); }
+  .btn-gold { background:linear-gradient(135deg,var(--gold-2),var(--gold)); color:#000; box-shadow:0 10px 28px rgba(230,178,58,.35); }
+  .btn-gold::before { content:""; position:absolute; top:0; left:-80%; width:50%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent); transform:skewX(-20deg); animation:btnShine 4.5s ease-in-out infinite; }
+  .btn-gold:hover { transform:translateY(-3px); box-shadow:0 16px 40px rgba(230,178,58,.5); filter:brightness(1.06); }
+  .btn-outline { background:transparent; color:#fff; border-color:rgba(255,255,255,.35); }
+  .btn-outline:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-3px); box-shadow:0 10px 26px rgba(0,0,0,.35); }
+  .btn-block { width:100%; }
+  .btn:focus-visible { outline:3px solid #fff; outline-offset:3px; }
+
+  /* WHATSAPP SECONDARY BUTTON */
+  .btn-whatsapp {
+    background: linear-gradient(135deg, var(--whatsapp) 0%, var(--whatsapp-dark) 100%);
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(37,211,102,.32);
+    border: 1px solid rgba(255,255,255,.18);
     position: relative;
-    border-bottom: 3px solid #2563eb20;
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
   }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(37,99,235,0.1) 0%, transparent 50%);
+  .btn-whatsapp::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.22), transparent 55%);
     pointer-events: none;
   }
+  .btn-whatsapp:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(37,211,102,.5);
+    filter: brightness(1.05);
+  }
+  .wa-btn-icon { font-size: 1.15rem; }
+  .fleet-wa-btn { margin-top: 10px; }
 
-  .hero-content {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    position: relative;
-    z-index: 1;
+  /* HERO DIVIDER */
+  .hero-divider { position:relative; z-index:2; display:flex; align-items:center; justify-content:center; gap:14px; padding:22px 0 26px; max-width:1300px; margin:0 auto; width:100%; }
+  .divider-line { flex:1; max-width:480px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); opacity:.7; }
+  .divider-diamond { color:var(--gold); font-size:.7rem; animation:diamondSpin 6s linear infinite; }
+
+  /* FEATURE STRIP */
+  .feature-strip { background:linear-gradient(180deg,#fdf9ee 0%,#ffffff 100%); border-top:1px solid rgba(230,178,58,.2); border-bottom:1px solid rgba(230,178,58,.2); padding:22px 24px; }
+  .feature-strip-inner { max-width:1300px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; align-items:center; }
+  .strip-item { display:flex; align-items:center; justify-content:center; gap:12px; padding:6px 10px; position:relative; }
+  .strip-item:not(:last-child)::after { content:""; position:absolute; right:-10px; top:20%; height:60%; width:1px; background:rgba(0,0,0,.12); }
+  .strip-icon { display:inline-flex; align-items:center; justify-content:center; font-size:1.35rem; color:#b8860b; width:44px; height:44px; border-radius:50%; background:rgba(230,178,58,.12); border:1px solid rgba(230,178,58,.35); transition:transform .3s ease, background .3s ease; }
+  .strip-item:hover .strip-icon { transform:rotate(-6deg) scale(1.08); background:rgba(230,178,58,.22); }
+  .strip-label { font-weight:600; color:#232323; font-size:.98rem; }
+
+  /* SECTION HEADS */
+  .fleet-section, .why-us, .faq-section { max-width:1300px; margin:0 auto; padding:70px 24px; }
+  .choose-head { text-align:center; margin-bottom:40px; }
+  .choose-title { font-family:Georgia,serif; font-size:clamp(1.9rem,4vw,2.9rem); font-weight:700; color:#111; margin:0 0 12px; letter-spacing:-.01em; }
+  .choose-title .gold { color:var(--gold-deep); position:relative; }
+  .choose-title .gold::after { content:""; position:absolute; left:0; right:0; bottom:-8px; height:3px; border-radius:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); animation:underlinePulse 3s ease-in-out infinite; }
+  .choose-sub { color:#6b6b6b; font-size:1.02rem; margin:18px 0 0; }
+
+  /* FLEET — ANIMATED CAR IMAGES */
+  .fleet-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; perspective:1400px; }
+  .fleet-card { background:#fff; border-radius:16px; overflow:hidden; border:1px solid rgba(0,0,0,.08); box-shadow:0 6px 18px rgba(0,0,0,.05); transition:transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease, border-color .35s ease; opacity:0; transform:translateY(24px); }
+  .fleet-card.in-view { animation:cardArrival .8s cubic-bezier(.2,.75,.25,1) forwards; }
+  .fleet-card:hover { transform:translateY(-10px) rotateX(1deg); box-shadow:0 26px 60px rgba(0,0,0,.18),0 0 0 1px rgba(230,178,58,.35); border-color:rgba(230,178,58,.55); }
+
+  .fleet-img-wrap { position:relative; overflow:hidden; height:200px; background:#0a0a0a; isolation:isolate; }
+  .fleet-img { width:100%; height:100%; object-fit:cover; transform-origin:52% 55%; animation:carCruise 8s ease-in-out infinite; will-change:transform, filter; filter:saturate(1.05) contrast(1.02); transition:filter .4s ease; }
+  .fleet-card:nth-child(2n) .fleet-img { animation-delay:-2.2s; }
+  .fleet-card:nth-child(3n) .fleet-img { animation-delay:-4.4s; }
+  .fleet-card:nth-child(4n) .fleet-img { animation-delay:-1.1s; }
+
+  .fleet-img-shine { position:absolute; inset:0; z-index:2; pointer-events:none; background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,.22) 48%, rgba(230,178,58,.18) 52%, transparent 72%); transform:translateX(-130%); animation:imageShine 6s ease-in-out infinite; }
+  .fleet-img-speedlines { position:absolute; left:-30%; right:-30%; bottom:12%; height:26%; z-index:2; pointer-events:none; opacity:.35; background:repeating-linear-gradient(174deg, transparent 0 14px, rgba(255,255,255,.35) 15px 16px, transparent 17px 30px); filter:blur(.4px); transform:translateX(-30%) skewX(-22deg); animation:speedLines 4s linear infinite; }
+  .fleet-card:hover .fleet-img { animation-play-state:paused; transform:scale(1.12); filter:saturate(1.18) contrast(1.08); }
+  .fleet-card:hover .fleet-img-shine { animation-duration:1.6s; }
+  .fleet-card:hover .fleet-img-speedlines { opacity:.7; animation-duration:1s; }
+
+  .fleet-price { position:absolute; bottom:12px; right:12px; z-index:3; display:inline-flex; align-items:center; gap:4px; background:rgba(10,10,10,.88); color:var(--gold); backdrop-filter:blur(10px); padding:8px 14px; border-radius:999px; font-weight:800; font-size:1rem; border:1px solid rgba(230,178,58,.5); box-shadow:0 6px 20px rgba(0,0,0,.35); transition:transform .3s ease, box-shadow .3s ease; }
+  .fleet-price span { font-size:.72rem; font-weight:500; color:#fff; margin-left:2px; opacity:.85; }
+  .fleet-card:hover .fleet-price { transform:translateY(-3px) scale(1.04); box-shadow:0 10px 26px rgba(0,0,0,.45), 0 0 16px rgba(230,178,58,.25); }
+
+  .fleet-badge-speed { position:absolute; top:12px; left:12px; z-index:3; display:inline-flex; align-items:center; gap:5px; background:linear-gradient(135deg, #e6b23a, #f5d76e); color:#000; font-weight:800; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; padding:5px 10px; border-radius:999px; box-shadow:0 4px 14px rgba(230,178,58,.45); animation:badgePulse 2.4s ease-in-out infinite; }
+  .fleet-badge-speed svg { font-size:.7rem; }
+
+  .fleet-body { padding:20px 22px 22px; }
+  .fleet-name { font-size:1.2rem; font-weight:800; margin:0 0 10px; color:#111; }
+  .fleet-meta { display:flex; flex-wrap:wrap; gap:14px; color:#6b6b6b; font-size:.88rem; margin-bottom:12px; }
+  .fleet-meta span { display:inline-flex; align-items:center; gap:6px; }
+  .fleet-features { list-style:none; margin:0 0 18px; padding:0; color:#444; font-size:.88rem; line-height:1.7; }
+  .fleet-features li { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+  .fleet-features svg { color:#b8860b; font-size:.82rem; min-width:12px; }
+
+  /* TESTIMONIALS */
+  .testimonials-section { background:linear-gradient(180deg,#faf7ef 0%,#ffffff 100%); padding:70px 24px 80px; border-top:1px solid rgba(230,178,58,.2); border-bottom:1px solid rgba(230,178,58,.2); }
+  .testimonials-container { max-width:900px; margin:0 auto; display:flex; align-items:center; gap:14px; }
+  .testimonials-wrapper { flex:1; position:relative; min-height:320px; }
+  .testimonial-card { background:#fff; border-radius:18px; padding:32px; box-shadow:0 14px 40px rgba(0,0,0,.08); border:1px solid rgba(230,178,58,.25); opacity:0; transform:translateX(60px) scale(.96); transition:all .5s cubic-bezier(.2,.8,.2,1); position:absolute; inset:0; visibility:hidden; }
+  .testimonial-card.active { opacity:1; transform:translateX(0) scale(1); position:relative; visibility:visible; }
+  .testimonial-content { position:relative; margin-bottom:22px; }
+  .quote-icon { color:rgba(230,178,58,.5); font-size:1.9rem; position:absolute; }
+  .quote-left { top:-8px; left:-6px; }
+  .quote-right { bottom:-8px; right:-6px; }
+  .testimonial-text { font-size:1.05rem; line-height:1.7; color:#333; font-style:italic; text-align:center; margin:0; padding:0 24px; }
+  .testimonial-footer { display:flex; flex-direction:column; align-items:center; gap:14px; border-top:1px solid #eee; padding-top:20px; }
+  .testimonial-rating-container { display:flex; align-items:center; gap:10px; background:#fdf9ee; padding:8px 16px; border-radius:999px; border:1px solid rgba(230,178,58,.3); }
+  .testimonial-rating { display:flex; gap:3px; }
+  .star { font-size:1.15rem; color:#cbd5e1; }
+  .star.filled { color:var(--gold); filter:drop-shadow(0 2px 4px rgba(230,178,58,.4)); }
+  .star.half { color:var(--gold); }
+  .rating-text { font-weight:800; color:#b8860b; font-size:1rem; }
+  .testimonial-author { text-align:center; }
+  .testimonial-author strong { display:block; color:#111; font-size:1.08rem; margin-bottom:4px; }
+  .author-details { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; font-size:.86rem; color:#777; }
+  .testimonial-location { display:inline-flex; align-items:center; gap:4px; color:#b8860b; }
+  .testimonial-nav-btn { width:48px; height:48px; border-radius:50%; background:#fff; border:2px solid var(--gold); color:var(--gold); cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1rem; transition:all .25s ease; box-shadow:0 6px 16px rgba(0,0,0,.08); }
+  .testimonial-nav-btn:hover { background:var(--gold); color:#000; transform:scale(1.08); box-shadow:0 10px 24px rgba(230,178,58,.4); }
+  .testimonial-nav-btn:focus-visible { outline:3px solid var(--gold-deep); outline-offset:3px; }
+  .testimonial-indicators { display:flex; justify-content:center; gap:8px; margin-top:26px; }
+  .indicator { width:10px; height:10px; border-radius:50%; background:#d1d1d1; border:none; cursor:pointer; transition:all .3s ease; padding:0; }
+  .indicator:hover { background:#b8860b; }
+  .indicator.active { background:var(--gold); width:28px; border-radius:999px; box-shadow:0 0 10px rgba(230,178,58,.6); }
+  .indicator:focus-visible { outline:2px solid var(--gold-deep); outline-offset:3px; }
+
+  /* WHY US */
+  .features-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+  .feature-item { text-align:center; padding:30px 20px; background:#fff; border-radius:16px; border:1px solid rgba(0,0,0,.07); box-shadow:0 4px 14px rgba(0,0,0,.04); transition:transform .4s ease, box-shadow .4s ease, border-color .3s ease; opacity:0; transform:translateY(22px); }
+  .feature-item.in-view { animation:cardArrival .8s cubic-bezier(.2,.75,.25,1) forwards; }
+  .feature-item:hover { transform:translateY(-8px); border-color:rgba(230,178,58,.5); box-shadow:0 16px 40px rgba(0,0,0,.1); }
+  .feature-icon-wrap { display:inline-flex; align-items:center; justify-content:center; width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,rgba(230,178,58,.16),rgba(230,178,58,.05)); border:1px solid rgba(230,178,58,.35); color:#b8860b; font-size:1.5rem; margin-bottom:16px; transition:transform .3s ease, background .3s ease; }
+  .feature-item:hover .feature-icon-wrap { transform:scale(1.1) rotate(-6deg); background:linear-gradient(135deg,rgba(230,178,58,.3),rgba(230,178,58,.1)); }
+  .feature-item h3 { font-size:1.08rem; margin:0 0 8px; color:#111; font-weight:800; }
+  .feature-item p { color:#666; font-size:.9rem; line-height:1.6; margin:0; }
+
+  /* CTA */
+  .cta-banner { background:#0a0a0a; color:#fff; padding:60px 24px; position:relative; overflow:hidden; }
+  .cta-banner::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 30% 50%, rgba(230,178,58,.18), transparent 55%); animation:ctaPulse 6s ease-in-out infinite; pointer-events:none; }
+  .cta-banner-inner { position:relative; z-index:2; max-width:900px; margin:0 auto; text-align:center; }
+  .cta-banner h2 { font-family:Georgia,serif; font-size:clamp(1.8rem,4vw,2.6rem); margin:0 0 10px; background:linear-gradient(135deg,#fff 0%,#f5d76e 70%,#e6b23a 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+  .cta-banner p { color:#c8c8c8; font-size:1.05rem; margin:0 0 26px; }
+
+  /* FAQ */
+  .faq-list { max-width:880px; margin:0 auto; display:grid; gap:12px; }
+  .faq-item { background:#fff; border:1px solid rgba(0,0,0,.09); border-radius:12px; padding:0 22px; overflow:hidden; transition:border-color .3s ease, box-shadow .3s ease; }
+  .faq-item:hover, .faq-item[open] { border-color:rgba(230,178,58,.5); box-shadow:0 8px 24px rgba(0,0,0,.06); }
+  .faq-item summary { list-style:none; cursor:pointer; position:relative; padding:20px 40px 20px 0; font-weight:700; color:#111; font-size:1rem; }
+  .faq-item summary::-webkit-details-marker { display:none; }
+  .faq-item summary::after { content:"+"; position:absolute; right:4px; top:50%; transform:translateY(-50%); color:#b8860b; font-size:1.5rem; transition:transform .3s ease; }
+  .faq-item[open] summary::after { content:"−"; transform:translateY(-50%) rotate(180deg); }
+  .faq-item p { margin:0; padding:0 0 20px; color:#555; line-height:1.75; font-size:.95rem; }
+
+  /* RESPONSIVE */
+  @media (max-width:1024px) {
+    .fleet-grid { grid-template-columns:repeat(2,1fr); }
+    .features-grid { grid-template-columns:repeat(2,1fr); }
+    .feature-strip-inner { grid-template-columns:repeat(2,1fr); gap:14px; }
+    .strip-item:nth-child(2)::after { display:none; }
   }
 
-  .hero-title {
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #0f2a40;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    animation: slideUp 0.6s ease-out, glowPulse 4s infinite 1s;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1rem, 3vw, 1.3rem);
-    margin-bottom: 2rem;
-    color: #0400ff;
-    animation: slideUp 0.7s ease-out;
-    font-weight: bolder;
-  }
-
-  .cta-button {
-    display: inline-block;
-    background-color: #1e4a76;
-    color: white;
-    padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1.5rem, 4vw, 2rem);
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    animation: slideUp 0.8s ease-out, gentlePulse 3s infinite 1s, glow 2s infinite alternate;
-    box-shadow: 0 8px 16px rgba(37,99,235,0.2);
-    min-height: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-button::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .cta-button:hover::after {
-    opacity: 1;
-  }
-
-  .cta-button:hover {
-    background-color: #2563eb;
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 24px rgba(37,99,235,0.3);
-    animation: none;
-  }
-
-  @keyframes glow {
-    from { box-shadow: 0 0 5px #2563eb, 0 0 10px #2563eb; }
-    to { box-shadow: 0 0 10px #1e4a76, 0 0 20px #1e4a76; }
-  }
-
-  .cta-button:focus-visible {
-    outline: 3px solid #f59e0b;
-    outline-offset: 2px;
-  }
-
-  .hero-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 1px solid #e2e8f0;
-    font-weight: 600;
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    color: #1e293b;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    animation: fadeInRight 0.8s ease-out, float 5s ease-in-out infinite 1s;
-  }
-
-  .hero-floating-image {
-    position: absolute;
-    bottom: 0.1px;
-    width: 100%;
-    height: 100%;
-    opacity: 0.55;
-    pointer-events: none;
-    z-index: 0;
-    animation: gentleScale 8s ease-in-out infinite;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .hero-floating-image:hover {
-    opacity: 0.25;
-    transform: scale(1.05);
-  }
-
-  @keyframes gentleScale {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-  }
-
-  .badge-icon {
-    color: #fbbf24;
-  }
-
-  /* Offer Banner with new shimmer */
-  .offer-banner {
-    background-color: #d4edda;
-    color: #155724;
-    text-align: center;
-    padding: clamp(0.8rem, 2.5vw, 1rem);
-    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
-    border-bottom: 2px solid #c3e6cb;
-    flex-wrap: wrap;
-    animation: enhancedShimmer 3s infinite;
-    background: linear-gradient(90deg, #d4edda, #c3e6cb, #d4edda);
-    background-size: 200% 100%;
-  }
-
-  @keyframes enhancedShimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
-  .banner-icon {
-    font-size: 1.5rem;
-    color: #28a745;
-    animation: bounce 2s infinite;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
-  /* SEO Intro Text */
-  .seo-intro {
-    max-width: 1200px;
-    margin: 2rem auto 0;
-    padding: 0 1rem;
-    text-align: center;
-    font-size: 1.1rem;
-    color: #2c3e50;
-    background: rgba(255,255,255,0.7);
-    border-radius: 12px;
-    padding: 1rem 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    animation: fadeIn 1s ease-out;
-  }
-
-  .seo-intro p {
-    margin: 0;
-    line-height: 1.6;
-  }
-
-  .seo-intro strong {
-    color: #1e4a76;
-  }
-
-  /* Section Titles with animated underline */
-  .section-title {
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
-    text-align: center;
-    margin: 2rem 1rem 1.5rem;
-    color: #0f2a40;
-    position: relative;
-    display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .section-title::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background-color: #1e4a76;
-    margin: 0.5rem auto;
-    transition: width 0.3s ease;
-  }
-
-  .section-title:hover::after {
-    width: 100px;
-    background-color: #2563eb;
-  }
-
-  /* Cars Grid */
-  .cars-section {
-    padding: 2rem 1rem;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .cars-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .car-card {
-    background-color: #ffffff;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    opacity: 0;
-    transform: translateY(30px);
-    border: 1px solid #e2e8f0;
-    will-change: transform, opacity;
-    position: relative;
-  }
-
-  .car-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .car-card:hover::before {
-    left: 100%;
-  }
-
-  .car-card.in-view {
-    animation: fadeInUp 0.5s forwards;
-  }
-
-  .car-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-    border-color: #2563eb40;
-  }
-
-  .car-image-wrapper {
-    position: relative;
-    overflow: hidden;
-    height: 200px;
-  }
-
-  .car-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .car-card:hover .car-image {
-    transform: scale(1.08);
-  }
-
-  .car-price-tag {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: #1e4a76;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 30px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    border: 1px solid #2563eb;
-    transition: transform 0.2s ease, box-shadow 0.2s;
-    animation: floatBadge 3s ease-in-out infinite;
-  }
-
-  @keyframes floatBadge {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-  }
-
-  .car-card:hover .car-price-tag {
-    transform: scale(1.05) translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  }
-
-  .price-unit {
-    font-size: 0.7rem;
-    font-weight: 400;
-    margin-left: 2px;
-    opacity: 0.9;
-  }
-
-  .car-details {
-    padding: 1.5rem;
-  }
-
-  .car-name {
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
-    margin-bottom: 0.8rem;
-    color: #0f2a40;
-    transition: color 0.2s;
-  }
-
-  .car-card:hover .car-name {
-    color: #1e4a76;
-  }
-
-  .car-features {
-    display: flex;
-    gap: clamp(0.5rem, 2vw, 1rem);
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    color: #475569;
-    flex-wrap: wrap;
-  }
-
-  .car-features span {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .feature-list {
-    list-style: none;
-    margin-bottom: 1.5rem;
-    color: #334155;
-    font-size: 0.9rem;
-    line-height: 1.8;
-  }
-
-  .feature-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .feature-icon-small {
-    color: #1e4a76;
-    font-size: 0.9rem;
-    min-width: 1.2rem;
-    text-align: center;
-    transition: transform 0.2s;
-  }
-
-  .feature-list li:hover .feature-icon-small {
-    transform: scale(1.2);
-    color: #2563eb;
-  }
-
-  .book-btn {
-    display: inline-block;
-    background-color: transparent;
-    color: #1e4a76;
-    border: 2px solid #1e4a76;
-    padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 2rem);
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    width: 100%;
-    text-align: center;
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
-    min-height: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .book-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(30, 74, 118, 0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.4s, height 0.4s;
-  }
-
-  .book-btn:hover::before {
-    width: 300px;
-    height: 300px;
-  }
-
-  .book-btn:hover {
-    background-color: #1e4a76;
-    color: white;
-    border-color: #1e4a76;
-    transform: scale(1.02);
-  }
-
-  .book-btn:focus-visible {
-    outline: 3px solid #f59e0b;
-    outline-offset: 2px;
-  }
-
-  /* Testimonials Section - Enhanced with better mobile centering */
-  .testimonials-section {
-    padding: 3rem 1rem;
-    background: linear-gradient(135deg, #f8fafc, #ffffff);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .testimonials-section::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(30, 74, 118, 0.03) 0%, transparent 70%);
-    animation: rotate 30s linear infinite;
-  }
-
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .testimonials-container {
-    max-width: 900px;
-    margin: 2rem auto;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0 0.5rem;
-  }
-
-  .testimonials-wrapper {
-    flex: 1;
-    max-width: 700px;
-    min-height: 320px;
-    position: relative;
-    margin: 0 auto;
-  }
-
-  .testimonial-card {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateX(100%) scale(0.8);
-    transition: all 0.5s ease-in-out;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    border: 1px solid rgba(30, 74, 118, 0.1);
-    visibility: hidden;
-    margin: 0 auto;
-  }
-
-  .testimonial-card.active {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    position: relative;
-    visibility: visible;
-    animation: slideIn 0.5s ease-out;
-  }
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(30px);
+  /* ---------- MOBILE HERO (matches mobile reference image) ---------- */
+  @media (max-width:768px) {
+    .nkr-hero {
+      padding: 40px 18px 0;
+      min-height: 88vh;
+      justify-content: flex-end;
     }
-    to {
-      opacity: 1;
-      transform: translateX(0);
+    .hero-bg {
+      background-position: center 35%;
+      background-size: cover;
+      transform: scale(1.02);
     }
-  }
-
-  .testimonial-content {
-    position: relative;
-    margin-bottom: 1.5rem;
-  }
-
-  .quote-icon {
-    color: #1e4a76;
-    opacity: 0.2;
-    font-size: 2rem;
-    position: absolute;
-  }
-
-  .quote-left {
-    top: -10px;
-    left: -10px;
-  }
-
-  .quote-right {
-    bottom: -10px;
-    right: -10px;
-  }
-
-  .testimonial-text {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #2c3e50;
-    font-style: italic;
-    padding: 0 1rem;
-    text-align: center;
-  }
-
-  .testimonial-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    border-top: 1px solid #e2e8f0;
-    padding-top: 1rem;
-  }
-
-  /* Enhanced Responsive Rating Container */
-  .testimonial-rating-container {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    background: #f8fafc;
-    padding: 0.5rem 1rem;
-    border-radius: 30px;
-    border: 1px solid #e2e8f0;
-    margin: 0 auto;
-  }
-
-  .testimonial-rating {
-    display: flex;
-    gap: 0.2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .star {
-    font-size: clamp(1rem, 3vw, 1.4rem);
-    transition: all 0.3s ease;
-  }
-
-  .star.filled {
-    color: #fbbf24;
-    filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3));
-    animation: starPulse 0.5s ease-out;
-  }
-
-  .star.half-filled {
-    color: #fbbf24;
-    filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3));
-  }
-
-  .star.empty {
-    color: #cbd5e1;
-  }
-
-  .rating-text {
-    font-weight: 700;
-    color: #1e4a76;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-    background: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    border: 1px solid #e2e8f0;
-  }
-
-  @keyframes starPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-  }
-
-  .testimonial-author {
-    text-align: center;
-    width: 100%;
-  }
-
-  .testimonial-author strong {
-    display: block;
-    color: #1e4a76;
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    margin-bottom: 0.3rem;
-  }
-
-  .author-details {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-  }
-
-  .testimonial-location {
-    color: #64748b;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .location-icon {
-    color: #1e4a76;
-    font-size: 0.8rem;
-  }
-
-  .testimonial-date {
-    color: #94a3b8;
-    font-size: 0.85rem;
-  }
-
-  .testimonial-nav-btn {
-    background: white;
-    border: 2px solid #1e4a76;
-    color: #1e4a76;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
-    z-index: 10;
-  }
-
-  .testimonial-nav-btn:hover {
-    background: #1e4a76;
-    color: white;
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(30, 74, 118, 0.3);
-  }
-
-  .testimonial-nav-btn:active {
-    transform: scale(0.95);
-  }
-
-  .testimonial-nav-btn:focus-visible {
-    outline: 3px solid #f59e0b;
-    outline-offset: 2px;
-  }
-
-  .testimonial-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 0.8rem;
-    margin-top: 1.5rem;
-  }
-
-  .indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #cbd5e1;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0;
-  }
-
-  .indicator:hover {
-    background: #94a3b8;
-    transform: scale(1.2);
-  }
-
-  .indicator.active {
-    background: #1e4a76;
-    transform: scale(1.3);
-    box-shadow: 0 0 10px rgba(30, 74, 118, 0.5);
-  }
-
-  .indicator:focus-visible {
-    outline: 3px solid #f59e0b;
-    outline-offset: 2px;
-  }
-
-  /* Timer indicator */
-  .timer-indicator {
-    max-width: 700px;
-    margin: 1rem auto 0;
-    height: 3px;
-    background: #e2e8f0;
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .timer-bar {
-    height: 100%;
-    background: #1e4a76;
-    width: 0%;
-    animation: timerProgress 10s linear infinite;
-  }
-
-  @keyframes timerProgress {
-    0% { width: 0%; }
-    100% { width: 100%; }
-  }
-
-  /* Why Us Section */
-  .why-us {
-    background-color: #eef2f6;
-    padding: 3rem 1rem;
-    margin-top: 3rem;
-  }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin: 2rem auto 0;
-    padding: 0 1rem;
-  }
-
-  .feature-item {
-    text-align: center;
-    padding: 1.5rem 1rem;
-    background-color: #ffffff;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
-    opacity: 0;
-    transform: translateY(30px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.02);
-  }
-
-  .feature-item.in-view {
-    animation: fadeInUp 0.5s forwards;
-  }
-
-  .feature-item:hover {
-    transform: translateY(-5px) scale(1.02);
-    border-color: #2563eb60;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  }
-
-  .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #1e4a76;
-    animation: gentlePulse 2s infinite;
-    transition: color 0.3s;
-  }
-
-  .feature-item:hover .feature-icon {
-    color: #2563eb;
-    animation: bounce 1s infinite;
-  }
-
-  @keyframes gentlePulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
-  .feature-item h3 {
-    color: #0f2a40;
-    margin-bottom: 0.5rem;
-    font-size: clamp(1rem, 3vw, 1.2rem);
-  }
-
-  .feature-item p {
-    color: #475569;
-    font-size: 0.9rem;
-  }
-
-  /* Animations */
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
+    /* Mobile-specific shade so the temple image stays visible behind text */
+    .hero-shade {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.85) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.35) 0%, transparent 60%);
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeInRight {
-    from {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  /* Responsive breakpoints */
-  @media (max-width: 640px) {
-    .hero {
-      padding: 2rem 1rem;
-    }
-    .hero-badge {
-      top: 10px;
-      right: 10px;
-      padding: 0.3rem 0.8rem;
-    }
-    .cars-grid {
-      grid-template-columns: 1fr;
-    }
-    .features-grid {
-      grid-template-columns: 1fr;
-    }
-    .offer-banner {
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .hero-floating-image {
+    .hero-inner {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
       width: 100%;
-      bottom: 0.1px;
-      left: 0px;
-      opacity: 0.46;
-      height: 100%;
     }
-    .seo-intro {
-      font-size: 1rem;
-      padding: 0.8rem;
+    .hero-text { max-width:100%; padding-bottom: 0; }
+    .hero-heading { font-size: clamp(2rem, 9vw, 2.8rem); line-height: 1.06; margin-bottom: 18px; }
+    .hero-desc { font-size: .98rem; max-width: 100%; margin-bottom: 26px; }
+    /* Buttons are outside the animated text, so pin them to the hero's bottom edge. */
+    .nkr-hero > .hero-actions {
+      position: absolute !important;
+      top: auto !important;
+      left: 15px !important;
+      right: 15px !important;
+      bottom: 28px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch;
+      gap: 12px;
+      width: auto;
+      margin: 0 !important;
+      padding: 0;
+      transform: none !important;
+      z-index: 10;
     }
-    
-    /* Mobile-specific testimonial centering */
-    .testimonials-container {
-      gap: 0.3rem;
-      padding: 0 0.2rem;
-    }
-    
-    .testimonial-nav-btn {
-      width: 32px;
-      height: 32px;
-      font-size: 0.9rem;
-      min-width: 32px;
-    }
-    
-    .testimonials-wrapper {
-      min-height: 380px;
-      max-width: calc(100% - 10px);
-    }
-    
-    .testimonial-card {
-      padding: 1.2rem;
-      width: 100%;
-      left: 0;
-      right: 0;
-    }
-    
-    .testimonial-text {
-      font-size: 0.95rem;
-      padding: 0 0.5rem;
-    }
-    
-    .testimonial-rating-container {
-      padding: 0.4rem 0.8rem;
-      gap: 0.5rem;
-    }
-    
-    .star {
-      font-size: 1rem;
-    }
-    
-    .rating-text {
-      font-size: 0.85rem;
-      padding: 0.15rem 0.5rem;
-    }
-    
-    .author-details {
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    
-    .timer-indicator {
-      max-width: 90%;
-    }
-    
-    /* Ensure perfect centering */
-    .testimonials-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .testimonial-card.active {
-      margin: 0 auto;
-    }
+    .nkr-hero > .hero-actions .btn { width:100%; box-sizing:border-box; }
+    .hero-eyebrow { font-size: .7rem; letter-spacing: .18em; margin-bottom: 14px; }
+    .hero-divider { padding: 14px 0 20px; }
+
+    .fleet-grid { grid-template-columns:1fr; }
+    .features-grid { grid-template-columns:1fr; }
+    .feature-strip-inner { grid-template-columns:1fr; }
+    .strip-item { justify-content:flex-start; }
+    .strip-item::after { display:none !important; }
+
+    .fleet-section, .why-us, .faq-section { padding:50px 16px; }
+    .testimonials-container { gap:8px; padding:0; }
+    .testimonial-nav-btn { width:38px; height:38px; font-size:.85rem; }
+    .testimonials-wrapper { min-height:360px; }
+    .testimonial-card { padding:22px 18px; }
+    .testimonial-text { font-size:.96rem; padding:0 12px; }
+    .cta-banner { padding:46px 18px; }
   }
 
-  @media (min-width: 641px) and (max-width: 768px) {
-    .testimonials-wrapper {
-      min-height: 320px;
-      max-width: 500px;
-    }
-    .testimonial-card {
-      padding: 1.5rem;
-    }
-    .author-details {
-      flex-direction: row;
-    }
-    .testimonial-nav-btn {
-      width: 40px;
-      height: 40px;
-    }
+  @media (max-width:420px) {
+    .nkr-hero { min-height: 92vh; padding: 30px 14px 0; }
+    .hero-heading { font-size: 2rem; }
+    .hero-desc { font-size: .92rem; }
   }
 
-  @media (min-width: 641px) and (max-width: 1024px) {
-    .cars-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .features-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+  /* KEYFRAMES */
+  @keyframes heroBgDrift { 0%{transform:scale(1.06) translate3d(0,0,0);} 100%{transform:scale(1.12) translate3d(-1.2%,-1%,0);} }
+  @keyframes heroTextRise { from{opacity:0; transform:translateY(28px); filter:blur(6px);} to{opacity:1; transform:translateY(0); filter:blur(0);} }
+  @keyframes goldShimmer { 0%,100%{filter:drop-shadow(0 4px 18px rgba(230,178,58,.35)) brightness(1);} 50%{filter:drop-shadow(0 6px 28px rgba(245,215,110,.6)) brightness(1.12);} }
+  @keyframes btnShine { 0%,60%{left:-80%;} 85%,100%{left:130%;} }
+  @keyframes diamondSpin { from{transform:rotate(0);} to{transform:rotate(360deg);} }
+  @keyframes ornamentPulse { 0%,100%{opacity:.6;} 50%{opacity:1;} }
+  @keyframes underlinePulse { 0%,100%{transform:scaleX(.7); opacity:.75;} 50%{transform:scaleX(1.15); opacity:1;} }
+  @keyframes cardArrival { from{opacity:0; transform:translateY(26px) scale(.975); filter:blur(5px);} to{opacity:1; transform:translateY(0) scale(1); filter:blur(0);} }
+  @keyframes ctaPulse { 0%,100%{opacity:.6; transform:scale(1);} 50%{opacity:1; transform:scale(1.06);} }
+  @keyframes carCruise { 0%, 100% { transform: scale(1.04) translate3d(-1%, 0, 0); } 50% { transform: scale(1.12) translate3d(1.4%, -.6%, 0); } }
+  @keyframes imageShine { 0%, 15% { transform: translateX(-130%); opacity: 0; } 30% { opacity: 1; } 65%, 100% { transform: translateX(130%); opacity: 0; } }
+  @keyframes speedLines { from { transform: translateX(-25%) skewX(-22deg); } to { transform: translateX(25%) skewX(-22deg); } }
+  @keyframes badgePulse { 0%, 100% { box-shadow: 0 4px 14px rgba(230,178,58,.45), 0 0 0 0 rgba(230,178,58,.5); } 50% { box-shadow: 0 4px 18px rgba(230,178,58,.65), 0 0 0 6px rgba(230,178,58,0); } }
 
-  @media (min-width: 1025px) {
-    .cars-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+    .fleet-img, .fleet-img-shine, .fleet-img-speedlines { animation: none !important; }
   }
 `;
 

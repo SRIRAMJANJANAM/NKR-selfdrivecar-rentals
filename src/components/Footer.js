@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { 
   FaInstagram, FaFacebookF, FaYoutube, FaWhatsapp, FaCar,
-  FaHome, FaInfoCircle,FaCalendarCheck, FaEnvelope, FaGoogle
+  FaHome, FaInfoCircle, FaCalendarCheck, FaEnvelope, FaGoogle,
+  FaMapMarkerAlt, FaPhoneAlt, FaExternalLinkAlt
 } from "react-icons/fa";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = footerStyles;
     document.head.appendChild(style);
     return () => {
@@ -17,21 +18,45 @@ function Footer() {
     };
   }, []);
 
+  const mapSrc = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d969.301942456951!2d79.51246371571425!3d13.645121782594446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4d4b1eb6466a8d%3A0xdc98fe9aa7ec2e76!2sNKR%20self%20Drive%20Car%20Rentals%20Tirupati!5e0!3m2!1sen!2sin!4v1771779235130!5m2!1sen!2sin";
+
   return (
     <footer className="footer-unique">
+      
+      {/* ================= MAP SECTION ================= */}
+      <div className="footer-map-section">
+        <div className="footer-map-container">
+          <iframe
+            src={mapSrc}
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="NKR Self Drive Location - Car Rental Tirupati"
+          ></iframe>
+        </div>
+      </div>
+
+      {/* ================= MAIN FOOTER ================= */}
       <div className="footer-unique-main">
         {/* Brand Column */}
         <div className="footer-unique-col brand-col">
           <div className="brand-header">
             <FaCar className="brand-icon" />
-            <span className="brand-name">NKR self drive cars rentals</span>
+            <span className="brand-name">NKR Self Drive Cars</span>
           </div>
           <p className="brand-description">
             Drive your way with our reliable self-drive cars. Freedom, comfort, and transparency – always.
           </p>
+          <div className="brand-contact">
+            <p><FaMapMarkerAlt /> Tirupati, Andhra Pradesh - 517501</p>
+            <p><FaPhoneAlt /> +91 86600 14029</p>
+          </div>
         </div>
 
-        {/* Quick Links Column with Icons */}
+        {/* Quick Links Column */}
         <div className="footer-unique-col links-col">
           <h3 className="col-title">Quick Links</h3>
           <ul className="icon-links">
@@ -62,7 +87,7 @@ function Footer() {
         <div className="footer-unique-col social-col">
           <h3 className="col-title">Connect With Us</h3>
           <div className="social-unique">
-            <a href="https://www.instagram.com/neelendar_reddy_nkr_?utm_source=qr&igsh=MWJ6YTN3OTN5bzRqYQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href="https://www.instagram.com/neelendar_reddy_nkr_" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <FaInstagram />
             </a>
             <a href="https://www.facebook.com/share/1DcKcWZUBe/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
@@ -74,7 +99,6 @@ function Footer() {
             <a href="https://wa.me/918660014029" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
               <FaWhatsapp />
             </a>
-            {/* Google Review Icon */}
             <a 
               href="https://search.google.com/local/writereview?placeid=ChIJjWpGth5LTToRdi7sp5r-mNw" 
               target="_blank" 
@@ -85,7 +109,7 @@ function Footer() {
               <FaGoogle />
             </a>
           </div>
-          {/* Review text link */}
+          
           <div className="review-link-container">
             <a 
               href="https://search.google.com/local/writereview?placeid=ChIJjWpGth5LTToRdi7sp5r-mNw"
@@ -99,11 +123,19 @@ function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar with Developer Credit */}
+      {/* ================= BOTTOM BAR ================= */}
       <div className="footer-unique-bottom">
         <div className="bottom-content">
           <p className="developer-credit">
-            Developed by <strong>SMYVISION TECHNOLOGIES</strong>
+            Developed by{" "}
+            <a 
+              href="https://smyvisiontechnologies.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="smyvision-highlight"
+            >
+              SMYVISION TECHNOLOGIES <FaExternalLinkAlt className="ext-icon" />
+            </a>
           </p>
           <p className="copyright">
             &copy; {currentYear} NKR Self Drive Cars Rentals. All rights reserved.
@@ -114,30 +146,58 @@ function Footer() {
   );
 }
 
-// Fresh monochromatic blue theme with distinct styling
+/* =========================================================
+   STYLES
+   ========================================================= */
 const footerStyles = `
+  :root {
+    --gold: #e6b23a;
+    --gold-2: #f5d76e;
+    --gold-deep: #b8860b;
+    --line: rgba(230,178,58,0.35);
+  }
+
   .footer-unique {
-    background: linear-gradient(145deg, #0b1e33 0%, #102b44 100%);
-    border-top: 4px solid transparent;
-    border-image: linear-gradient(90deg, #1e4a76, #4a9eff, #1e4a76);
-    border-image-slice: 1;
-    box-shadow: 0 -10px 30px rgba(0, 20, 40, 0.6);
-    padding: 3rem 2rem 0;
-    color: #e6f0ff;
-    animation: slideUp 0.6s ease-out;
+    background: #0a0a0a;
+    position: relative;
+    color: #e6e6e6;
+    font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
   }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .footer-unique-main {
-    max-width: 1200px;
+  /* ---------- MAP SECTION ---------- */
+  .footer-map-section {
+    max-width: 1300px;
     margin: 0 auto;
+    padding: 0 24px;
+    transform: translateY(-40px);
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-map-container {
+    height: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    border: 1px solid rgba(230,178,58,0.4);
+    background: #111;
+  }
+
+  .footer-map-container iframe {
+    width: 100%;
+    height: 100%;
+    filter: grayscale(20%) contrast(1.05);
+  }
+
+  /* ---------- MAIN FOOTER ---------- */
+  .footer-unique-main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem 24px 4rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2.5rem 1.5rem;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 3rem;
   }
 
   .footer-unique-col {
@@ -149,48 +209,69 @@ const footerStyles = `
   .brand-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+    gap: 12px;
+    margin-bottom: 16px;
   }
 
   .brand-icon {
     font-size: 2.2rem;
-    color: #4a9eff;
-    filter: drop-shadow(0 2px 4px rgba(0, 160, 255, 0.4));
-    transition: transform 0.3s ease;
+    color: var(--gold);
+    filter: drop-shadow(0 0 10px rgba(230,178,58,0.4));
+    animation: iconFloat 3s ease-in-out infinite;
   }
 
-  .brand-header:hover .brand-icon {
-    transform: rotate(5deg) scale(1.1);
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
   }
 
   .brand-name {
-    font-family: 'Segoe UI', 'Poppins', sans-serif;
+    font-family: Georgia, serif;
     font-weight: 700;
-    font-size: 1.3rem;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff, #b0d0ff);
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #ffffff, var(--gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: -0.5px;
   }
 
   .brand-description {
     font-size: 0.95rem;
-    line-height: 1.6;
-    color: #b0d0ff;
-    max-width: 280px;
+    line-height: 1.7;
+    color: #a0a0a0;
+    margin-bottom: 24px;
+    max-width: 320px;
+  }
+
+  .brand-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .brand-contact p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #d0d0d0;
+    margin: 0;
+  }
+
+  .brand-contact svg {
+    color: var(--gold);
+    font-size: 1rem;
   }
 
   /* Column titles */
   .col-title {
     color: #ffffff;
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     margin-bottom: 1.5rem;
     position: relative;
-    padding-bottom: 0.5rem;
+    padding-bottom: 10px;
   }
 
   .col-title::after {
@@ -198,183 +279,218 @@ const footerStyles = `
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 50px;
+    width: 40px;
     height: 3px;
-    background: linear-gradient(90deg, #1e4a76, #4a9eff);
+    background: var(--gold);
     border-radius: 2px;
+    animation: underlinePulse 3s ease-in-out infinite;
   }
 
-  /* Icon links list */
+  @keyframes underlinePulse {
+    0%, 100% { transform: scaleX(0.8); opacity: 0.8; }
+    50% { transform: scaleX(1.1); opacity: 1; }
+  }
+
+  /* Icon links */
   .icon-links {
     list-style: none;
     padding: 0;
     margin: 0;
-  }
-
-  .icon-links li {
-    margin-bottom: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .icon-links a {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    color: #b0d0ff;
+    gap: 12px;
+    color: #b0b0b0;
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    background-color: rgba(30, 74, 118, 0.2);
-    backdrop-filter: blur(2px);
+    transition: all 0.25s ease;
   }
 
   .icon-links a:hover {
-    background-color: #1e4a76;
-    color: #ffffff;
+    color: var(--gold);
     transform: translateX(6px);
-    box-shadow: 0 4px 10px rgba(0, 40, 80, 0.6);
   }
 
   .link-icon {
-    font-size: 1.2rem;
-    color: #4a9eff;
-    transition: all 0.2s ease;
+    font-size: 1.1rem;
+    color: var(--gold);
+    transition: transform 0.25s ease;
   }
 
   .icon-links a:hover .link-icon {
-    color: #ffffff;
     transform: scale(1.15);
   }
 
-  /* Social icons unique */
+  /* Social Icons */
   .social-unique {
     display: flex;
-    gap: 1rem;
+    gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 1.2rem;
+    margin-bottom: 24px;
   }
 
   .social-unique a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
-    background: #1a2f45;
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(230,178,58,0.3);
     border-radius: 12px;
-    color: #4a9eff;
-    font-size: 1.6rem;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border: 1px solid #1e4a76;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   .social-unique a:hover {
-    background: linear-gradient(145deg, #1e4a76, #2a5f8a);
-    color: #ffffff;
-    border-radius: 50%;
-    transform: translateY(-6px) scale(1.1);
-    box-shadow: 0 12px 20px rgba(0, 80, 160, 0.5);
+    background: var(--gold);
+    color: #000;
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(230,178,58,0.3);
   }
 
-  /* Google Review Icon specific styling */
   .google-review-icon:hover {
-    background: linear-gradient(145deg, #4285F4, #0d47a1) !important;
+    background: #4285F4 !important;
+    border-color: #4285F4 !important;
+    color: #fff !important;
+    box-shadow: 0 10px 20px rgba(66, 133, 244, 0.4) !important;
   }
 
-  /* Review link container */
-  .review-link-container {
-    margin-top: 0.5rem;
-  }
-
+  /* Review Link */
   .review-text-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    color: #b0d0ff;
+    gap: 8px;
+    color: var(--gold);
     text-decoration: none;
     font-size: 0.95rem;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    background: rgba(66, 133, 244, 0.15);
+    font-weight: 600;
+    padding: 10px 20px;
+    background: rgba(230,178,58,0.1);
     border-radius: 30px;
-    border: 1px solid rgba(66, 133, 244, 0.3);
+    border: 1px solid rgba(230,178,58,0.4);
     transition: all 0.3s ease;
-    backdrop-filter: blur(4px);
+    width: fit-content;
   }
 
   .review-text-link:hover {
-    background: #4285F4;
-    color: white;
+    background: var(--gold);
+    color: #000;
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(66, 133, 244, 0.4);
-    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(230,178,58,0.3);
   }
 
   .review-text-icon {
-    font-size: 1.1rem;
-    color: #4285F4;
-    transition: all 0.3s ease;
+    font-size: 1rem;
   }
 
-  .review-text-link:hover .review-text-icon {
-    color: white;
-    transform: scale(1.1);
-  }
-
-  /* Bottom bar */
+  /* ---------- BOTTOM BAR ---------- */
   .footer-unique-bottom {
-    background-color: #071626;
-    margin-top: 3rem;
-    padding: 1.2rem 2rem;
-    border-top: 1px solid #1e4a76;
+    background: #000;
+    border-top: 1px solid rgba(230,178,58,0.2);
+    padding: 24px;
   }
 
   .bottom-content {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.8rem;
+    gap: 16px;
   }
 
   .developer-credit {
     font-size: 0.95rem;
-    color: #b0d0ff;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .developer-credit strong {
-    color: #ffffff;
-    font-weight: 700;
-    background: linear-gradient(135deg, #4a9eff, #a0c8ff);
+  /* HIGHLIGHTING SMYVISION TECHNOLOGIES */
+  .smyvision-highlight {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-decoration: none;
+    background: linear-gradient(135deg, #f8e6a8 0%, #e6b23a 50%, #c9962a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 8px rgba(230,178,58,0.4));
+    animation: goldShimmer 3s ease-in-out infinite;
+    letter-spacing: 0.05em;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background-color: rgba(230,178,58,0.1);
+    border: 1px solid rgba(230,178,58,0.3);
+    transition: all 0.3s ease;
+  }
+
+  .smyvision-highlight:hover {
+    background-color: rgba(230,178,58,0.2);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .ext-icon {
+    font-size: 0.8rem;
+    -webkit-text-fill-color: var(--gold);
+    color: var(--gold);
+  }
+
+  @keyframes goldShimmer {
+    0%, 100% { filter: drop-shadow(0 2px 8px rgba(230,178,58,0.4)) brightness(1); }
+    50% { filter: drop-shadow(0 4px 16px rgba(245,215,110,0.7)) brightness(1.2); }
   }
 
   .copyright {
     font-size: 0.85rem;
-    color: #8aadff;
+    color: #666;
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px) {
     .footer-unique-main {
-      grid-template-columns: 1fr;
-      gap: 2rem;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-map-section {
+      transform: translateY(-20px);
     }
 
-    .footer-unique-col {
+    .footer-map-container {
+      height: 200px;
+      border-radius: 14px;
+    }
+
+    .footer-unique-main {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
       text-align: center;
-      align-items: center;
+      padding-top: 1rem;
+    }
+
+    .brand-header, .brand-contact p {
+      justify-content: center;
     }
 
     .brand-description {
-      max-width: 100%;
+      margin: 0 auto 24px;
     }
 
     .col-title::after {
@@ -384,10 +500,6 @@ const footerStyles = `
 
     .icon-links a {
       justify-content: center;
-    }
-
-    .icon-links a:hover {
-      transform: translateX(0) scale(1.03);
     }
 
     .social-unique {
@@ -401,27 +513,28 @@ const footerStyles = `
     .bottom-content {
       flex-direction: column;
       text-align: center;
+      justify-content: center;
+    }
+
+    .developer-credit {
+      flex-direction: column;
+      gap: 6px;
     }
   }
 
   @media (max-width: 480px) {
-    .footer-unique {
-      padding: 2rem 1rem 0;
+    .footer-map-container {
+      height: 180px;
     }
-    .brand-icon {
-      font-size: 2rem;
-    }
-    .brand-name {
-      font-size: 1.2rem;
-    }
+    
     .social-unique a {
-      width: 46px;
-      height: 46px;
-      font-size: 1.4rem;
+      width: 40px;
+      height: 40px;
+      font-size: 1.1rem;
     }
-    .review-text-link {
-      font-size: 0.85rem;
-      padding: 0.4rem 0.8rem;
+
+    .smyvision-highlight {
+      font-size: 0.95rem;
     }
   }
 `;
